@@ -5,7 +5,7 @@
 
 
 //#include "game.hpp"
-//#include "guichan.hpp"
+#include "guichan.hpp"
 
 int main(int argc, char **argv)
 {
@@ -14,15 +14,13 @@ int main(int argc, char **argv)
 //		Game game;
 //		game.run();
 		allegro_message("Hello Allegro!");
-	}
-	/*
+    }
 	catch (gcn::Exception e)
     {
         std::cerr << e.getMessage();
         allegro_message(e.getMessage().c_str());
         return 1;   
     }
-	*/
 	catch (std::string e)
 	{
 		std::cerr << e;
