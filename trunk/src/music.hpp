@@ -28,8 +28,8 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef BALLZ_MUSIC_HPP
-#define BALLZ_MUSIC_HPP
+#ifndef MUSIC_HPP
+#define MUSIC_HPP
 
 #include <string>
 

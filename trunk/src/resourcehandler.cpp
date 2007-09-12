@@ -103,5 +103,5 @@ SAMPLE* ResourceHandler::getSample(const std::string& filename)
 
 std::string ResourceHandler::getRealFilename(const std::string& filename)
 {
-    return std::string(BALLZ_DATA_PREFIX) + "/" + filename;
+    return std::string(DB_DATA_PREFIX) + "/" + filename;
 }
