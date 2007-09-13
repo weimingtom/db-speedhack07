@@ -1,0 +1,6 @@
+Reused source components:
+
+* resourcehandler.cpp, timer.cpp, music.cpp, os.hpp from Ballz, http://code.google.com/p/db-tins07/
+* animation.cpp, splash.cpp from Nodajo's Mechanical Castle, http://code.google.com/p/db-nmc/
+
+Music was composed by us, but prior to the competition.
