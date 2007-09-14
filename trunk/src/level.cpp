@@ -82,10 +82,25 @@ void Level::draw(BITMAP* dest)
 		}
 	}
 
+	drawMousePointer(subdest);
+
     destroy_bitmap(subdest);
 
     mGraphics->setTarget(dest);
     mGui->draw();
+}
+
+void Level::drawMousePointer(BITMAP *dest)
+{
+	int mx = getMouseX();
+	int my = getMouseY()- mGameScrollY;
+	circle(dest, mx, my, 5, makecol(180, 180, 180));
+	arc(dest, mx, my, itofix(mGameScrollY * 3), itofix(mGameScrollY * 3 + 100), 5, makecol(255, 255, 255));
+	arc(dest, mx, my, itofix(mGameScrollY * 3), itofix(mGameScrollY * 3 + 100), 7, makecol(140, 140, 140));
+	hline(dest, mx - 3, my, mx - 2, makecol(255,255,255));
+	hline(dest, mx + 2, my, mx + 3, makecol(255,255,255));
+	vline(dest, mx, my - 3, my - 2, makecol(255,255,255));
+	vline(dest, mx, my + 2, my + 3, makecol(255,255,255));
 }
 
 void Level::logic()

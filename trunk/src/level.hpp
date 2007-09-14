@@ -45,6 +45,7 @@ protected:
     };
 
 	void updateScrolling();
+	void drawMousePointer(BITMAP *dest);
     void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
     void checkStaticCollision(std::list<Entity*>& list);
 

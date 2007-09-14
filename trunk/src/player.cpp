@@ -3,6 +3,7 @@
 #include "playerbullet.hpp"
 
 #include <cmath>
+#include <iostream>
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323
@@ -17,7 +18,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(5),
+	mNumPods(3),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -69,11 +70,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 			int frame = getPodDepth(i) < 0.4f ? 1 : 0;
 			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
 		}
-	}
-
-	circle(dest, mTargetX, mTargetY - scrolly, 5, makecol(180, 180, 180));
-	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 5, makecol(255, 255, 255));
-	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 7, makecol(180, 180, 180));
+	}	
 }
 
 void Player::logic(Level* level)
@@ -178,6 +175,14 @@ void Player::logic(Level* level)
 	if (mShotBurstCounter > 0)
 	{
 		float angle = std::atan2((float)(mTargetX - getCenterX()), (float)(mTargetY - getCenterY()) + 0.01f);		
+
+		if (angle < -1.2) {
+			angle = -1.2;
+		}
+
+		if (angle > 1.2) {
+			angle = 1.2;
+		}
 
 		for (int i = 0; i < mNumPods; i++)
 		{
