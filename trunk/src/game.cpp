@@ -39,7 +39,7 @@ Game::Game()
 	mBuffer = create_bitmap(320, 240);
 
     mSplashScreen = new SplashScreen();
-    mLevel = new Level();
+    mLevel = new Level(ResourceHandler::getInstance()->getRealFilename("level1.txt"));
 }
 
 Game::~Game()

@@ -7,10 +7,11 @@
 class Level
 {
 public:
-    Level();
+    Level(const std::string& filename);
     ~Level();
     void draw(BITMAP* dest);
     void logic();
+    void load(const std::string& filename);
 
 protected:
     std::list<Entity*> mEntities;

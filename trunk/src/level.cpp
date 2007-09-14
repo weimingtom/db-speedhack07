@@ -1,6 +1,6 @@
 #include "level.hpp"
 
-Level::Level()
+Level::Level(const std::string& filename)
 : mScrollY(0)
 {
 
@@ -91,4 +91,9 @@ void Level::logic()
     }
 
     mEntities.remove_if(isNull);
+}
+
+void Level::load(const std::string& filename)
+{
+
 }
