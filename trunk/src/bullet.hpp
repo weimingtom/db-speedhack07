@@ -6,7 +6,10 @@
 class Bullet: public Entity
 {
 public:
-    Bullet();
+    Bullet(unsigned int type);
+    unsigned int getEntityType() { return mType; }
+protected:
+    unsigned int mType;
 };
 
 #endif
