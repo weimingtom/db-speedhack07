@@ -17,7 +17,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(2),
+	mNumPods(10),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -50,8 +50,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		if (getPodDepth(i) < 0.0f)
 		{
 			int frame = getPodDepth(i) > -0.2f ? 1 : 2;
-			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
-			putpixel(dest, getCenterX() + getPodOffset(i), getY() - scrolly, makecol(255,255,0));
+			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);			
 		}
 	}
 
@@ -64,7 +63,6 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		{
 			int frame = getPodDepth(i) < 0.4f ? 1 : 0;
 			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
-			putpixel(dest, getCenterX() + getPodOffset(i), getY() - scrolly, makecol(255,255,0));
 		}
 	}
 
@@ -177,8 +175,8 @@ void Player::logic(Level* level)
 				dx = 0.0f;
 				dy = 1.0f;
 			}
-			dx *= 7;
-			dy *= 7;
+			dx *= 10;
+			dy *= 10;
 
 			dy += mDY / 8;
 

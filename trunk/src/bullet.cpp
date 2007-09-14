@@ -7,7 +7,8 @@
 
 Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy, const std::string& filename, int damage)
 :Entity(x, y, w, h, true),
- mType(type)
+ mType(type),
+ mIsToBeDeleted(false)
 {
     if (type != Entity::ENEMY_BULLET_TYPE 
         && type != Entity::PLAYER_BULLET_TYPE)
