@@ -1,9 +1,10 @@
 #include "player.hpp"
 
 Player::Player() :
-	Entity(115, 0, 10, 20, true),
+	Entity(115, 20, 10, 20, true),
 	mDX(0),
-	mDY(0)
+	mDY(0),
+	mAirResistance(AIR_RESISTANCE_LOW)
 {
 }
 
@@ -25,13 +26,67 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 
 void Player::logic(Level* level)
 {
-	if (key[KEY_A] || key[KEY_LEFT]) {
-		mX--;
+	bool leftPressed = key[KEY_A] || key[KEY_LEFT];
+	bool rightPressed = key[KEY_D] || key[KEY_RIGHT];
+
+	int maxDX = 64 / mAirResistance;
+
+	if (leftPressed && !rightPressed && -mDX < maxDX)
+	{
+		if (mDX > -8)
+		{
+			mDX = -8;
+		}
+		else
+		{
+			mDX -= 2;
+		}
+	}
+	else if (rightPressed && !leftPressed && mDX < maxDX)
+	{
+		if (mDX < 8)
+		{
+			mDX = 8;
+		}
+		else
+		{
+			mDX += 2;
+		}
+	}
+	else 
+	{
+		if (mDX > 0)
+		{
+			mDX -= 4;
+		}
+		
+		if (mDX < 0)
+		{
+			mDX += 4;
+		}
 	}
 
-	if (key[KEY_D] || key[KEY_RIGHT]) {
-		mX++;
+	if (mDX > maxDX) {
+		mDX--;
 	}
+
+	if (mDX < -maxDX) {
+		mDX++;
+	}
+
+	int targetDY = 64 / mAirResistance;
+
+	if (mDY < targetDY)
+	{
+		mDY++;
+	}
+	else if (mDY > targetDY)
+	{
+		mDY--;
+	}
+
+	mX += mDX / 8;
+	mY += mDY / 8;
 }
 
 bool Player::isToBeDeleted()

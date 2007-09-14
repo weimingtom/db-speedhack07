@@ -13,8 +13,14 @@ public:
     bool isToBeDeleted();
     unsigned int getType() { return Entity::PLAYER_TYPE; }
 	virtual bool drawInLayer(unsigned int layer);
+
+	static const int AIR_RESISTANCE_LOW = 2;
+	static const int AIR_RESISTANCE_MEDIUM = 3;
+	static const int AIR_RESISTANCE_HIGH = 6;
+
 private:
 	int mDX, mDY;
+	int mAirResistance;
 };
 
 #endif
