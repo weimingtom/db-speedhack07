@@ -24,6 +24,8 @@ public:
 	int getMouseY();
 	int isFirePressed();
 
+    int getScrollY() { return mGameScrollY; }
+
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;
