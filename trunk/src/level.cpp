@@ -269,7 +269,7 @@ bool Level::isFirePressed()
 
 bool Level::isBrakePressed()
 {
-    return (mouse_b & 2) != 0;
+    return key[KEY_W];
 }
 
 bool Level::isBurnPressed()
