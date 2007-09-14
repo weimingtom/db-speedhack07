@@ -17,6 +17,7 @@ public:
 
 protected:
     Animation* mAnimation;
+    bool mToBeDeleted;
 	
 };
 

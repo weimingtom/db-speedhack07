@@ -1,7 +1,9 @@
 #include "block.hpp"
+#include "level.hpp"
 
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
-: Enemy(x, y, width, height, hitCount)
+: Enemy(x, y, width, height, hitCount),
+mToBeDeleted(false)
 {
     mAnimation = new Animation(filename);
 	
@@ -14,7 +16,7 @@ Block::~Block()
 
 void Block::logic(Level* level)
 {
-
+    mToBeDeleted = (getY() - level->getScrollY()) < 0;
 }
 
 void Block::handleCollision(Entity *other, Level *level)
@@ -29,5 +31,5 @@ void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 
 bool Block::isToBeDeleted()
 {
-    return false;
+    return mToBeDeleted;
 }
