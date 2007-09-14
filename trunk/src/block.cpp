@@ -24,7 +24,7 @@ void Block::handleCollision(Entity *other, Level *level)
 
 void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-    mAnimation->drawFrame(dest, 0, getX(), getY());
+    mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
 }
 
 bool Block::isToBeDeleted()

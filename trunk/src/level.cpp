@@ -37,7 +37,7 @@ void Level::draw(BITMAP* dest)
 {
     BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
 
-    mBackground->draw(subdest, mBackgroundScrollY, Entity::BACKGROUND_LAYER);
+    mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::BACKGROUND_LAYER);
 
     std::list<Entity *>::iterator it;
 
@@ -87,7 +87,16 @@ void Level::logic()
 
     mEntities.remove_if(isNull);
 
-    mBackgroundScrollY++;
+    //mBackgroundScrollY++;
+
+	updateScrolling();
+}
+
+void Level::updateScrolling()
+{
+	int wantedScroll = mPlayer->getY() - 20;
+	int scrollAmount = wantedScroll - mGameScrollY;
+	mGameScrollY += scrollAmount / 5;
 }
 
 void Level::load(const std::string& filename)

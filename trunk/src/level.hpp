@@ -15,7 +15,12 @@ public:
     void load(const std::string& filename);
     void addEntity(Entity* entity);
 
+	int getMouseX();
+	int getMouseY();
+
 protected:
+	void updateScrolling();
+
     std::list<Entity*> mEntities;
     std::list<Entity*> mHibernatingEntities;
     std::list<Entity*> mEnemyEntities;
