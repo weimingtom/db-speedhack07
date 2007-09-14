@@ -20,6 +20,7 @@ protected:
 	float mDy;
 	float mX, mY;
 	int mDamage;
+	bool mIsToBeDeleted;
 };
 
 #endif

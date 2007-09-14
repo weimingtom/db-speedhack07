@@ -34,13 +34,13 @@ void Bullet::logic(Level* level)
 
 void Bullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-	//fill_circle(
 	circlefill(dest, getX(), getY()-scrolly, 1, makecol(255, 200, 0));
-	//mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
+	int y = getY() - scrolly;
+	mIsToBeDeleted = getX() < 0 || getX() > 240 || y < 0 || y > 240;
 }
 
 
 bool Bullet::isToBeDeleted()
 {
-    return false;
+    return mIsToBeDeleted;
 }
