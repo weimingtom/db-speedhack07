@@ -6,8 +6,8 @@
 class Enemy: public Entity
 {
 public:
-    Enemy();
-    unsigned int getEntityType() { return Entity::ENEMY_TYPE; }
+    Enemy(int x, int y, int width, int height);
+    unsigned int getType() { return Entity::ENEMY_TYPE; }
 };
 
 #endif

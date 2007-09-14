@@ -1,5 +1,9 @@
 #include "level.hpp"
+
+#include "exception.hpp"
 #include "fileutil.hpp"
+#include "stringutil.hpp"
+#include "block.hpp"
 
 Level::Level(const std::string& filename)
 : mScrollY(0)
@@ -107,9 +111,17 @@ void Level::load(const std::string& filename)
     {
         for (col = 0; col < data[row].size(); col++)
         {
-            if (data[row].at(col) == '.')
+            switch(data[row].at(col))
             {
-                // ignore;
+                case '.':
+                // ignore
+                    break;
+                case '0':
+                    mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10));
+                   break;
+                default:
+                    throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
+                    break;
             }
         }
     }
