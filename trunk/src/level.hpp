@@ -22,7 +22,8 @@ public:
 
 	int getMouseX();
 	int getMouseY();
-	int isFirePressed();
+	bool isFirePressed();
+    bool isBrakePressed(); 
 
     int getScrollY() { return mGameScrollY; }
 

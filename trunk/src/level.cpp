@@ -255,9 +255,14 @@ int Level::getMouseY()
 	return mouse_y / 2 + mGameScrollY;
 }
 
-int Level::isFirePressed()
+bool Level::isFirePressed()
 {
 	return mouse_b & 1;
+}
+
+bool Level::isBrakePressed()
+{
+    return mouse_b & 2;
 }
 
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)

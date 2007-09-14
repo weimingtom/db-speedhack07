@@ -124,7 +124,15 @@ void Player::logic(Level* level)
 		mDX++;
 	}
 
-	int targetDY = 64 / mAirResistance;
+    int targetDY;
+    if (level->isBrakePressed())
+    {
+       targetDY = 0;
+    }
+    else
+    {
+	    targetDY = 64 / mAirResistance;
+    }
 
 	if (mDY < targetDY)
 	{
