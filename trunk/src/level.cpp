@@ -63,7 +63,7 @@ static bool isNull(Entity *e)
 
 void Level::draw(BITMAP* dest)
 {
-    BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
+    BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 	
 
     mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::BACKGROUND_LAYER);
 
@@ -242,12 +242,17 @@ void Level::addEntity(Entity* entity)
 
 int Level::getMouseX()
 {
-	return mouse_x / 2- 40;
+	return mouse_x / 2 - 40;
 }
 
 int Level::getMouseY()
 {
 	return mouse_y / 2 + mGameScrollY;
+}
+
+int Level::isFirePressed()
+{
+	return mouse_b & 1;
 }
 
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)

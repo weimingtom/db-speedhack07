@@ -2,6 +2,7 @@
 #define DBSH07_PLAYER_HPP
 
 #include "entity.hpp"
+#include "animation.hpp"
 
 class Player: public Entity
 {
@@ -14,14 +15,25 @@ public:
     unsigned int getType() { return Entity::PLAYER_TYPE; }
 	virtual bool drawInLayer(unsigned int layer);
 
+	int getPodOffset(int i);
+	float getPodDepth(int i);
+
 	static const int AIR_RESISTANCE_LOW = 2;
 	static const int AIR_RESISTANCE_MEDIUM = 3;
 	static const int AIR_RESISTANCE_HIGH = 6;
 
 private:
+	int mFrameCounter;
 	int mDX, mDY;
 	int mAirResistance;
 	int mTargetX, mTargetY;
+	bool mShotPressed;
+	bool mShotReleased;
+	int mShotBurstCounter;
+	int mNumPods;
+
+	Animation mPlayerAni;
+	Animation mPodAni;
 };
 
 #endif

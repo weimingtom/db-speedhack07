@@ -21,6 +21,7 @@ public:
 
 	int getMouseX();
 	int getMouseY();
+	int isFirePressed();
 
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;

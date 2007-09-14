@@ -24,6 +24,8 @@ void StarsBackground::logic(Level* level)
 
 void StarsBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
+	clear_to_color(dest, makecol(30, 0, 40));
+
     for (unsigned int i = 0; i < mStars.size(); i++)
     {
         int x = mStars[i].x;
