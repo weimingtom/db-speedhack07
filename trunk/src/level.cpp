@@ -159,14 +159,28 @@ void Level::logic()
 
 void Level::updateScrolling()
 {
-	float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed() * 5.0f;
-	float scrollAmount = wantedScroll - mGameScrollFloat;
-	float wantedSpeed = mPlayer->getSpeed();
-	float speedAdjust = wantedSpeed - mScrollSpeed;
-	mScrollSpeed += speedAdjust / 20.0f;
-	mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
-	
-	mGameScrollY = (int)mGameScrollFloat;
+    if (isBurnPressed())
+    {
+	    float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed();
+	    float scrollAmount = wantedScroll - mGameScrollFloat;
+	    float wantedSpeed = mPlayer->getSpeed();
+	    float speedAdjust = wantedSpeed - mScrollSpeed;
+        mScrollSpeed += speedAdjust / 20.0f;
+        mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
+    	
+	    mGameScrollY = (int)mGameScrollFloat;
+    }
+    else
+    {
+	    float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed() * 5.0f;
+	    float scrollAmount = wantedScroll - mGameScrollFloat;
+	    float wantedSpeed = mPlayer->getSpeed();
+	    float speedAdjust = wantedSpeed - mScrollSpeed;
+        mScrollSpeed += speedAdjust / 20.0f;
+        mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
+    	
+	    mGameScrollY = (int)mGameScrollFloat;
+    }
 }
 
 void Level::load(const std::string& filename)

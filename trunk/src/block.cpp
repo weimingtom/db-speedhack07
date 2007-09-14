@@ -18,10 +18,7 @@ Block::~Block()
 
 void Block::logic(Level* level)
 {
-	if( (getY() - level->getScrollY()) < 0)
-	{
-		mToBeDeleted = true;
-	}
+    mToBeDeleted = (getY() - level->getScrollY()) + getHeight() < 0;
 }
 
 void Block::handleCollision(Entity *other, Level *level)
