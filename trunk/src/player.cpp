@@ -129,6 +129,10 @@ void Player::logic(Level* level)
     {
        targetDY = 8;
     }
+    else if (level->isBurnPressed())
+    {
+         targetDY = (64 / mAirResistance) * 2;
+    }
     else
     {
 	    targetDY = 64 / mAirResistance;

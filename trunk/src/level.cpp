@@ -272,6 +272,11 @@ bool Level::isBrakePressed()
     return (mouse_b & 2) != 0;
 }
 
+bool Level::isBurnPressed()
+{
+    return key[KEY_S];
+}
+
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)
 {
     std::list<Entity *>::iterator it1;
