@@ -10,6 +10,7 @@
 #include <iostream>
 
 Game::Game()
+:mPauseButtonPressed(false)
 {
     allegro_init();
     install_keyboard();
@@ -87,6 +88,8 @@ void Game::logic()
         case LEVEL:
             mLevel->logic();
             break;
+        case PAUSE:
+            break;
         case EXIT:
             break;
    	    default:
@@ -97,6 +100,17 @@ void Game::logic()
     {
         mState = EXIT;
     }
+
+    if (key[KEY_P] && !mPauseButtonPressed && mState == PAUSE)
+    {
+        mState = LEVEL;
+    }
+    else if (key[KEY_P] && !mPauseButtonPressed && mState == LEVEL)
+    {
+        mState = PAUSE;
+    }
+
+    mPauseButtonPressed = key[KEY_P];
 }
 
 void Game::draw()
@@ -121,6 +135,8 @@ void Game::draw()
         mLevel->draw(mBuffer);
 //          mAllegroGraphics->setTarget(mBuffer);
 //            mGui->draw();
+        break;
+    case PAUSE:
         break;
 	case EXIT:
 		break;

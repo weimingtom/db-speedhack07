@@ -34,7 +34,8 @@ protected:
         SPLASHSCREEN,
 		MENU,
 		EXIT,
-        LEVEL
+        LEVEL,
+        PAUSE
     };
 
     State mState;
@@ -84,6 +85,8 @@ protected:
     DBSH07Button* mStartButton;
     DBSH07Button* mCreditsButton;
     DBSH07Button* mExitButton;
+
+    bool mPauseButtonPressed;
 
 };
 
