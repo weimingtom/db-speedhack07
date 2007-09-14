@@ -13,14 +13,15 @@ public:
     void draw(BITMAP* dest);
     void logic();
     void load(const std::string& filename);
+    void addEntity(Entity* entity);
 
 protected:
     std::list<Entity*> mEntities;
     std::list<Entity*> mHibernatingEntities;
     std::list<Entity*> mEnemyEntities;
-    std::list<Entity*> mEnemyBulletsEntities;
+    std::list<Entity*> mEnemyBulletEntities;
     std::list<Entity*> mPlayerEntities;
-    std::list<Entity*> mPlayerBulletsEntities;
+    std::list<Entity*> mPlayerBulletEntities;
     int mScrollY;
     Player* mPlayer;
 };

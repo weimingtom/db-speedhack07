@@ -11,7 +11,7 @@ public:
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
     void logic(Level* level);
     bool isToBeDeleted();
-    unsigned int getEntityType() { return Entity::PLAYER_TYPE; }
+    unsigned int getType() { return Entity::PLAYER_TYPE; }
 };
 
 #endif

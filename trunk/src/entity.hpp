@@ -44,7 +44,7 @@ public:
 
 	virtual bool isToBeDeleted() = 0;
 
-    virtual unsigned int getEntityType() = 0;
+    virtual unsigned int getType() = 0;
 
 	virtual bool isCollidable();
 

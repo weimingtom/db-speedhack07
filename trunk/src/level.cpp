@@ -85,9 +85,9 @@ void Level::logic()
 		    delete (*it);
 
             mPlayerEntities.remove((*it));
-            mPlayerBulletsEntities.remove((*it));
+            mPlayerBulletEntities.remove((*it));
             mEnemyEntities.remove((*it));
-            mEnemyBulletsEntities.remove((*it));
+            mEnemyBulletEntities.remove((*it));
 		    *it = NULL;
 	    }
     }
@@ -98,4 +98,25 @@ void Level::logic()
 void Level::load(const std::string& filename)
 {
 
+}
+
+void Level::addEntity(Entity* entity)
+{
+    switch (entity->getType())
+    {
+        case Entity::ENEMY_BULLET_TYPE:
+            mEnemyBulletEntities.push_back(entity);
+            break;
+        case Entity::ENEMY_TYPE:
+            mEnemyEntities.push_back(entity);
+            break;
+        case Entity::PLAYER_BULLET_TYPE:
+            mPlayerBulletEntities.push_back(entity);
+            break;
+        case Entity::PLAYER_TYPE:
+            mPlayerEntities.push_back(entity);
+            break;
+    }
+
+    mEntities.push_back(entity);
 }
