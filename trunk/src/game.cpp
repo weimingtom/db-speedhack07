@@ -36,14 +36,14 @@ Game::Game()
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 
     initTimer();
-    mState = MENU; //SPLASHSCREEN;
+    mState = LEVEL; //SPLASHSCREEN;
 
     mScreenBuffer = create_bitmap(640, 480);
 	mBuffer = create_bitmap(320, 240);
 
     mSplashScreen = new SplashScreen();
 	initGui();
-    mLevel = new Level(ResourceHandler::getInstance()->getRealFilename("level1.txt"));
+    mLevel = new Level("level1.txt");
 
 	initMusic();
 }
@@ -76,18 +76,11 @@ void Game::logic()
             }
             break;
         case MENU:
-        
             mGui->logic();
 			break;
-		
-//            case GAME:
-//                mGui->logic();
-//				mRoom->logic();
-//                break;
-
-            case LEVEL:
-                mLevel->logic();
-                break;
+        case LEVEL:
+            mLevel->logic();
+            break;
         case EXIT:
             break;
    	    default:
@@ -116,13 +109,11 @@ void Game::draw()
         mAllegroGraphics->setTarget(mBuffer);
         mGui->draw();
 		break;
-//		case GAME:
-//			mRoom->draw(mBuffer);
-//			release_bitmap(mBuffer);
+    case LEVEL:
+        mLevel->draw(mBuffer);
 //          mAllegroGraphics->setTarget(mBuffer);
 //            mGui->draw();
-//			stretch_blit(mBuffer, mScreenBuffer, 0, 0, 320, 240, 0, 0, 640, 480);
-//			break;
+        break;
 	case EXIT:
 		break;
 	default:

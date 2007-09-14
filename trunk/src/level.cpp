@@ -5,12 +5,16 @@
 #include "stringutil.hpp"
 #include "block.hpp"
 
+#include <iostream>
+
 Level::Level(const std::string& filename)
 : mScrollY(0)
 {
     mPlayer = new Player();
     mEntities.push_back(mPlayer);
     mPlayerEntities.push_back(mPlayer);
+
+    load(filename);
 }
 
 Level::~Level()
@@ -77,6 +81,13 @@ void Level::draw(BITMAP* dest)
 void Level::logic()
 {
     std::list<Entity *>::iterator it;
+
+    while (!mHibernatingEntities.empty() 
+            && mHibernatingEntities.front()->getY() <= mScrollY + 240 + 20)
+    {
+        addEntity(mHibernatingEntities.front());
+        mHibernatingEntities.pop_front();
+    }
 
     for (it = mEntities.begin(); it != mEntities.end(); it++)
     {
