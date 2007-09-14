@@ -12,7 +12,7 @@
 #include "guichan/allegro.hpp"
 #include "gui/ballzscrollarea.hpp"
 
-class Game
+class Game: public gcn::ActionListener
 {
 public:
     Game();
@@ -25,7 +25,9 @@ private:
 	void initGui();
 protected:
 
-	    class MainMenuListModel: public gcn::ListModel
+	void action(const gcn::ActionEvent& actionEvent);
+
+	class MainMenuListModel: public gcn::ListModel
     {
     public:
         int getNumberOfElements()
@@ -83,6 +85,9 @@ protected:
     gcn::Image* mPerImage;
     gcn::Icon* mPerIcon;
     gcn::Label* mPerLabel;
+    gcn::Image* mTedImage;
+	gcn::Icon* mTedIcon;
+    gcn::Label* mTedLabel;
 
     gcn::Container* mLevelsContainer;
 //    LevelSelector* mLevelSelector;

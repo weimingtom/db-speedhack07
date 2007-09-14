@@ -33,7 +33,7 @@ Game::Game()
     }
 
     initTimer();
-    mState = SPLASHSCREEN;
+    mState = MENU; //SPLASHSCREEN;
 
     mScreenBuffer = create_bitmap(640, 480);
 	mBuffer = create_bitmap(320, 240);
@@ -208,7 +208,7 @@ void Game::initGui()
 	mMainMenuListBox->setSelected(0);
 	mMainMenuContainer->add(mMainMenuListBox, 125, 150);
 	mMainMenuListBox->requestFocus();
-//	mMainMenuListBox->addActionListener(this);
+	mMainMenuListBox->addActionListener(this);
 
 
 	mCreditsContainer = new gcn::Container();
@@ -219,17 +219,21 @@ void Game::initGui()
 
 	mOlofImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("olof.bmp"));
 	mOlofIcon = new gcn::Icon(mOlofImage);
-	mCreditsContainer->add(mOlofIcon, 80, 95);
-
+	mCreditsContainer->add(mOlofIcon, 50, 95);
 	mOlofLabel = new gcn::Label("OLOF NAESSEN");
-	mCreditsContainer->add(mOlofLabel, 80, 165);
+	mCreditsContainer->add(mOlofLabel, 35, 165);
 
 	mPerImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("per.bmp"));
 	mPerIcon = new gcn::Icon(mPerImage);
-	mCreditsContainer->add(mPerIcon, 170, 95);
-
+	mCreditsContainer->add(mPerIcon, 131, 95);
 	mPerLabel = new gcn::Label("PER LARSSON");
-	mCreditsContainer->add(mPerLabel, 170, 165);
+	mCreditsContainer->add(mPerLabel, 130, 165);
+
+	mTedImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("ted.bmp"));
+	mTedIcon = new gcn::Icon(mTedImage);
+	mCreditsContainer->add(mTedIcon, 215, 92);
+	mTedLabel = new gcn::Label("TED STEEN");
+	mCreditsContainer->add(mTedLabel, 215, 165);
 
 	mCreditsText = new gcn::TextBox("We would like to thank Marcus Matern and Tomas Almgren\n"
 									"for helping out with making levels. Finally we would like\n"
@@ -269,4 +273,26 @@ void Game::initGui()
 	mInfoText->setBorderSize(0);
 	mMainMenuContainer->add(mInfoText, 110, 200);
 */
+}
+void Game::action(const gcn::ActionEvent& actionEvent)
+{
+	std::cout << "action!" << std::endl;
+	
+    if (actionEvent.getSource() == mMainMenuListBox)
+    {
+		std::cout << "main menu selection: " << mMainMenuListBox->getSelected() << std::endl;
+
+        if (mMainMenuListBox->getSelected() == 0)
+        {
+            mMainMenuContainer->setVisible(false);
+            mLevelsContainer->setVisible(true);
+            //mLevelSelector->requestFocus();
+        }
+        else if (mMainMenuListBox->getSelected() == 1)
+        {
+			std::cout << "about" << std::endl;
+            mMainMenuContainer->setVisible(false);
+            mCreditsContainer->setVisible(true);
+        }
+    }
 }
