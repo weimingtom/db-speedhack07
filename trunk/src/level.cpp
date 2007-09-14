@@ -141,7 +141,7 @@ void Level::logic()
             {
                 if ((*it)->getType() == Entity::BLOCK_TYPE)
                 {
-                    mStaticEntities[(*it)->getX() / 10 + (*it)->getY() / 10 * 24] = NULL;
+                    mStaticEntities[(*it)->getX() / BLOCK_SIZE + (*it)->getY() / BLOCK_SIZE * 24] = NULL;
                 }
 
                 mPlayerEntities.remove((*it));
@@ -231,7 +231,11 @@ void Level::load(const std::string& filename)
                 case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
-                        staticEntity = new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 2);
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "spaceblock.bmp", 2);
                         mHibernatingEntities.push_back(staticEntity);
                     }
                    break;
@@ -338,10 +342,10 @@ void Level::checkStaticCollision(std::list<Entity*>& list)
             continue;
         }
     
-        int minx = entity->getX() / 10;
-        int miny = entity->getY() / 10;
-        int maxx = (entity->getX() + entity->getWidth() - 1) / 10;
-        int maxy = (entity->getY() + entity->getHeight() - 1) / 10;
+        int minx = entity->getX() / BLOCK_SIZE;
+        int miny = entity->getY() / BLOCK_SIZE;
+        int maxx = (entity->getX() + entity->getWidth() - 1) / BLOCK_SIZE;
+        int maxy = (entity->getY() + entity->getHeight() - 1) / BLOCK_SIZE;
 
         for (int x = minx; x <= maxx; x++)
         {
