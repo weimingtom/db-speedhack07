@@ -88,6 +88,11 @@ void Level::draw(BITMAP* dest)
 
 void Level::logic()
 {
+	std::cout << mPlayerEntities.size() << " " 
+		<< mPlayerBulletEntities.size() << " "
+		<< mEnemyEntities.size() << " "
+		<< mEnemyBulletEntities.size() << std::endl;
+
     if (mState == DIALOG)
     {
          mGui->logic();
@@ -263,7 +268,7 @@ void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)
     for (it1 = list1.begin(); it1 != list1.end(); it1++)
     {
         for (it2 = list2.begin(); it2 != list2.end(); it2++)
-        {
+        {			
             Entity* entity1 = (*it1);
             Entity* entity2 = (*it2);
 

@@ -17,7 +17,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(10),
+	mNumPods(5),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -160,34 +160,34 @@ void Player::logic(Level* level)
 
 	if (mShotBurstCounter > 0)
 	{
-		if (mShotBurstCounter % SHOT_FRAME_DELAY == 1)
+		float dx = mTargetX - getCenterX();
+		float dy = mTargetY - getCenterY();
+		float l = std::sqrt(dx * dx + dy * dy);
+		if (l > 0.0f)
 		{
-			float dx = mTargetX - mX;
-			float dy = mTargetY - mY;
-			float l = std::sqrt(dx * dx + dy * dy);
-			if (l > 0.0f)
-			{
-				dx /= l;
-				dy /= l;
-			}
-			else
-			{
-				dx = 0.0f;
-				dy = 1.0f;
-			}
-			dx *= 10;
-			dy *= 10;
+			dx /= l;
+			dy /= l;
+		}
+		else
+		{
+			dx = 0.0f;
+			dy = 1.0f;
+		}
+		dx *= 10;
+		dy *= 10;
 
-			dy += mDY / 8;
+		dy += mDY / 8;
 
-			for (int i = 0; i < mNumPods; i++)
-			{
+		for (int i = 0; i < mNumPods; i++)
+		{
+			if (i % SHOT_FRAME_DELAY == mShotBurstCounter % SHOT_FRAME_DELAY)
+			{			
 				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
 				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, 0);
 				level->addEntity(bullet);
 			}
-		}
+		}	
 
 		mShotBurstCounter--;		
 	}
