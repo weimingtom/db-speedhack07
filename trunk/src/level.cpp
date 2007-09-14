@@ -117,6 +117,8 @@ void Level::logic()
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
         checkCollision(mPlayerEntities, mEnemyBulletEntities);
         checkCollision(mEnemyEntities, mPlayerEntities);
+        checkStaticCollision(mPlayerEntities);
+        checkStaticCollision(mPlayerBulletEntities);
         //checkCollision(mEnemyEntities, mEnemyEntities);
      
         std::list<Entity *>::iterator it;
@@ -222,8 +224,7 @@ void Level::load(const std::string& filename)
                     if (mMotif == SPACE_MOTIF)
                     {
                         staticEntity = new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 10);
-                        mStaticEntities.push_back(staticEntity);
-                        mEntities.push_back(staticEntity);
+                        mHibernatingEntities.push_back(staticEntity);
                     }
                    break;
                 default:
@@ -336,9 +337,9 @@ void Level::checkStaticCollision(std::list<Entity*>& list)
 
         for (int x = minx; x <= maxx; x++)
         {
-            for (int y = miny; y < maxy; y++)
+            for (int y = miny; y <= maxy; y++)
             {
-                Entity* otherEntity = mStaticEntities[x + y * 10];
+                Entity* otherEntity = mStaticEntities[x + y * 24];
       
                 if (otherEntity != NULL
                     && otherEntity->isCollidable())

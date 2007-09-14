@@ -64,6 +64,7 @@ public:
     static const int DECORATION_TYPE = 2;
     static const int ENEMY_BULLET_TYPE = 3;
     static const int PLAYER_BULLET_TYPE = 4;
+    static const int BLOCK_TYPE = 5;
 
 protected:
 	int mX, mY, mW, mH;

@@ -5,8 +5,9 @@
 #include "level.hpp"
 
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
-: Enemy(x, y, width, height, hitCount),
-mToBeDeleted(false)
+: Entity(x, y, width, height, true),
+  mToBeDeleted(false),
+  mHitCount(hitCount)
 {
     mAnimation = new Animation(filename);
 	mIsHit = false;
