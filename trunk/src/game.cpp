@@ -5,6 +5,7 @@
 #include "resourcehandler.hpp"
 #include "timer.hpp"
 #include "exception.hpp"
+#include "music.hpp"
 
 #include <iostream>
 
@@ -32,6 +33,8 @@ Game::Game()
 	    }
     }
 
+	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
+
     initTimer();
     mState = MENU; //SPLASHSCREEN;
 
@@ -42,6 +45,7 @@ Game::Game()
 	initGui();
     mLevel = new Level(ResourceHandler::getInstance()->getRealFilename("level1.txt"));
 
+	initMusic();
 }
 
 Game::~Game()
@@ -58,6 +62,8 @@ Game::~Game()
 
 void Game::logic()
 {
+	pollMusic();
+
     switch (mState) 
     {
         case SPLASHSCREEN:

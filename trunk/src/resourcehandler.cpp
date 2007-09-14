@@ -57,7 +57,6 @@ SAMPLE* ResourceHandler::getSample(const std::string& filename)
 {
     if (mSamples.find(filename) == mSamples.end())
     {
-
 	    SAMPLE* sample = load_sample(getRealFilename(filename).c_str());
 	    
         if (sample == NULL) 
@@ -73,5 +72,5 @@ SAMPLE* ResourceHandler::getSample(const std::string& filename)
 
 std::string ResourceHandler::getRealFilename(const std::string& filename)
 {
-    return std::string(DB_DATA_PREFIX) + "/" + filename;
+    return std::string(DB_DATA_PREFIX) + filename;
 }

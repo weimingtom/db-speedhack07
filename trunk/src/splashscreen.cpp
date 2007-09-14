@@ -3,7 +3,7 @@
 
 #include "splashscreen.hpp"
 #include "resourcehandler.hpp"
-
+#include "music.hpp"
 
 SplashScreen::SplashScreen()
     : mDrawingDone(false),
@@ -13,7 +13,8 @@ SplashScreen::SplashScreen()
 }
 
 void SplashScreen::logic()
-{
+{	
+	playMusic("splash.xm");
     mFrameCounter++;
 }
 

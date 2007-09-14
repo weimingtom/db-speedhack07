@@ -3,6 +3,8 @@
 #include <dumb.h>
 
 #include "music.hpp"
+#include "resourcehandler.hpp"
+#include "exception.hpp"
 
 static DUH *playing = NULL;
 static AL_DUH_PLAYER *player;
@@ -14,7 +16,7 @@ void initMusic()
 	dumb_register_stdfiles();
 }
 
-void playMusic(std::string file)
+void playMusic(std::string file, float volume)
 {
 	if (playingFile == file) {
 		return;
@@ -25,8 +27,14 @@ void playMusic(std::string file)
 		unload_duh(playing);
 	}
 
-	playing = dumb_load_xm_quick(file.c_str());
-	player = al_start_duh(playing, 2, 0, 0.5f, 4096, 44100);
+	std::string fileName = ResourceHandler::getInstance()->getRealFilename(file);
+
+	if (!exists(fileName.c_str())) {
+		throw DBSH07_EXCEPTION("Unable to load " + fileName);
+	}
+
+	playing = dumb_load_xm_quick(fileName.c_str());
+	player = al_start_duh(playing, 2, 0, volume, 4096, 44100);
 	playingFile = file;
 
 	pollMusic();

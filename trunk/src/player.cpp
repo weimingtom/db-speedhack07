@@ -24,4 +24,4 @@ void Player::logic(Level* level)
 bool Player::isToBeDeleted()
 {
     return false;
-}   
+}
