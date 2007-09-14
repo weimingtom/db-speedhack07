@@ -1,4 +1,5 @@
 #include "level.hpp"
+#include "fileutil.hpp"
 
 Level::Level(const std::string& filename)
 : mScrollY(0)
@@ -97,7 +98,21 @@ void Level::logic()
 
 void Level::load(const std::string& filename)
 {
+    std::vector<std::string> data = tokenize(loadFile(filename), "\n");
 
+    unsigned int row;
+    unsigned int col;
+
+    for (row = 0; row < data.size(); row++)
+    {
+        for (col = 0; col < data[row].size(); col++)
+        {
+            if (data[row].at(col) == '.')
+            {
+                // ignore;
+            }
+        }
+    }
 }
 
 void Level::addEntity(Entity* entity)

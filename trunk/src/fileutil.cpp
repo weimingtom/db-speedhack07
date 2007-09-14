@@ -1,10 +1,12 @@
 #include <fstream>
 #include "fileutil.hpp"
 #include "exception.hpp"
+#include "resourcehandler.hpp"
 
 std::string loadFile(const std::string &fileName)
 {
-	std::ifstream is(fileName.c_str());
+    std::string realFilename = ResourceHandler::getInstance()->getRealFilename(fileName);
+	std::ifstream is(realFilename.c_str());
 	
 	if (!is.good())
 	{
