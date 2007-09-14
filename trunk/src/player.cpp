@@ -127,7 +127,7 @@ void Player::logic(Level* level)
     int targetDY;
     if (level->isBrakePressed())
     {
-       targetDY = 0;
+       targetDY = 8;
     }
     else
     {
@@ -168,23 +168,7 @@ void Player::logic(Level* level)
 
 	if (mShotBurstCounter > 0)
 	{
-		float dx = mTargetX - getCenterX();
-		float dy = mTargetY - getCenterY();
-		float l = std::sqrt(dx * dx + dy * dy);
-		if (l > 0.0f)
-		{
-			dx /= l;
-			dy /= l;
-		}
-		else
-		{
-			dx = 0.0f;
-			dy = 1.0f;
-		}
-		dx *= 10;
-		dy *= 10;
-
-		dy += mDY / 8;
+		float angle = std::atan2((float)(mTargetX - getCenterX()), (float)(mTargetY - getCenterY()) + 0.01f);		
 
 		for (int i = 0; i < mNumPods; i++)
 		{
@@ -192,6 +176,11 @@ void Player::logic(Level* level)
 			{			
 				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
+				
+				angle += getPodOffset(i) / 20.0f;
+
+				float dx = sin(angle) * 10.0f;
+				float dy = cos(angle) * 10.0f + (mDY / 8);
 				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, 0);
 				level->addEntity(bullet);
 			}
@@ -206,4 +195,9 @@ void Player::logic(Level* level)
 bool Player::isToBeDeleted()
 {
     return false;
+}
+
+int Player::getSpeed()
+{
+	return mDY / 8;
 }

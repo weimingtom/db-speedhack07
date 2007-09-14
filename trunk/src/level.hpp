@@ -62,6 +62,9 @@ protected:
     Dialog* mDialog;
     unsigned int mState;
     std::list<std::string> mDialogText;
+
+	float mScrollSpeed;
+	float mGameScrollFloat;
 };
 
 #endif

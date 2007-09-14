@@ -11,7 +11,9 @@
 
 Level::Level(const std::string& filename)
 : mGameScrollY(0),
-mBackgroundScrollY(0)
+  mBackgroundScrollY(0),
+  mScrollSpeed(0.0f),
+  mGameScrollFloat(0.0f)
 {
     load(filename);
 	mPlayer = new Player();
@@ -157,9 +159,14 @@ void Level::logic()
 
 void Level::updateScrolling()
 {
-	int wantedScroll = mPlayer->getY() - 20;
-	int scrollAmount = wantedScroll - mGameScrollY;
-	mGameScrollY += scrollAmount / 5;
+	float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed() * 5.0f;
+	float scrollAmount = wantedScroll - mGameScrollFloat;
+	float wantedSpeed = mPlayer->getSpeed();
+	float speedAdjust = wantedSpeed - mScrollSpeed;
+	mScrollSpeed += speedAdjust / 20.0f;
+	mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
+	
+	mGameScrollY = (int)mGameScrollFloat;
 }
 
 void Level::load(const std::string& filename)
@@ -257,12 +264,12 @@ int Level::getMouseY()
 
 bool Level::isFirePressed()
 {
-	return mouse_b & 1;
+	return (mouse_b & 1) != 0;
 }
 
 bool Level::isBrakePressed()
 {
-    return mouse_b & 2;
+    return (mouse_b & 2) != 0;
 }
 
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)

@@ -18,6 +18,8 @@ public:
 	int getPodOffset(int i);
 	float getPodDepth(int i);
 
+	int getSpeed();
+
 	static const int AIR_RESISTANCE_LOW = 2;
 	static const int AIR_RESISTANCE_MEDIUM = 3;
 	static const int AIR_RESISTANCE_HIGH = 6;
