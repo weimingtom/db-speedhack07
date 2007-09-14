@@ -2,7 +2,7 @@
 #define DBSH07_LEVEL_HPP
 
 #include "entity.hpp"
-#include <vector>
+#include <list>
 
 class Level
 {
@@ -13,10 +13,13 @@ public:
     void logic();
 
 protected:
-    std::vector<Entity*> mEntities;
-    std::vector<Entity*> mHibernatingEntities;
-    std::vector<Entity*> mEnemyEntities;
-    std::vector<Entity*> mPlayerEntities;
+    std::list<Entity*> mEntities;
+    std::list<Entity*> mHibernatingEntities;
+    std::list<Entity*> mEnemyEntities;
+    std::list<Entity*> mEnemyBulletsEntities;
+    std::list<Entity*> mPlayerEntities;
+    std::list<Entity*> mPlayerBulletsEntities;
+    int mScrollY;
 };
 
 #endif
