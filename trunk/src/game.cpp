@@ -200,7 +200,7 @@ void Game::initGui()
 	mTop->add(mMainMenuContainer);
 
 	mMainMenuListModel = new MainMenuListModel();
-	mMainMenuListBox = new BallzListBox();
+	mMainMenuListBox = new DBSH07ListBox();
 	mMainMenuListBox->setListModel(mMainMenuListModel);
 	mMainMenuListBox->setTabOutEnabled(false);
 	mMainMenuListBox->setSelected(0);

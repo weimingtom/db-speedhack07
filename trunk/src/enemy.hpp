@@ -9,7 +9,7 @@ public:
     Enemy(int x, int y, int width, int height, int hitCount);
     unsigned int getType() { return Entity::ENEMY_TYPE; }
 
-private:
+protected:
 	int mHitCount;
 };
 

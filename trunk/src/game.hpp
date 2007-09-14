@@ -6,11 +6,11 @@
 #include "splashscreen.hpp"
 #include "level.hpp"
 
-#include "gui/ballzlistbox.hpp"
+#include "gui/dbsh07listbox.hpp"
 //#include "gui/levelselector.hpp"
 #include "guichan.hpp"
 #include "guichan/allegro.hpp"
-#include "gui/ballzscrollarea.hpp"
+#include "gui/dbsh07scrollarea.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -78,7 +78,7 @@ protected:
 	gcn::Container* mTop;
 
     gcn::Container* mMainMenuContainer;
-    BallzListBox* mMainMenuListBox;
+    DBSH07ListBox* mMainMenuListBox;
     MainMenuListModel* mMainMenuListModel;
 
     gcn::Container* mCreditsContainer;
