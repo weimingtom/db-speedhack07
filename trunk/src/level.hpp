@@ -24,6 +24,7 @@ protected:
     std::list<Entity*> mPlayerBulletEntities;
     int mScrollY;
     Player* mPlayer;
+    Entity* mBackground;
 };
 
 #endif

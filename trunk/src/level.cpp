@@ -4,6 +4,7 @@
 #include "fileutil.hpp"
 #include "stringutil.hpp"
 #include "block.hpp"
+#include "starsbackground.hpp"
 
 #include <iostream>
 
@@ -34,6 +35,9 @@ static bool isNull(Entity *e)
 void Level::draw(BITMAP* dest)
 {
     BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
+
+    mBackground->draw(subdest, 0, Entity::BACKGROUND_LAYER);
+
     std::list<Entity *>::iterator it;
 
 	for (int layer = 0; layer < Entity::NUM_LAYERS; layer++)
@@ -90,7 +94,18 @@ void Level::load(const std::string& filename)
     unsigned int row;
     unsigned int col;
 
-    for (row = 0; row < data.size(); row++)
+    std::string backgroundName = data[0];
+
+    if (backgroundName == "STARS")
+    {
+        mBackground = new StarsBackground();
+    }
+    else
+    {
+        throw DBSH07_EXCEPTION("Unknown background!");
+    }
+
+    for (row = 1; row < data.size(); row++)
     {
         for (col = 0; col < data[row].size(); col++)
         {
@@ -104,7 +119,6 @@ void Level::load(const std::string& filename)
 					break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
-                    break;
             }
         }
     }
