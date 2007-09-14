@@ -16,6 +16,7 @@ public:
 	virtual bool drawInLayer(unsigned int layer);
 
 	int getPodOffset(int i);
+	float getPodOffsetFloat(int i);
 	float getPodDepth(int i);
 
 	int getSpeed();
