@@ -139,12 +139,18 @@ void Level::logic()
         {
 	        if ((*it)->isToBeDeleted()) 
             {
-		        delete (*it);
+                if ((*it)->getType() == Entity::BLOCK_TYPE)
+                {
+                    mStaticEntities[(*it)->getX() / 10 + (*it)->getY() / 10 * 24] = NULL;
+                }
 
                 mPlayerEntities.remove((*it));
                 mPlayerBulletEntities.remove((*it));
                 mEnemyEntities.remove((*it));
                 mEnemyBulletEntities.remove((*it));
+
+		        delete (*it);
+
 		        *it = NULL;
 	        }
         }
@@ -204,8 +210,10 @@ void Level::load(const std::string& filename)
         throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE)!");
     }
 
+    data.erase(data.begin());
+
     // Load entities
-    for (row = 1; row < data.size(); row++)
+    for (row = 0; row < data.size(); row++)
     {
         if (data[row] == "DIALOG")
         {
@@ -223,7 +231,7 @@ void Level::load(const std::string& filename)
                 case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
-                        staticEntity = new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 10);
+                        staticEntity = new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 2);
                         mHibernatingEntities.push_back(staticEntity);
                     }
                    break;
