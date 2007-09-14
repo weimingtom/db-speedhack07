@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "block.hpp"
 #include "level.hpp"
 
@@ -16,12 +18,25 @@ Block::~Block()
 
 void Block::logic(Level* level)
 {
-    mToBeDeleted = (getY() - level->getScrollY()) < 0;
+	if( (getY() - level->getScrollY()) < 0)
+	{
+		mToBeDeleted = true;
+	}
 }
 
 void Block::handleCollision(Entity *other, Level *level)
 {
 	
+	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
+	{
+		mHitCount--;
+		if(mHitCount <= 0)
+		{
+			//todo some explosions
+			mToBeDeleted = true;
+		}
+	}
+
 }
 
 void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
