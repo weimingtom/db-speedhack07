@@ -110,6 +110,7 @@ void Game::draw()
         mGui->draw();
 		break;
     case LEVEL:
+        clear_to_color(mBuffer, makecol(0, 0, 0));
         mLevel->draw(mBuffer);
 //          mAllegroGraphics->setTarget(mBuffer);
 //            mGui->draw();

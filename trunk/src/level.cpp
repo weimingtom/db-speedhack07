@@ -35,13 +35,14 @@ static bool isNull(Entity *e)
 
 void Level::draw(BITMAP* dest)
 {
+    BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
     std::list<Entity *>::iterator it;
 
     for (it = mEntities.begin(); it != mEntities.end(); it++)
 	{
         if ((*it)->drawInLayer(Entity::BACKGROUND_LAYER))
         {
-		    (*it)->draw(dest, mScrollY, Entity::BACKGROUND_LAYER);
+		    (*it)->draw(subdest, mScrollY, Entity::BACKGROUND_LAYER);
         }
 	}
 
@@ -49,7 +50,7 @@ void Level::draw(BITMAP* dest)
 	{
         if ((*it)->drawInLayer(Entity::PLAYER_LAYER))
         {
-		    (*it)->draw(dest, mScrollY, Entity::PLAYER_LAYER);
+		    (*it)->draw(subdest, mScrollY, Entity::PLAYER_LAYER);
         }
 	}
 
@@ -57,7 +58,7 @@ void Level::draw(BITMAP* dest)
 	{
         if ((*it)->drawInLayer(Entity::ENEMY_LAYER))
         {
-		    (*it)->draw(dest, mScrollY, Entity::ENEMY_LAYER);
+		    (*it)->draw(subdest, mScrollY, Entity::ENEMY_LAYER);
         }
 	}
 
@@ -65,7 +66,7 @@ void Level::draw(BITMAP* dest)
 	{
         if ((*it)->drawInLayer(Entity::EXPLOSION_LAYER))
         {
-		    (*it)->draw(dest, mScrollY, Entity::EXPLOSION_LAYER);
+		    (*it)->draw(subdest, mScrollY, Entity::EXPLOSION_LAYER);
         }
 	}
 
@@ -73,9 +74,11 @@ void Level::draw(BITMAP* dest)
 	{
         if ((*it)->drawInLayer(Entity::FOREGROUND_LAYER))
         {
-		    (*it)->draw(dest, mScrollY, Entity::FOREGROUND_LAYER);
+		    (*it)->draw(subdest, mScrollY, Entity::FOREGROUND_LAYER);
         }
 	}
+
+    destroy_bitmap(subdest);
 }
 
 void Level::logic()
