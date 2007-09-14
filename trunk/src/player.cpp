@@ -50,8 +50,8 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		if (getPodDepth(i) < 0.0f)
 		{
 			int frame = getPodDepth(i) > -0.2f ? 1 : 2;
-			mPodAni.drawFrame(dest, frame, getX() + getPodOffset(i) + 3, getY() - scrolly + 4);
-			
+			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
+			putpixel(dest, getCenterX() + getPodOffset(i), getY() - scrolly, makecol(255,255,0));
 		}
 	}
 
@@ -63,7 +63,8 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		if (getPodDepth(i) >= 0.0f)
 		{
 			int frame = getPodDepth(i) < 0.4f ? 1 : 0;
-			mPodAni.drawFrame(dest, frame, getX() + getPodOffset(i) + 3, getY() - scrolly + 4);
+			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
+			putpixel(dest, getCenterX() + getPodOffset(i), getY() - scrolly, makecol(255,255,0));
 		}
 	}
 
@@ -183,7 +184,7 @@ void Player::logic(Level* level)
 
 			for (int i = 0; i < mNumPods; i++)
 			{
-				int x = mX + getPodOffset(i);
+				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
 				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, 0);
 				level->addEntity(bullet);
