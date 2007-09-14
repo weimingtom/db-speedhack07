@@ -1,10 +1,10 @@
 #include "block.hpp"
 
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
-: Enemy(x, y, width, height)
+: Enemy(x, y, width, height, hitCount)
 {
     mAnimation = new Animation(filename);
-	mHitCount = hitCount;
+	
 }
 
 Block::~Block()
@@ -15,6 +15,11 @@ Block::~Block()
 void Block::logic(Level* level)
 {
 
+}
+
+void Block::handleCollision(Entity *other, Level *level)
+{
+	
 }
 
 void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)

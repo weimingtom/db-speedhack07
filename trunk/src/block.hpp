@@ -13,10 +13,11 @@ public:
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
     bool drawInLayer(unsigned int layer) { return layer == Entity::ENEMY_LAYER; }
     bool isToBeDeleted();
+	void handleCollision(Entity *other, Level *level);
 
 protected:
     Animation* mAnimation;
-	int mHitCount;
+	
 };
 
 #endif

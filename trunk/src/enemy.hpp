@@ -6,8 +6,11 @@
 class Enemy: public Entity
 {
 public:
-    Enemy(int x, int y, int width, int height);
+    Enemy(int x, int y, int width, int height, int hitCount);
     unsigned int getType() { return Entity::ENEMY_TYPE; }
+
+private:
+	int mHitCount;
 };
 
 #endif
