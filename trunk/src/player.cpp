@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include "level.hpp"
 
 Player::Player() :
 	Entity(115, 20, 10, 20, true),
@@ -22,6 +23,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	rectfill(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1 - scrolly, makecol(128, 128, 128));
 	rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
+	circle(dest, mTargetX, mTargetY - scrolly, 6, makecol(255, 255, 255));
 }
 
 void Player::logic(Level* level)
@@ -87,6 +89,9 @@ void Player::logic(Level* level)
 
 	mX += mDX / 8;
 	mY += mDY / 8;
+
+	mTargetX = level->getMouseX();
+	mTargetY = level->getMouseY();
 }
 
 bool Player::isToBeDeleted()

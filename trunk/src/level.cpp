@@ -156,3 +156,13 @@ void Level::addEntity(Entity* entity)
 
     mEntities.push_back(entity);
 }
+
+int Level::getMouseX()
+{
+	return mouse_x / 2- 40;
+}
+
+int Level::getMouseY()
+{
+	return mouse_y / 2 + mGameScrollY;
+}

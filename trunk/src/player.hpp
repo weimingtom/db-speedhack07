@@ -21,6 +21,7 @@ public:
 private:
 	int mDX, mDY;
 	int mAirResistance;
+	int mTargetX, mTargetY;
 };
 
 #endif
