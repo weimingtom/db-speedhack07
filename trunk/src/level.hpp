@@ -3,6 +3,10 @@
 
 #include "entity.hpp"
 #include "player.hpp"
+#include "guichan.hpp"
+#include "guichan/allegro.hpp"
+#include "gui/dialog.hpp"
+
 #include <list>
 
 class Level
@@ -24,6 +28,12 @@ public:
     static const int CAVE_MOTIF = 3;
 
 protected:
+    enum State
+    {
+        DIALOG,
+        GAME
+    };
+
 	void updateScrolling();
     void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
 
@@ -38,6 +48,15 @@ protected:
     Player* mPlayer;
     Entity* mBackground;
     int mMotif;
+    gcn::Gui* mGui;
+    gcn::AllegroInput* mInput;
+    gcn::AllegroGraphics* mGraphics;
+    gcn::AllegroImageLoader* mImageLoader;
+    gcn::ImageFont* mImageFont;
+    gcn::Container* mTop;
+    Dialog* mDialog;
+    unsigned int mState;
+    std::list<std::string> mDialogText;
 };
 
 #endif

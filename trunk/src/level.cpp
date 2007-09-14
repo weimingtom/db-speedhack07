@@ -5,6 +5,7 @@
 #include "stringutil.hpp"
 #include "block.hpp"
 #include "starsbackground.hpp"
+#include "resourcehandler.hpp"
 
 #include <iostream>
 
@@ -15,10 +16,37 @@ mBackgroundScrollY(0)
     load(filename);
 	mPlayer = new Player();
 	addEntity(mPlayer);
+
+    mGui = new gcn::Gui();
+    mGraphics = new gcn::AllegroGraphics();
+    mInput = new gcn::AllegroInput();
+    mImageLoader = new gcn::AllegroImageLoader();
+    gcn::Image::setImageLoader(mImageLoader);
+    mGui->setInput(mInput);
+    mGui->setGraphics(mGraphics);
+    mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 126);
+	mImageFont->setGlyphSpacing(-1);
+	gcn::Widget::setGlobalFont(mImageFont);
+    mTop = new gcn::Container();
+    mTop->setSize(320, 240);
+    mTop->setOpaque(false);
+    mGui->setTop(mTop);
+    mDialog = new Dialog();
+    mDialog->setSize(240, 75);
+    mDialog->setVisible(false);
+    mTop->add(mDialog, 40, 240 - 75);
 }
 
 Level::~Level()
 {
+    delete mGui;
+    delete mImageLoader;
+    delete mGraphics;
+    delete mInput;
+    delete mTop;
+    delete mImageFont;
+    delete mDialog;
+
     std::list<Entity *>::iterator it;
 
     for (it = mEntities.begin(); it != mEntities.end(); it++)
@@ -53,48 +81,73 @@ void Level::draw(BITMAP* dest)
 	}
 
     destroy_bitmap(subdest);
+
+    mGraphics->setTarget(dest);
+    mGui->draw();
 }
 
 void Level::logic()
 {
-    checkCollision(mEnemyEntities, mPlayerBulletEntities);
-    checkCollision(mPlayerEntities, mEnemyBulletEntities);
-    checkCollision(mEnemyEntities, mPlayerEntities);
-    checkCollision(mEnemyEntities, mEnemyEntities);
- 
-    std::list<Entity *>::iterator it;
-
-    while (!mHibernatingEntities.empty() 
-            && mHibernatingEntities.front()->getY() <= mGameScrollY + 240 + 20)
+    if (mState == DIALOG)
     {
-        addEntity(mHibernatingEntities.front());
-        mHibernatingEntities.pop_front();
-    }
+         mGui->logic();
 
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-    {
-	    (*it)->logic(this);
-    }
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-    {
-	    if ((*it)->isToBeDeleted()) 
+        if (!mDialog->isVisible() && mDialogText.empty())
         {
-		    delete (*it);
+            mState = GAME;
+        }
+        else if (!mDialog->isVisible())
+        {
+            mDialog->setText(mDialogText.front());
+            mDialog->setVisible(true);
+            mDialogText.pop_front();
+        } 
 
-            mPlayerEntities.remove((*it));
-            mPlayerBulletEntities.remove((*it));
-            mEnemyEntities.remove((*it));
-            mEnemyBulletEntities.remove((*it));
-		    *it = NULL;
-	    }
+        mBackgroundScrollY++;
     }
+    else if (mState == GAME)
+    {
+        checkCollision(mEnemyEntities, mPlayerBulletEntities);
+        checkCollision(mPlayerEntities, mEnemyBulletEntities);
+        checkCollision(mEnemyEntities, mPlayerEntities);
+        checkCollision(mEnemyEntities, mEnemyEntities);
+     
+        std::list<Entity *>::iterator it;
 
-    mEntities.remove_if(isNull);
+        while (!mHibernatingEntities.empty() 
+                && mHibernatingEntities.front()->getY() <= mGameScrollY + 240 + 20)
+        {
+            addEntity(mHibernatingEntities.front());
+            mHibernatingEntities.pop_front();
+        }
 
-    //mBackgroundScrollY++;
+        for (it = mEntities.begin(); it != mEntities.end(); it++)
+        {
+	        (*it)->logic(this);
+        }
 
-	updateScrolling();
+        for (it = mEntities.begin(); it != mEntities.end(); it++)
+        {
+	        if ((*it)->isToBeDeleted()) 
+            {
+		        delete (*it);
+
+                mPlayerEntities.remove((*it));
+                mPlayerBulletEntities.remove((*it));
+                mEnemyEntities.remove((*it));
+                mEnemyBulletEntities.remove((*it));
+		        *it = NULL;
+	        }
+        }
+
+        mEntities.remove_if(isNull);
+
+        //mBackgroundScrollY++;
+
+	    updateScrolling();
+
+        mGui->logic();
+    }
 }
 
 void Level::updateScrolling()
@@ -123,8 +176,14 @@ void Level::load(const std::string& filename)
         throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE)!");
     }
 
+    // Load entities
     for (row = 1; row < data.size(); row++)
     {
+        if (data[row] == "DIALOG")
+        {
+            break;
+        }
+
         for (col = 0; col < data[row].size(); col++)
         {
             switch(data[row].at(col))
@@ -142,6 +201,21 @@ void Level::load(const std::string& filename)
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
             }
         }
+    }
+
+    // Load dialog
+    if (row < data.size() && data[row] == "DIALOG")
+    {
+        mState = DIALOG;
+
+        for (unsigned int i = row + 1; i < data.size(); i ++)
+        {
+            mDialogText.push_back(data[i]);
+        }
+    }
+    else
+    {
+        mState = GAME;
     }
 }
 
