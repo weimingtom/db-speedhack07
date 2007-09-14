@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include "level.hpp"
+#include "playerbullet.hpp"
 
 #include <cmath>
 
@@ -50,6 +51,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		{
 			int frame = getPodDepth(i) > -0.2f ? 1 : 2;
 			mPodAni.drawFrame(dest, frame, getX() + getPodOffset(i) + 3, getY() - scrolly + 4);
+			
 		}
 	}
 
@@ -65,9 +67,9 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		}
 	}
 
-	circle(dest, mTargetX, mTargetY - scrolly, 6, makecol(255, 255, 255));
-	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 5, makecol(255, 0, 0));
-	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 7, makecol(255, 0, 0));
+	circle(dest, mTargetX, mTargetY - scrolly, 5, makecol(180, 180, 180));
+	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 5, makecol(255, 255, 255));
+	arc(dest, mTargetX, mTargetY - scrolly, itofix(scrolly * 3), itofix(scrolly * 3 + 100), 7, makecol(180, 180, 180));
 }
 
 void Player::logic(Level* level)
@@ -153,13 +155,13 @@ void Player::logic(Level* level)
 	
 	if (mShotPressed && mShotBurstCounter <= 0)
 	{
-		mShotBurstCounter = 15;
+		mShotBurstCounter = SHOT_BURST_LENGTH;
 		mShotPressed = false;
 	}
 
 	if (mShotBurstCounter > 0)
 	{
-		if (mShotBurstCounter % 2 == 1)
+		if (mShotBurstCounter % SHOT_FRAME_DELAY == 1)
 		{
 			float dx = mTargetX - mX;
 			float dy = mTargetY - mY;
@@ -174,9 +176,18 @@ void Player::logic(Level* level)
 				dx = 0.0f;
 				dy = 1.0f;
 			}
+			dx *= 7;
+			dy *= 7;
+
 			dy += mDY / 8;
 
-//			level->addEntity(shot);
+			for (int i = 0; i < mNumPods; i++)
+			{
+				int x = mX + getPodOffset(i);
+				int y = mY + 8;
+				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, 0);
+				level->addEntity(bullet);
+			}
 		}
 
 		mShotBurstCounter--;		

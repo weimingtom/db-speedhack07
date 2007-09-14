@@ -35,7 +35,7 @@ void Bullet::logic(Level* level)
 void Bullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	//fill_circle(
-	circlefill(dest, getX(), getY()-scrolly, 4, makecol(255, 200, 0));
+	circlefill(dest, getX(), getY()-scrolly, 1, makecol(255, 200, 0));
 	//mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
 }
 
