@@ -18,6 +18,11 @@ public:
 	int getMouseX();
 	int getMouseY();
 
+    static const int SPACE_MOTIF;
+    static const int SKY_MOTIF;
+    static const int WATER_MOTIF;
+    static const int CAVE_MOTIF;
+
 protected:
 	void updateScrolling();
     void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
@@ -32,6 +37,7 @@ protected:
     int mBackgroundScrollY;
     Player* mPlayer;
     Entity* mBackground;
+    int mMotif;
 };
 
 #endif
