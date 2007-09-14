@@ -212,20 +212,24 @@ void Level::load(const std::string& filename)
 
         for (col = 0; col < data[row].size(); col++)
         {
+            Entity* staticEntity = NULL;
             switch(data[row].at(col))
             {
                 case '.':
-					// ignore
+					// Ignore
                     break;
                 case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
-                        mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 2));
+                        staticEntity = new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 10);
+                        mStaticEntities.push_back(staticEntity);
+                        mEntities.push_back(staticEntity);
                     }
                    break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
             }
+            mStaticEntities.push_back(staticEntity);
         }
     }
 
@@ -307,6 +311,41 @@ void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)
             {
                 entity1->handleCollision(entity2, this);
                 entity2->handleCollision(entity1, this);
+            }
+        }
+    }
+}
+
+void Level::checkStaticCollision(std::list<Entity*>& list)
+{
+    std::list<Entity *>::iterator it;
+
+    for (it = list.begin(); it != list.end(); it++)
+    {
+        Entity* entity = (*it);
+
+        if (!entity->isCollidable())
+        {
+            continue;
+        }
+    
+        int minx = entity->getX() / 10;
+        int miny = entity->getY() / 10;
+        int maxx = (entity->getX() + entity->getWidth() - 1) / 10;
+        int maxy = (entity->getY() + entity->getHeight() - 1) / 10;
+
+        for (int x = minx; x <= maxx; x++)
+        {
+            for (int y = miny; y < maxy; y++)
+            {
+                Entity* otherEntity = mStaticEntities[x + y * 10];
+      
+                if (otherEntity != NULL
+                    && otherEntity->isCollidable())
+                {
+                    entity->handleCollision(otherEntity, this);
+                    otherEntity->handleCollision(entity, this);
+                }   
             }
         }
     }

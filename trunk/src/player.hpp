@@ -13,8 +13,7 @@ public:
     void logic(Level* level);
     bool isToBeDeleted();
     unsigned int getType() { return Entity::PLAYER_TYPE; }
-	virtual bool drawInLayer(unsigned int layer);
-
+    bool drawInLayer(unsigned int layer);
 	int getPodOffset(int i);
 	float getPodOffsetFloat(int i);
 	float getPodDepth(int i);

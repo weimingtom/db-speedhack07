@@ -42,6 +42,7 @@ protected:
 
 	void updateScrolling();
     void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
+    void checkStaticCollision(std::list<Entity*>& list);
 
     std::list<Entity*> mEntities;
     std::list<Entity*> mHibernatingEntities;
@@ -66,6 +67,8 @@ protected:
 
 	float mScrollSpeed;
 	float mGameScrollFloat;
+
+    std::vector<Entity*> mStaticEntities;
 };
 
 #endif
