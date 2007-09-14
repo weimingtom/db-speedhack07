@@ -56,10 +56,11 @@ void Mine::handleCollision(Entity *other, Level *level)
 		mDy += 1.0;
 		//std::cout << "dx: " << dx << std::endl;
 		mDx += dx / 20.0f;
-
+		//spawnDebris(level, 1, mX, mY, mW, mH);
 		if(mHitCount <= 0)
 		{
 			//todo some explosions
+			spawnDebris(level, 2, mX, mY, mW, mH);
 			mToBeDeleted = true;
 			mCollidable = false; //do not collide while blinking
 		}

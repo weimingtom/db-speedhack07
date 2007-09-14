@@ -67,6 +67,9 @@ public:
     static const int BLOCK_TYPE = 5;
 
 protected:
+
+	void spawnDebris(Level *level, int amount, int x, int y, int w, int h);
+
 	int mX, mY, mW, mH;
 	bool mCollidable;
 };

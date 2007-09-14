@@ -2,6 +2,8 @@
 
 #include "entity.hpp"
 #include "level.hpp"
+#include "debris.hpp"
+#include "util.hpp"
 
 Entity::Entity(bool collidable)
 : mX(0),
@@ -105,4 +107,18 @@ bool Entity::isCollidable()
 
 void Entity::handleCollision(Entity *other, Level *level)
 {
+}
+
+void Entity::spawnDebris(Level *level, int amount, int x, int y, int w, int h)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		Debris *d = new Debris(x + rand() % w,
+							   y + rand() % h,
+							   (frand() - 0.5f) * 5.0f,
+							   (frand() - 0.2f) * 10.0f,
+							   "debris.bmp", 2);
+
+		level->addEntity(d);
+	}
 }
