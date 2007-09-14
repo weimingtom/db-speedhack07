@@ -115,12 +115,12 @@ void Level::load(const std::string& filename)
 
     if (backgroundName == "SPACE")
     {
-        mMotif = SPACE;
+        mMotif = SPACE_MOTIF;
         mBackground = new StarsBackground();
     }
     else
     {
-        throw DBSH07_EXCEPTION("Unknown background!");
+        throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE)!");
     }
 
     for (row = 1; row < data.size(); row++)
@@ -133,7 +133,7 @@ void Level::load(const std::string& filename)
 					// ignore
                     break;
                 case '0':
-                    if (mMotif == SPACE)
+                    if (mMotif == SPACE_MOTIF)
                     {
                         mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10, "spaceblock.bmp", -1));
                     }

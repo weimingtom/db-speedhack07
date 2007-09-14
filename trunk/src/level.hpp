@@ -18,10 +18,10 @@ public:
 	int getMouseX();
 	int getMouseY();
 
-    static const int SPACE_MOTIF;
-    static const int SKY_MOTIF;
-    static const int WATER_MOTIF;
-    static const int CAVE_MOTIF;
+    static const int SPACE_MOTIF = 0;
+    static const int SKY_MOTIF = 1;
+    static const int WATER_MOTIF = 2;
+    static const int CAVE_MOTIF = 3;
 
 protected:
 	void updateScrolling();
