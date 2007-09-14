@@ -9,3 +9,13 @@ Level::~Level()
 {
 
 }
+
+void Level::draw(BITMAP* dest)
+{
+
+}
+
+void Level::logic()
+{
+
+}
