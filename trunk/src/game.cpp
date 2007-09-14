@@ -99,13 +99,12 @@ void Game::draw()
 	acquire_bitmap(mBuffer);
 
      // TODO Remove the clear line. 
-    clear_to_color(mBuffer, makecol(120, 160, 160));
+    //clear_to_color(mBuffer, makecol(120, 160, 160));
 
     switch (mState) 
     {
     case SPLASHSCREEN:
         mSplashScreen->draw(mBuffer);
-        stretch_blit(mBuffer, mScreenBuffer, 0, 0, 320, 240, 0, 0, 640, 480);
         break;
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
@@ -123,6 +122,7 @@ void Game::draw()
 	default:
 		throw DBSH07_EXCEPTION("Unknown game state.");
    }
+	release_bitmap(mBuffer);
 }
 
 void Game::run()
@@ -147,7 +147,7 @@ void Game::run()
 		if (frame > getTick())
 		{
 			draw();
-            blit(mScreenBuffer, screen, 0, 0, 0, 0, 640, 480); 
+			stretch_blit(mBuffer, screen, 0, 0, 320, 240, 0, 0, 640, 480);
 
 			graphicframes++;
 		}
@@ -160,6 +160,8 @@ void Game::run()
 		if (second != getTick() / TICKS_PER_SECOND) 
         {			
 			std::cout << "FPS: " << graphicframes << std::endl;
+			std::cout << "State: " << mState << std::endl;
+
 			second = getTick() / TICKS_PER_SECOND;
 			graphicframes = 0;
 		}
