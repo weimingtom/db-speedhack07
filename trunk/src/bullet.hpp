@@ -12,6 +12,7 @@ public:
 	void logic(Level* level);
 	void draw(BITMAP *dest, int scrolly, unsigned int layer);
     bool drawInLayer(unsigned int layer) { return layer == Entity::PLAYER_LAYER; }
+	void handleCollision(Entity *other, Level *level);
 	bool isToBeDeleted();
 
 protected:

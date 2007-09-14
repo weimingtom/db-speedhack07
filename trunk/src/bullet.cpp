@@ -32,8 +32,18 @@ void Bullet::logic(Level* level)
 	setX((int)mX);
 	setY((int)mY);
 	int y = getY() - level->getScrollY();
-	mIsToBeDeleted = getX() < 0 || getX() > 240 || y < 0 || y > 240;
-
+	if(getX() < 0 || getX() > 240 || y < 0 || y > 240)
+	{
+		mIsToBeDeleted = true;
+	}
+}
+void Bullet::handleCollision(Entity *other, Level *level)
+{
+	//todo unessecary check?
+	if(other->getType() != Entity::PLAYER_BULLET_TYPE)
+	{
+		mIsToBeDeleted = true;
+	}
 }
 
 void Bullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
