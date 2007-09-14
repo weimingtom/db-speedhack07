@@ -21,6 +21,7 @@ protected:
     bool mToBeDeleted;
     int mHitCount;
 	bool mIsHit;
+    int mFrameCounter;
 };
 
 #endif

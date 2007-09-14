@@ -255,6 +255,18 @@ void Level::load(const std::string& filename)
                         mHibernatingEntities.push_back(staticEntity);
                     }
                    break;
+                   case '1':
+                    if (mMotif == SPACE_MOTIF)
+                    {
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "spacesolidblock.bmp", 0);
+
+                        mHibernatingEntities.push_back(staticEntity);
+                    }
+                   break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
             }

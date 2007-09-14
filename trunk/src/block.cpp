@@ -10,7 +10,8 @@
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
 : Entity(x, y, width, height, true),
   mToBeDeleted(false),
-  mHitCount(hitCount)
+  mHitCount(hitCount),
+  mFrameCounter(0)
 {
     mAnimation = new Animation(filename);
 	mIsHit = false;
@@ -27,11 +28,17 @@ void Block::logic(Level* level)
 	{
 		mToBeDeleted = true;
 	}
+
+    mFrameCounter++;
 }
 
 void Block::handleCollision(Entity *other, Level *level)
 {
-	
+    if (mHitCount - 1 < 0)
+    {
+        return;
+    }
+
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
 		mHitCount--;
@@ -67,7 +74,7 @@ void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		mIsHit = false;
 	} else
 	{
-		mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
+		mAnimation->drawFrame(dest, mFrameCounter / 5, getX(), getY() - scrolly);
 	}
 }
 
