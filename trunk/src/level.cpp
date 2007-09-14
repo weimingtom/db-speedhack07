@@ -141,7 +141,7 @@ void Level::logic()
             {
                 if ((*it)->getType() == Entity::BLOCK_TYPE)
                 {
-                    mStaticEntities[(*it)->getX() / BLOCK_SIZE + (*it)->getY() / BLOCK_SIZE * 24] = NULL;
+                    mStaticEntities[(*it)->getX() / BLOCK_SIZE + (*it)->getY() / BLOCK_SIZE * BLOCK_WIDTH] = NULL;
                 }
 
                 mPlayerEntities.remove((*it));
@@ -381,7 +381,7 @@ void Level::checkStaticCollision(std::list<Entity*>& list)
 
                 Entity* otherEntity = mStaticEntities[i];
       
-                if (otherEntity != NULL
+                if (otherEntity != NULL 
                     && otherEntity->isCollidable())
                 {
                     entity->handleCollision(otherEntity, this);
