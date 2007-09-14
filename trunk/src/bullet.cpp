@@ -3,7 +3,7 @@
 #include "bullet.hpp"
 #include "exception.hpp"
 
-Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float angle, float speed, const std::string& filename, int damage)
+Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy, const std::string& filename, int damage)
 :Entity(x, y, w, h, true),
  mType(type)
 {
@@ -13,8 +13,8 @@ Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float angle, float
         throw DBSH07_EXCEPTION("Illegal bullet type!");
     }
 	mType = type;
-	mAngle = angle;
-	mSpeed = speed;
+	mDx = dx;
+	mDy = dy;
 	mX = x;
 	mY = y;
 	//mFileName = fileName;
@@ -23,8 +23,8 @@ Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float angle, float
 
 void Bullet::logic(Level* level)
 {
-	mX += std::sin(mAngle) * mSpeed;
-	mY += std::cos(mAngle) * mSpeed;
+	mX += mDx; //std::sin(mAngle) * mSpeed;
+	mY += mDy; //std::cos(mAngle) * mSpeed;
 
 	setX((int)mX);
 	setY((int)mY);

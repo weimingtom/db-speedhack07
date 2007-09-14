@@ -7,14 +7,14 @@
 class Bullet: public Entity
 {
 public:
-    Bullet(int x, int y, int w, int h, unsigned int type, float angle, float speed, const std::string& filename, int damage);
+    Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy, const std::string& filename, int damage);
     unsigned int getType() { return mType; }
 	void logic(Level* level);
 
 protected:
     unsigned int mType;
-	float mAngle;
-	float mSpeed;
+	float mDx;
+	float mDy;
 	float mX, mY;
 	//std::string& mFilename;
 	int mDamage;
