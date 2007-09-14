@@ -12,7 +12,7 @@
 #include "guichan/allegro.hpp"
 #include "gui/ballzscrollarea.hpp"
 
-class Game: public gcn::ActionListener
+class Game: public gcn::ActionListener, public gcn::KeyListener
 {
 public:
     Game();
@@ -26,13 +26,14 @@ private:
 protected:
 
 	void action(const gcn::ActionEvent& actionEvent);
+	void keyPressed(gcn::KeyEvent &keyEvent);
 
 	class MainMenuListModel: public gcn::ListModel
     {
     public:
         int getNumberOfElements()
         {
-            return 2;
+            return 3;
         }
 
         std::string getElementAt(int i)
@@ -43,7 +44,9 @@ protected:
                 return std::string("PLAY");
             case 1:
                 return std::string("CREDITS");
-            default: // Just to keep warnings away
+            case 2:
+                return std::string("QUIT");
+			default: // Just to keep warnings away
               return std::string("");
             }
         }
@@ -89,18 +92,18 @@ protected:
 	gcn::Icon* mTedIcon;
     gcn::Label* mTedLabel;
 
-    gcn::Container* mLevelsContainer;
+//    gcn::Container* mLevelsContainer;
 //    LevelSelector* mLevelSelector;
-    BallzScrollArea* mLevelSelectorScrollArea;
+//    BallzScrollArea* mLevelSelectorScrollArea;
 
-    gcn::TextBox* mInfoText;
-    gcn::ImageFont* mInfoTextFont;
+//    gcn::TextBox* mInfoText;
+//    gcn::ImageFont* mInfoTextFont;
 
     gcn::Image* mTopBackgroundImage;
     gcn::Icon* mTopBackgroundIcon;
     gcn::Image* mBallzLogoImage;
     gcn::Icon* mBallzLogoIcon;
-    gcn::Label* mCollectedStars;
+    //gcn::Label* mCollectedStars;
 
     gcn::TextBox* mCreditsText;
 

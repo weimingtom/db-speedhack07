@@ -36,7 +36,7 @@ Game::Game()
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 
     initTimer();
-    mState = LEVEL; //SPLASHSCREEN;
+    mState = MENU; //SPLASHSCREEN;
 
     mScreenBuffer = create_bitmap(640, 480);
 	mBuffer = create_bitmap(320, 240);
@@ -168,7 +168,7 @@ void Game::run()
 void Game::initGui()
 {
 	mGui = new gcn::Gui();
-//		mGui->addGlobalKeyListener(this);
+	mGui->addGlobalKeyListener(this);
 	mAllegroGraphics = new gcn::AllegroGraphics();
 	mAllegroImageLoader = new gcn::AllegroImageLoader();
 	mAllegroInput = new gcn::AllegroInput();
@@ -242,24 +242,6 @@ void Game::initGui()
 	mCreditsText->setBorderSize(0);
 	mCreditsContainer->add(mCreditsText, 40, 180);
 
-	mLevelsContainer = new gcn::Container();
-	mLevelsContainer->setSize(320, 240);
-	mLevelsContainer->setOpaque(false);
-	mLevelsContainer->setVisible(false);
-	mTop->add(mLevelsContainer);
-
-//	mLevelSelector = new LevelSelector();
-//	mLevelSelector->setTabOutEnabled(false);
-//	mLevelSelector->setSelected(0);
-//	mLevelSelector->addActionListener(this);
-  
-	mLevelSelectorScrollArea = new BallzScrollArea();
-	mLevelSelectorScrollArea->setSize(310, 88);
-//	mLevelSelectorScrollArea->setContent(mLevelSelector);
-	mLevelsContainer->add(mLevelSelectorScrollArea, 5, 140);
-
-	mCollectedStars = new gcn::Label("Total ~ collected: 0");
-	mLevelsContainer->add(mCollectedStars, 115, 120);
 /*
 	mInfoText = new gcn::TextBox("Team Darkbits Tins 07\n"
 								 "     http://darkbits.org\n"
@@ -282,15 +264,36 @@ void Game::action(const gcn::ActionEvent& actionEvent)
 
         if (mMainMenuListBox->getSelected() == 0)
         {
-            mMainMenuContainer->setVisible(false);
-            mLevelsContainer->setVisible(true);
+            //mMainMenuContainer->setVisible(false);
+            //mLevelsContainer->setVisible(true);
             //mLevelSelector->requestFocus();
+			mState = LEVEL;
         }
         else if (mMainMenuListBox->getSelected() == 1)
         {
 			std::cout << "about" << std::endl;
             mMainMenuContainer->setVisible(false);
             mCreditsContainer->setVisible(true);
+        }
+		else if (mMainMenuListBox->getSelected() == 2)
+		{
+			mState = EXIT;
+		}
+    }
+}
+void Game::keyPressed(gcn::KeyEvent &keyEvent)
+{
+    if (keyEvent.getKey().getValue() == gcn::Key::ESCAPE)
+    {
+        if (mCreditsContainer->isVisible())
+        {
+            mCreditsContainer->setVisible(false);
+            mMainMenuContainer->setVisible(true);
+            mMainMenuListBox->requestFocus();
+        }
+        else
+        {
+            mState = EXIT;
         }
     }
 }
