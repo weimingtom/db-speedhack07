@@ -165,8 +165,8 @@ void Level::updateScrolling()
 	    float scrollAmount = wantedScroll - mGameScrollFloat;
 	    float wantedSpeed = mPlayer->getSpeed();
 	    float speedAdjust = wantedSpeed - mScrollSpeed;
-        mScrollSpeed += speedAdjust / 20.0f;
-        mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
+        mScrollSpeed += speedAdjust / 40.0f;
+        mGameScrollFloat += mScrollSpeed + scrollAmount / 20.0f;
     	
 	    mGameScrollY = (int)mGameScrollFloat;
     }
