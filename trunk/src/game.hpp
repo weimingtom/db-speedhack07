@@ -11,6 +11,7 @@
 #include "guichan.hpp"
 #include "guichan/allegro.hpp"
 #include "gui/dbsh07button.hpp"
+#include "gui/extendedallegroinput.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -46,7 +47,7 @@ protected:
 
 	gcn::AllegroGraphics* mAllegroGraphics;
     gcn::AllegroImageLoader* mAllegroImageLoader;
-    gcn::AllegroInput* mAllegroInput;
+    gcn::ExtendedAllegroInput* mAllegroInput;
     gcn::ImageFont* mImageFont;
 	gcn::Gui* mGui;
 

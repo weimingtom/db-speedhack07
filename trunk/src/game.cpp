@@ -114,7 +114,7 @@ void Game::draw()
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
         mGui->draw();
-        draw_sprite(mBuffer, mouse_sprite, mouse_x, mouse_y);
+        draw_sprite(mBuffer, mouse_sprite, mouse_x / 2, mouse_y / 2);
 		break;
     case LEVEL:
         clear_to_color(mBuffer, makecol(0, 0, 0));
@@ -178,7 +178,7 @@ void Game::initGui()
 	mGui->addGlobalKeyListener(this);
 	mAllegroGraphics = new gcn::AllegroGraphics();
 	mAllegroImageLoader = new gcn::AllegroImageLoader();
-	mAllegroInput = new gcn::AllegroInput();
+	mAllegroInput = new gcn::ExtendedAllegroInput();
 
 	mGui->setGraphics(mAllegroGraphics);
 	mGui->setInput(mAllegroInput);

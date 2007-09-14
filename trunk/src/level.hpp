@@ -6,6 +6,7 @@
 #include "guichan.hpp"
 #include "guichan/allegro.hpp"
 #include "gui/dialog.hpp"
+#include "gui/extendedallegroinput.hpp"
 
 #include <list>
 
@@ -50,7 +51,7 @@ protected:
     Entity* mBackground;
     int mMotif;
     gcn::Gui* mGui;
-    gcn::AllegroInput* mInput;
+    gcn::ExtendedAllegroInput* mInput;
     gcn::AllegroGraphics* mGraphics;
     gcn::AllegroImageLoader* mImageLoader;
     gcn::ImageFont* mImageFont;

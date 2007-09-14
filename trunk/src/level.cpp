@@ -19,7 +19,7 @@ mBackgroundScrollY(0)
 
     mGui = new gcn::Gui();
     mGraphics = new gcn::AllegroGraphics();
-    mInput = new gcn::AllegroInput();
+    mInput = new gcn::ExtendedAllegroInput();
     mImageLoader = new gcn::AllegroImageLoader();
     gcn::Image::setImageLoader(mImageLoader);
     mGui->setInput(mInput);
