@@ -55,6 +55,7 @@ int main(int argc, char **argv)
         allegro_message(os.str().c_str());
         return 1;
 	}
+	/*
     catch (...)
 	{
         std::string error = "An unknown exception occured (this is generally very bad).";
@@ -63,7 +64,7 @@ int main(int argc, char **argv)
         allegro_message(error.c_str());
 		return 1;
 	}
-
+*/
 	return 0;
 }
 END_OF_MAIN()
