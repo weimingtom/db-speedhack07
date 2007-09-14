@@ -57,6 +57,11 @@ void Level::draw(BITMAP* dest)
 
 void Level::logic()
 {
+    checkCollision(mEnemyEntities, mPlayerBulletEntities);
+    checkCollision(mPlayerEntities, mEnemyBulletEntities);
+    checkCollision(mEnemyEntities, mPlayerEntities);
+    checkCollision(mEnemyEntities, mEnemyEntities);
+ 
     std::list<Entity *>::iterator it;
 
     while (!mHibernatingEntities.empty() 
@@ -165,4 +170,25 @@ int Level::getMouseX()
 int Level::getMouseY()
 {
 	return mouse_y / 2 + mGameScrollY;
+}
+
+void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)
+{
+    std::list<Entity *>::iterator it1;
+    std::list<Entity *>::iterator it2;
+
+    for (it1 = list1.begin(); it1 != list1.end(); it1++)
+    {
+        for (it2 = list2.begin(); it2 != list2.end(); it2++)
+        {
+            Entity* entity1 = (*it1);
+            Entity* entity2 = (*it2);
+
+            if (entity1->collidesWith(entity2))
+            {
+                entity1->handleCollision(entity2, this);
+                entity2->handleCollision(entity1, this);
+            }
+        }
+    }
 }

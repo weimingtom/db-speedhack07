@@ -20,6 +20,7 @@ public:
 
 protected:
 	void updateScrolling();
+    void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
 
     std::list<Entity*> mEntities;
     std::list<Entity*> mHibernatingEntities;
