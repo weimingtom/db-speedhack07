@@ -10,7 +10,7 @@
 //#include "gui/levelselector.hpp"
 #include "guichan.hpp"
 #include "guichan/allegro.hpp"
-//#include "gui/dbsh07scrollarea.hpp"
+#include "gui/dbsh07button.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -27,31 +27,6 @@ protected:
 
 	void action(const gcn::ActionEvent& actionEvent);
 	void keyPressed(gcn::KeyEvent &keyEvent);
-
-	class MainMenuListModel: public gcn::ListModel
-    {
-    public:
-        int getNumberOfElements()
-        {
-            return 3;
-        }
-
-        std::string getElementAt(int i)
-        {
-            switch(i)
-            {
-            case 0:
-                return std::string("PLAY");
-            case 1:
-                return std::string("CREDITS");
-            case 2:
-                return std::string("QUIT");
-			default: // Just to keep warnings away
-              return std::string("");
-            }
-        }
-    };
-
 
     enum State
     {
@@ -78,8 +53,6 @@ protected:
 	gcn::Container* mTop;
 
     gcn::Container* mMainMenuContainer;
-    DBSH07ListBox* mMainMenuListBox;
-    MainMenuListModel* mMainMenuListModel;
 
     gcn::Container* mCreditsContainer;
     gcn::Image* mOlofImage;
@@ -106,6 +79,10 @@ protected:
     //gcn::Label* mCollectedStars;
 
     gcn::TextBox* mCreditsText;
+
+    DBSH07Button* mStartButton;
+    DBSH07Button* mCreditsButton;
+    DBSH07Button* mExitButton;
 
 };
 

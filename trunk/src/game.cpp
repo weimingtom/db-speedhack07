@@ -53,11 +53,17 @@ Game::~Game()
     ResourceHandler::getInstance()->destroy();
 
     delete mSplashScreen;
-	destroy_bitmap(mScreenBuffer);
 	destroy_bitmap(mBuffer);
 
     delete mLevel;
 
+    delete mGui;
+    delete mAllegroGraphics;
+    delete mAllegroImageLoader;
+    delete mAllegroInput;
+    delete mImageFont;
+    delete mTop;
+    delete mStartButton;
 }
 
 void Game::logic()
@@ -108,6 +114,7 @@ void Game::draw()
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
         mGui->draw();
+        draw_sprite(mBuffer, mouse_sprite, mouse_x, mouse_y);
 		break;
     case LEVEL:
         clear_to_color(mBuffer, makecol(0, 0, 0));
@@ -199,14 +206,15 @@ void Game::initGui()
 	mMainMenuContainer->setOpaque(false);
 	mTop->add(mMainMenuContainer);
 
-	mMainMenuListModel = new MainMenuListModel();
-	mMainMenuListBox = new DBSH07ListBox();
-	mMainMenuListBox->setListModel(mMainMenuListModel);
-	mMainMenuListBox->setTabOutEnabled(false);
-	mMainMenuListBox->setSelected(0);
-	mMainMenuContainer->add(mMainMenuListBox, 125, 150);
-	mMainMenuListBox->requestFocus();
-	mMainMenuListBox->addActionListener(this);
+    mStartButton = new DBSH07Button("Start game");
+    mStartButton->addActionListener(this);
+    mMainMenuContainer->add(mStartButton, 125, 150);
+    mCreditsButton = new DBSH07Button("Credits");
+    mCreditsButton->addActionListener(this);
+    mMainMenuContainer->add(mCreditsButton, 125, 150 + mStartButton->getHeight());
+    mExitButton = new DBSH07Button("Exit");
+    mExitButton->addActionListener(this);
+    mMainMenuContainer->add(mExitButton, 125, 150 + mStartButton->getHeight()*2);
 
 
 	mCreditsContainer = new gcn::Container();
@@ -256,29 +264,18 @@ void Game::initGui()
 }
 void Game::action(const gcn::ActionEvent& actionEvent)
 {
-	std::cout << "action!" << std::endl;
-	
-    if (actionEvent.getSource() == mMainMenuListBox)
+    if (actionEvent.getSource() == mStartButton)
     {
-		std::cout << "main menu selection: " << mMainMenuListBox->getSelected() << std::endl;
-
-        if (mMainMenuListBox->getSelected() == 0)
-        {
-            //mMainMenuContainer->setVisible(false);
-            //mLevelsContainer->setVisible(true);
-            //mLevelSelector->requestFocus();
-			mState = LEVEL;
-        }
-        else if (mMainMenuListBox->getSelected() == 1)
-        {
-			std::cout << "about" << std::endl;
-            mMainMenuContainer->setVisible(false);
-            mCreditsContainer->setVisible(true);
-        }
-		else if (mMainMenuListBox->getSelected() == 2)
-		{
-			mState = EXIT;
-		}
+        mState = LEVEL;
+    }
+    else if (actionEvent.getSource() == mCreditsButton)
+    {
+        mMainMenuContainer->setVisible(false);
+        mCreditsContainer->setVisible(true);
+    }
+    else if (actionEvent.getSource() == mExitButton)
+    {
+        mState = EXIT;
     }
 }
 void Game::keyPressed(gcn::KeyEvent &keyEvent)
@@ -289,7 +286,6 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
         {
             mCreditsContainer->setVisible(false);
             mMainMenuContainer->setVisible(true);
-            mMainMenuListBox->requestFocus();
         }
         else
         {
