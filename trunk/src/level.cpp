@@ -117,7 +117,7 @@ void Level::logic()
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
         checkCollision(mPlayerEntities, mEnemyBulletEntities);
         checkCollision(mEnemyEntities, mPlayerEntities);
-        checkCollision(mEnemyEntities, mEnemyEntities);
+        //checkCollision(mEnemyEntities, mEnemyEntities);
      
         std::list<Entity *>::iterator it;
 
@@ -220,7 +220,7 @@ void Level::load(const std::string& filename)
                 case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
-                        mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 10));
+                        mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10, "spaceblock.bmp", 2));
                     }
                    break;
                 default:

@@ -25,7 +25,7 @@ public:
 	static const int AIR_RESISTANCE_MEDIUM = 3;
 	static const int AIR_RESISTANCE_HIGH = 6;
 	static const int SHOT_BURST_LENGTH = 15;
-	static const int SHOT_FRAME_DELAY = 3;
+	static const int SHOT_FRAME_DELAY = 4;
 
 private:
 	int mFrameCounter;
