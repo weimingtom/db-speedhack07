@@ -21,7 +21,6 @@ protected:
     bool mToBeDeleted;
     int mHitCount;
 	bool mIsHit;
-	
 };
 
 #endif

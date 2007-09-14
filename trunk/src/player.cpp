@@ -17,7 +17,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(1),
+	mNumPods(5),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -30,17 +30,17 @@ Player::~Player()
 
 int Player::getPodOffset(int i)
 {
-	return (int)(getPodOffsetFloat(i) - 0.5f);
+	return (int)std::floor(getPodOffsetFloat(i) - 0.5f);
 }
 
 float Player::getPodOffsetFloat(int i)
 {
-	return std::cos(mFrameCounter * 0.3f / mNumPods + (i * M_PI * 2.0f) / mNumPods) * 10.0f;
+	return std::cos(mFrameCounter * 0.3f / (mNumPods + 1) + (i * M_PI * 2.0f) / mNumPods) * 10.0f;
 }
 
 float Player::getPodDepth(int i)
 {
-	return std::sin(mFrameCounter * 0.3f / mNumPods + i * M_PI * 2.0f / mNumPods);
+	return std::sin(mFrameCounter * 0.3f / (mNumPods + 1) + i * M_PI * 2.0f / mNumPods);
 }
 
 bool Player::drawInLayer(unsigned int layer)

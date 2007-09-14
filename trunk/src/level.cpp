@@ -236,6 +236,7 @@ void Level::load(const std::string& filename)
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
                                                  "spaceblock.bmp", 2);
+
                         mHibernatingEntities.push_back(staticEntity);
                     }
                    break;
@@ -300,12 +301,12 @@ bool Level::isFirePressed()
 
 bool Level::isBrakePressed()
 {
-    return key[KEY_W];
+    return key[KEY_W] != 0;
 }
 
 bool Level::isBurnPressed()
 {
-    return key[KEY_S];
+    return key[KEY_S] != 0;
 }
 
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)
@@ -347,11 +348,38 @@ void Level::checkStaticCollision(std::list<Entity*>& list)
         int maxx = (entity->getX() + entity->getWidth() - 1) / BLOCK_SIZE;
         int maxy = (entity->getY() + entity->getHeight() - 1) / BLOCK_SIZE;
 
+		if (minx >= BLOCK_WIDTH || maxx < 0)
+		{
+			continue;
+		}
+
+		if (minx < 0)
+		{
+			minx = 0;
+		}
+
+		if (miny < 0)
+		{
+			miny = 0;
+		}
+
+		if (maxx >= BLOCK_WIDTH)
+		{
+			maxx = BLOCK_WIDTH - 1;
+		}
+
         for (int x = minx; x <= maxx; x++)
         {
             for (int y = miny; y <= maxy; y++)
             {
-                Entity* otherEntity = mStaticEntities[x + y * 24];
+				unsigned int i = x + y * BLOCK_WIDTH;
+				
+				if (i >= mStaticEntities.size())
+				{
+					continue;
+				}
+
+                Entity* otherEntity = mStaticEntities[i];
       
                 if (otherEntity != NULL
                     && otherEntity->isCollidable())
