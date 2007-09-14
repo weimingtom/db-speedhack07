@@ -22,7 +22,8 @@ protected:
     std::list<Entity*> mEnemyBulletEntities;
     std::list<Entity*> mPlayerEntities;
     std::list<Entity*> mPlayerBulletEntities;
-    int mScrollY;
+    int mGameScrollY;
+    int mBackgroundScrollY;
     Player* mPlayer;
     Entity* mBackground;
 };

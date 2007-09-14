@@ -9,7 +9,8 @@
 #include <iostream>
 
 Level::Level(const std::string& filename)
-: mScrollY(0)
+: mGameScrollY(0),
+mBackgroundScrollY(0)
 {
     load(filename);
 	mPlayer = new Player();
@@ -36,7 +37,7 @@ void Level::draw(BITMAP* dest)
 {
     BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
 
-    mBackground->draw(subdest, 0, Entity::BACKGROUND_LAYER);
+    mBackground->draw(subdest, mBackgroundScrollY, Entity::BACKGROUND_LAYER);
 
     std::list<Entity *>::iterator it;
 
@@ -46,7 +47,7 @@ void Level::draw(BITMAP* dest)
 		{
 			if ((*it)->drawInLayer(layer))
 			{
-				(*it)->draw(subdest, mScrollY, layer);
+				(*it)->draw(subdest, mGameScrollY, layer);
 			}
 		}
 	}
@@ -59,7 +60,7 @@ void Level::logic()
     std::list<Entity *>::iterator it;
 
     while (!mHibernatingEntities.empty() 
-            && mHibernatingEntities.front()->getY() <= mScrollY + 240 + 20)
+            && mHibernatingEntities.front()->getY() <= mGameScrollY + 240 + 20)
     {
         addEntity(mHibernatingEntities.front());
         mHibernatingEntities.pop_front();
@@ -85,6 +86,8 @@ void Level::logic()
     }
 
     mEntities.remove_if(isNull);
+
+    mBackgroundScrollY++;
 }
 
 void Level::load(const std::string& filename)

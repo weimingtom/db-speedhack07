@@ -23,6 +23,9 @@ void StarsBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
     for (unsigned int i = 0; i < mStars.size(); i++)
     {
+        if (scrolly > mStars[i].y + 240)
+        {
+        }
         putpixel(dest, mStars[i].x, mStars[i].y + scrolly, makecol(255, 255, 255));
     }
 }
