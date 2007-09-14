@@ -85,7 +85,7 @@ int Entity::getCenterY()
 
 bool Entity::collidesWith(Entity *other)
 {
-    if (other == this)
+    if (other == this || !isCollidable() || !other->isCollidable())
     {
         return false;
     }

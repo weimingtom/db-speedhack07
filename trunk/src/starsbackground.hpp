@@ -19,11 +19,12 @@ protected:
     class Star
     {
     public:
-        Star(int x_, int y_)
-            : x(x_), y(y_)
+        Star(int x_, int y_, int dy_)
+            : x(x_), y(y_), dy(dy_)
         {}
         int x;
         int y;
+        int dy;
     };
 
     std::vector<Star> mStars;

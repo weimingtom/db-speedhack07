@@ -5,7 +5,10 @@ StarsBackground::StarsBackground()
 {
     for (unsigned int i = 0; i < 100; i++)
     {
-        mStars.push_back(Star(rand() % 240, rand() % 240));
+        int dy = rand() % 10 + 7;
+        mStars.push_back(Star(rand() % 240, 
+                              (rand() % 240) * dy,
+                              dy));
     }
 }
 
@@ -23,10 +26,19 @@ void StarsBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
     for (unsigned int i = 0; i < mStars.size(); i++)
     {
-        if (scrolly > mStars[i].y - 240)
+        int x = mStars[i].x;
+        int y = (mStars[i].y - scrolly) / mStars[i].dy;
+
+        if (y < 0)
         {
-            mStars[i].y = scrolly + 240;
+            mStars[i].x = rand() % 240;
+            mStars[i].y += 240 * mStars[i].dy;
         }
-        putpixel(dest, mStars[i].x, mStars[i].y + scrolly, makecol(255, 255, 255));
+
+        int color = 1000 / mStars[i].dy ;
+        putpixel(dest, 
+                 x,
+                 y,
+                 makecol(color, color, color));
     }
 }
