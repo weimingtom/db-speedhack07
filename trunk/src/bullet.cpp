@@ -1,7 +1,9 @@
 #include <cmath>
+#include <allegro.h>
 
 #include "bullet.hpp"
 #include "exception.hpp"
+
 
 Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy, const std::string& filename, int damage)
 :Entity(x, y, w, h, true),
@@ -28,4 +30,17 @@ void Bullet::logic(Level* level)
 
 	setX((int)mX);
 	setY((int)mY);
+}
+
+void Bullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
+{
+	//fill_circle(
+	circlefill(dest, getX(), getY()-scrolly, 4, makecol(255, 200, 0));
+	//mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
+}
+
+
+bool Bullet::isToBeDeleted()
+{
+    return false;
 }
