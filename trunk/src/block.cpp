@@ -1,4 +1,5 @@
 #include <iostream>
+//#include <allegro.c>
 
 #include "block.hpp"
 #include "level.hpp"
@@ -8,7 +9,7 @@ Block::Block(int x, int y, int width, int height, const std::string& filename, i
 mToBeDeleted(false)
 {
     mAnimation = new Animation(filename);
-	
+	mIsHit = false;
 }
 
 Block::~Block()
@@ -30,6 +31,7 @@ void Block::handleCollision(Entity *other, Level *level)
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
 		mHitCount--;
+		mIsHit = true;
 		if(mHitCount <= 0)
 		{
 			//todo some explosions
@@ -41,10 +43,19 @@ void Block::handleCollision(Entity *other, Level *level)
 
 void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-    mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
+	if(mIsHit)
+	{
+		int x2 = getX() + getWidth();
+		int y2 = getY()-scrolly + getHeight();
+		rectfill(dest, getX(), getY()-scrolly, x2, y2, makecol(255, 255, 255));
+		mIsHit = false;
+	} else
+	{
+		mAnimation->drawFrame(dest, 0, getX(), getY() - scrolly);
+	}
 }
 
 bool Block::isToBeDeleted()
 {
-    return mToBeDeleted;
+    return mToBeDeleted && !mIsHit;
 }
