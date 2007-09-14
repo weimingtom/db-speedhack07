@@ -39,6 +39,7 @@ Game::Game()
 	mBuffer = create_bitmap(320, 240);
 
     mSplashScreen = new SplashScreen();
+    mLevel = new Level();
 }
 
 Game::~Game()
@@ -48,6 +49,8 @@ Game::~Game()
     delete mSplashScreen;
 	destroy_bitmap(mScreenBuffer);
 	destroy_bitmap(mBuffer);
+
+    delete mLevel;
 
 }
 
@@ -64,11 +67,9 @@ void Game::logic()
                 mState = EXIT;
             }
             break;
-
-//            case GAME:
-//                mGui->logic();
-//				mRoom->logic();
-//                break;
+            case LEVEL:
+                mLevel->logic();
+                break;
         case EXIT:
             break;
    	    default:

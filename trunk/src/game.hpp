@@ -4,6 +4,7 @@
 #include <allegro.h>
 
 #include "splashscreen.hpp"
+#include "level.hpp"
 
 class Game
 {
@@ -21,12 +22,14 @@ protected:
     {
         EXIT,
         SPLASHSCREEN,
+        LEVEL
     };
 
     State mState;
     BITMAP* mBuffer;
     BITMAP* mScreenBuffer;
     SplashScreen* mSplashScreen;
+    Level* mLevel;
 };
 
 #endif
