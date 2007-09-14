@@ -50,13 +50,15 @@ public:
 
 	virtual void handleCollision(Entity *other, Level *level);
 
-    virtual bool drawInLayer(unsigned int layer) { return layer == ENEMY_LAYER; }
+    virtual bool drawInLayer(unsigned int layer) = 0;
 
     static const int BACKGROUND_LAYER = 0;
     static const int PLAYER_LAYER = 1;
     static const int ENEMY_LAYER = 2;
     static const int EXPLOSION_LAYER = 3;
     static const int FOREGROUND_LAYER = 4;
+	static const int NUM_LAYERS = 5;
+
     static const int ENEMY_TYPE = 0;
     static const int PLAYER_TYPE = 1;
     static const int DECORATION_TYPE = 2;

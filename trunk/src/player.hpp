@@ -12,6 +12,9 @@ public:
     void logic(Level* level);
     bool isToBeDeleted();
     unsigned int getType() { return Entity::PLAYER_TYPE; }
+	virtual bool drawInLayer(unsigned int layer);
+private:
+	int mDX, mDY;
 };
 
 #endif

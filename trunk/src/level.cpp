@@ -10,11 +10,9 @@
 Level::Level(const std::string& filename)
 : mScrollY(0)
 {
-    mPlayer = new Player();
-    mEntities.push_back(mPlayer);
-    mPlayerEntities.push_back(mPlayer);
-
     load(filename);
+	mPlayer = new Player();
+	addEntity(mPlayer);
 }
 
 Level::~Level()
@@ -38,44 +36,15 @@ void Level::draw(BITMAP* dest)
     BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 
     std::list<Entity *>::iterator it;
 
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
+	for (int layer = 0; layer < Entity::NUM_LAYERS; layer++)
 	{
-        if ((*it)->drawInLayer(Entity::BACKGROUND_LAYER))
-        {
-		    (*it)->draw(subdest, mScrollY, Entity::BACKGROUND_LAYER);
-        }
-	}
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-	{
-        if ((*it)->drawInLayer(Entity::PLAYER_LAYER))
-        {
-		    (*it)->draw(subdest, mScrollY, Entity::PLAYER_LAYER);
-        }
-	}
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-	{
-        if ((*it)->drawInLayer(Entity::ENEMY_LAYER))
-        {
-		    (*it)->draw(subdest, mScrollY, Entity::ENEMY_LAYER);
-        }
-	}
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-	{
-        if ((*it)->drawInLayer(Entity::EXPLOSION_LAYER))
-        {
-		    (*it)->draw(subdest, mScrollY, Entity::EXPLOSION_LAYER);
-        }
-	}
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-	{
-        if ((*it)->drawInLayer(Entity::FOREGROUND_LAYER))
-        {
-		    (*it)->draw(subdest, mScrollY, Entity::FOREGROUND_LAYER);
-        }
+		for (it = mEntities.begin(); it != mEntities.end(); it++)
+		{
+			if ((*it)->drawInLayer(layer))
+			{
+				(*it)->draw(subdest, mScrollY, layer);
+			}
+		}
 	}
 
     destroy_bitmap(subdest);
@@ -128,11 +97,11 @@ void Level::load(const std::string& filename)
             switch(data[row].at(col))
             {
                 case '.':
-                // ignore
+					// ignore
                     break;
                 case '0':
-                    mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10));
-                   break;
+					mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10));
+					break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
                     break;
