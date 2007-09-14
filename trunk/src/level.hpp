@@ -2,6 +2,7 @@
 #define DBSH07_LEVEL_HPP
 
 #include "entity.hpp"
+#include "player.hpp"
 #include <list>
 
 class Level
@@ -21,6 +22,7 @@ protected:
     std::list<Entity*> mPlayerEntities;
     std::list<Entity*> mPlayerBulletsEntities;
     int mScrollY;
+    Player* mPlayer;
 };
 
 #endif

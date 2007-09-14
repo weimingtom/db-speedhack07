@@ -3,7 +3,9 @@
 Level::Level(const std::string& filename)
 : mScrollY(0)
 {
-
+    mPlayer = new Player();
+    mEntities.push_back(mPlayer);
+    mPlayerEntities.push_back(mPlayer);
 }
 
 Level::~Level()

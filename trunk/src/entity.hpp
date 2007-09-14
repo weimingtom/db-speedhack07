@@ -44,6 +44,8 @@ public:
 
 	virtual bool isToBeDeleted() = 0;
 
+    virtual unsigned int getEntityType() = 0;
+
 	virtual bool isCollidable();
 
 	virtual void handleCollision(Entity *other, Level *level);
@@ -55,6 +57,11 @@ public:
     static const int ENEMY_LAYER = 2;
     static const int EXPLOSION_LAYER = 3;
     static const int FOREGROUND_LAYER = 4;
+    static const int ENEMY_TYPE = 0;
+    static const int PLAYER_TYPE = 1;
+    static const int DECORATION_TYPE = 2;
+    static const int ENEMY_BULLET_TYPE = 3;
+    static const int PLAYER_BULLET_TYPE = 4;
 
 protected:
 	int mX, mY, mW, mH;
