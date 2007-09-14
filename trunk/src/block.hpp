@@ -7,7 +7,7 @@
 class Block: public Enemy
 {
 public:
-    Block(int x, int y, int width, int height);
+    Block(int x, int y, int width, int height, const std::string& filename, int hitCount);
     ~Block();
     void logic(Level* level);
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
@@ -16,6 +16,7 @@ public:
 
 protected:
     Animation* mAnimation;
+	int mHitCount;
 };
 
 #endif

@@ -1,9 +1,10 @@
 #include "block.hpp"
 
-Block::Block(int x, int y, int width, int height)
+Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
 : Enemy(x, y, width, height)
 {
-    mAnimation = new Animation("block.bmp");
+    mAnimation = new Animation(filename);
+	mHitCount = hitCount;
 }
 
 Block::~Block()

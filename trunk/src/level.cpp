@@ -118,8 +118,8 @@ void Level::load(const std::string& filename)
 					// ignore
                     break;
                 case '0':
-					mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10));
-					break;
+                    mHibernatingEntities.push_back(new Block(col*10,row*10, 10, 10, "block.bmp", -1));
+                   break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
             }
