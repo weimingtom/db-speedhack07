@@ -8,20 +8,54 @@ Debris::Debris(int x, int y, float dx, float dy, const std::string& file, int an
 	mAnimation(file),
 	mAnimSpeed(animSpeed),
 	mAutoRemove(false),
-	mToBeDeleted(false)
+	mToBeDeleted(false),
+	mFrameCounter(0)
 {
-	mX = (float)x;
-	mY = (float)y;
+	setSize(mAnimation.getFrameWidth() / 2, mAnimation.getFrameHeight() / 2);
+	mX = (float)x - mW / 2;
+	mY = (float)y - mH / 2;
 	mDX = dx;
 	mDY = dy;
+	setPosition((int)mX, (int)mY);
 }
 
 void Debris::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
+	if (mToBeDeleted)
+	{
+		return;
+	}
+
+	int x = getX();
+	int y = getY() - scrolly;
+	mAnimation.drawFrame(dest, mFrameCounter / mAnimSpeed, x, y);
 }
 
 void Debris::logic(Level *level)
 {
+	mFrameCounter++;
+
+	mDX *= 0.9f;
+	mDY += (-3.0f - mDY) * 0.05f;
+
+	mX += mDX;
+	mY += mDY;
+
+	setPosition((int)mX, (int)mY);
+
+
+	if (mAutoRemove && mFrameCounter / mAnimSpeed >= mAnimation.getFrameCount())
+	{
+		mToBeDeleted = true;
+	}
+
+	if (mX > Level::LEVEL_WIDTH ||
+		mY > 240 + level->getScrollY() ||
+		mX + mW <= 0 ||
+		mY + mH <= 0)
+	{
+		mToBeDeleted = true;
+	}
 }
 
 bool Debris::isToBeDeleted()

@@ -3,6 +3,9 @@
 
 #include "block.hpp"
 #include "level.hpp"
+#include "debris.hpp"
+#include "util.hpp"
+
 
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
 : Entity(x, y, width, height, true),
@@ -36,6 +39,18 @@ void Block::handleCollision(Entity *other, Level *level)
 		if(mHitCount <= 0)
 		{
 			//todo some explosions
+			
+			for (int i = 0; i < 3; i++)
+			{
+				Debris *d = new Debris(mX + rand() % mW,
+									   mY + rand() % mH,
+									   (frand() - 0.5f) * 5.0f,
+									   (frand() - 0.2f) * 10.0f,
+									   "debris.bmp", 2);
+
+				level->addEntity(d);
+			}
+
 			mToBeDeleted = true;
 		}
 	}

@@ -25,6 +25,7 @@ protected:
 	bool mAutoRemove;
 	float mX, mY, mDX, mDY;
 	bool mToBeDeleted;
+	int mFrameCounter;
 };
 
 #endif

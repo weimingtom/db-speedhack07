@@ -59,7 +59,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		}
 	}
 
-	mPlayerAni.drawFrame(dest, 0, getX(), getY() - scrolly);
+	mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
 	//rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
 
 	for (int i = 0; i < mNumPods; i++)
