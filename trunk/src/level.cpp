@@ -4,6 +4,7 @@
 #include "fileutil.hpp"
 #include "stringutil.hpp"
 #include "block.hpp"
+#include "mine.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
 
@@ -238,6 +239,8 @@ void Level::load(const std::string& filename)
         for (col = 0; col < data[row].size(); col++)
         {
             Entity* staticEntity = NULL;
+			Entity* entity = NULL;
+
             switch(data[row].at(col))
             {
                 case '.':
@@ -254,6 +257,10 @@ void Level::load(const std::string& filename)
 
                         mHibernatingEntities.push_back(staticEntity);
                     }
+                   break;
+                case 'M':
+                    entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, false);
+                    mHibernatingEntities.push_back(entity);
                    break;
                    case '1':
                     if (mMotif == SPACE_MOTIF)

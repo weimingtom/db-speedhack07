@@ -1,5 +1,4 @@
 #include <iostream>
-//#include <allegro.c>
 
 #include "block.hpp"
 #include "level.hpp"
