@@ -5,30 +5,28 @@
 
 #include "splashscreen.hpp"
 
-namespace dbsh07
+class Game
 {
-    class Game
+public:
+    Game();
+    ~Game();
+
+	void logic();
+	void draw();
+    void run();
+
+protected:
+
+    enum State
     {
-    public:
-        Game();
-        ~Game();
-
-		void logic();
-		void draw();
-        void run();
-
-    protected:
-
-        enum State
-        {
-            EXIT,
-            SPLASHSCREEN,
-        };
-
-        State mState;
-        BITMAP* mBuffer;
-        BITMAP* mScreenBuffer;
-        SplashScreen* mSplashScreen;
+        EXIT,
+        SPLASHSCREEN,
     };
-}
+
+    State mState;
+    BITMAP* mBuffer;
+    BITMAP* mScreenBuffer;
+    SplashScreen* mSplashScreen;
+};
+
 #endif

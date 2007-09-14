@@ -1,5 +1,5 @@
-#ifndef NMC_SPLASHSCREEN_HPP
-#define NMC_SPLASHSCREEN_HPP
+#ifndef DBSH07_SPLASHSCREEN_HPP
+#define DBSH07_SPLASHSCREEN_HPP
 
 #include <allegro.h>
 

@@ -11,9 +11,9 @@ int main(int argc, char **argv)
 {
 	try
 	{
-		dbsh07::Game game;
+		Game game;
 		game.run();
-	} catch (dbsh07::Exception e)
+	} catch (Exception e)
     {
         std::string str;
         std::ostringstream os(str);

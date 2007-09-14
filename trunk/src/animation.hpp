@@ -1,38 +1,36 @@
-#ifndef NMC_ANIMATION_HPP
-#define NMC_ANIMATION_HPP
+#ifndef DBSH07_ANIMATION_HPP
+#define DBSH07_ANIMATION_HPP
 
 #include <vector>
 #include <allegro.h>
 
-namespace nmc
+class Animation
 {
-	class Animation
-	{
-	public:
-		Animation(const std::string& filename);
+public:
+	Animation(const std::string& filename);
 
-		Animation(const std::string& filename, int frames);
+	Animation(const std::string& filename, int frames);
 
-		~Animation();
+	~Animation();
 
-		BITMAP *getFrame(int frame);
+	BITMAP *getFrame(int frame);
 
-		int getFrameCount();
+	int getFrameCount();
 
-		int getFrameWidth();
+	int getFrameWidth();
 
-		int getFrameHeight();
+	int getFrameHeight();
 
-		void drawFrame(BITMAP *dest, int frame, int x, int y, bool hflip = false, bool vflip = false);
+	void drawFrame(BITMAP *dest, int frame, int x, int y, bool hflip = false, bool vflip = false);
 
-		void drawRotatedFrame(BITMAP *dest, int frame, int x, int y, int angle, bool vflip = false);
+	void drawRotatedFrame(BITMAP *dest, int frame, int x, int y, int angle, bool vflip = false);
 
-	protected:
-		void fillFramesList(BITMAP *allFrames, int count);
+protected:
+	void fillFramesList(BITMAP *allFrames, int count);
 
-		int mFrameWidth, mFrameHeight;
-		std::vector<BITMAP *> mFrames;
-	};
-}
+	int mFrameWidth, mFrameHeight;
+	std::vector<BITMAP *> mFrames;
+};
+
 
 #endif
