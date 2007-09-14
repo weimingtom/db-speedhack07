@@ -35,7 +35,8 @@ int Player::getPodOffset(int i)
 
 float Player::getPodOffsetFloat(int i)
 {
-	return std::cos(mFrameCounter * 0.3f / mNumPods + i * M_PI * 2.0f / mNumPods) * 10.0f;
+	return 1.0f;
+	return std::cos(mFrameCounter * 0.3f / mNumPods + (i * M_PI * 2.0f) / mNumPods) * 10.0f;
 }
 
 float Player::getPodDepth(int i)
@@ -181,12 +182,12 @@ void Player::logic(Level* level)
 
 		for (int i = 0; i < mNumPods; i++)
 		{
-			if (i % SHOT_FRAME_DELAY == mFrameCounter % SHOT_FRAME_DELAY)
+			//if (i % SHOT_FRAME_DELAY == mFrameCounter % SHOT_FRAME_DELAY)
 			{			
 				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
 				
-				angle += getPodOffsetFloat(i) / 20.0f;
+				angle += getPodOffsetFloat(i) / 30.0f;
 
 				float dx = sin(angle) * 10.0f;
 				float dy = cos(angle) * 10.0f + (mDY / 8);
