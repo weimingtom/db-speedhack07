@@ -420,14 +420,19 @@ void Level::load(const std::string& filename)
                 case '.':
 					// Ignore
                     break;
-                case '0':
+                case '1':
+				case '2':
+				case '3':
+                case '4':
+				case '5':
+				case '6':
                     if (mMotif == SPACE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
-                                                 "spaceblock.bmp", 2);
+                                                 "spaceblock.bmp", data[row].at(col) - '0');
 
                         mHibernatingEntities.push_back(staticEntity);
                     }
@@ -476,14 +481,14 @@ void Level::load(const std::string& filename)
                     entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
                     mHibernatingEntities.push_back(entity);
                     break;
-				case '1':
+				case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
-                                                 "spacesolidblock.bmp", 0);
+                                                 "spacesolidblock.bmp", -1);
 
                         mHibernatingEntities.push_back(staticEntity);
                     }

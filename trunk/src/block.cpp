@@ -70,14 +70,27 @@ void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	if(mIsHit)
 	{
-		int x2 = getX() + getWidth();
-		int y2 = getY()-scrolly + getHeight();
+		int x2 = getX() + getWidth() - 1;
+		int y2 = getY()-scrolly + getHeight() - 1;
 		rectfill(dest, getX(), getY()-scrolly, x2, y2, makecol(255, 255, 255));
 		mIsHit = false;
-	} 
+	}
 	else
 	{
-		mAnimation->drawFrame(dest, mFrameCounter / 5, getX(), getY() - scrolly);
+		if (mHitCount == -1)
+		{
+			mAnimation->drawFrame(dest, mFrameCounter / 5, getX(), getY() - scrolly);
+		}
+		else
+		{
+			int frame = mHitCount - 1;
+			if (frame >= mAnimation->getFrameCount())
+			{
+				frame = mAnimation->getFrameCount() - 1;
+			}
+
+			mAnimation->drawFrame(dest, frame, getX(), getY() - scrolly);
+		}
 	}
 }
 
