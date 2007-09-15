@@ -74,7 +74,8 @@ void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		int y2 = getY()-scrolly + getHeight();
 		rectfill(dest, getX(), getY()-scrolly, x2, y2, makecol(255, 255, 255));
 		mIsHit = false;
-	} else
+	} 
+	else
 	{
 		mAnimation->drawFrame(dest, mFrameCounter / 5, getX(), getY() - scrolly);
 	}

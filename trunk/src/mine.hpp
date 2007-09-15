@@ -26,6 +26,7 @@ protected:
 	float mY, mX;
 	int mFrameCount;
 	
+	SAMPLE *mExplosionSample;
 };
 
 #endif

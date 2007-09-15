@@ -2,6 +2,7 @@
 
 #include "mine.hpp"
 #include "level.hpp"
+#include "resourcehandler.hpp"
 
 Mine::Mine(int x, int y, bool isMagnetic)
 : Enemy(x, y, 16, 16, true),
@@ -16,6 +17,8 @@ Mine::Mine(int x, int y, bool isMagnetic)
 	mDy = 0;
 	mDx = 0;
 	mFrameCount = 0;
+
+	mExplosionSample = ResourceHandler::getInstance()->getSample("explo2.wav");
 }
 
 Mine::~Mine()
@@ -37,14 +40,16 @@ void Mine::logic(Level* level)
 	float dyDy = targetDy - mDy;
 	float dxDx = -mDx;
 	
-	setY((int)mY);
-	setX((int)mX);
+
 	mY += mDy;
 	mX += mDx;
 	mFrameCount++;
 
 	mDy += dyDy/20.0f;
 	mDx += dxDx/20.0f;
+
+	setY((int)mY);
+	setX((int)mX);
 
 	if((getY() - level->getScrollY()) + getHeight() < 0)
 	{
@@ -74,8 +79,7 @@ void Mine::handleCollision(Entity *other, Level *level)
     else if (other->getType() == Entity::PLAYER_TYPE)
     {
         level->getPlayer()->kill();
-        spawnDebris(level, 2, mX, mY, mW, mH);
-        spawnExplosions(level, 10, mX, mY, mW, mH);
+
 		mToBeDeleted = true;
 		mCollidable = false;
     }
@@ -88,6 +92,18 @@ void Mine::handleCollision(Entity *other, Level *level)
 	{
 		spawnDebris(level, 8, mX, mY, mW, mH);
         spawnExplosions(level, 10, mX, mY, mW, mH);
+
+		int pan = (getCenterX() * 256) / 240;
+		if (pan < 0)
+		{
+			pan = 0;
+		} 
+		else if (pan > 255)
+		{
+			pan = 255;
+		}
+
+		play_sample(mExplosionSample, 150, pan, 750, 0);
 	}
 
 }

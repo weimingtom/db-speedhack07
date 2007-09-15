@@ -2,6 +2,7 @@
 #include "level.hpp"
 #include "playerbullet.hpp"
 #include "util.hpp"
+#include "resourcehandler.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -11,6 +12,7 @@ Player::Player() :
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
+	mShotSample = ResourceHandler::getInstance()->getSample("explo1.wav");
     reset();
 }
 
@@ -270,7 +272,7 @@ void Player::movementLogic(Level* level)
 	if (mShotPressed && mShotBurstCounter <= 0)
 	{
 		mShotBurstCounter = SHOT_BURST_LENGTH;
-		mShotPressed = false;
+		mShotPressed = false;		
 	}
 
 	if (mShotBurstCounter > 0)
@@ -293,8 +295,9 @@ void Player::movementLogic(Level* level)
 			float dx = sin(angle) * 10.0f;
 			float dy = cos(angle) * 10.0f + (mDY / 8);
 			PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 2, angle);
-			level->addEntity(bullet);
-		}
+			level->addEntity(bullet);			
+			play_sample(mShotSample, 50, 128, 1000, 0);
+		}		
 
 		for (int i = 0; i < mNumPods; i++)
 		{

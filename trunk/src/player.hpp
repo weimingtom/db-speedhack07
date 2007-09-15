@@ -53,6 +53,7 @@ private:
 
 	Animation mPlayerAni;
 	Animation mPodAni;
+	SAMPLE *mShotSample;
 
     bool mImortalButtonPressed;
 };
