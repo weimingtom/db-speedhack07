@@ -56,6 +56,7 @@ Level::~Level()
     delete mTimeLabel;
     delete mLevelCompleteLabel;
     delete mLevelNameLabel;
+    delete mLevelNumberLabel;
 
     std::list<Entity *>::iterator it;
 
@@ -125,6 +126,10 @@ void Level::initGui()
     mLevelNameLabel = new gcn::Label();
     mLevelNameLabel->setVisible(false);
     mTop->add(mLevelNameLabel);
+
+    mLevelNumberLabel = new gcn::Label();
+    mLevelNumberLabel->setVisible(false);
+    mTop->add(mLevelNumberLabel);
 
 }
 // Predicate function used to remove entities.
@@ -257,18 +262,24 @@ void Level::logic()
     }
     else if (mState == GAME)
     {
-        if (mFrameCounter == 0)
+        if (mFrameCounter < 200)
         {
+            mLevelNumberLabel->setCaption("LEVEL " + toString(GameState::getInstance()->getLevel()) + ":");
+            mLevelNumberLabel->adjustSize();
+            mLevelNumberLabel->setPosition(160 - mLevelNumberLabel->getWidth() / 2 + 20,
+                120 - mLevelNumberLabel->getHeight());
+            mLevelNumberLabel->setVisible(true);
             mLevelNameLabel->setCaption(mLevelName);
             mLevelNameLabel->adjustSize();
             mLevelNameLabel->setPosition(160 - mLevelNameLabel->getWidth() / 2 + 20,
-                                         120 - mLevelNameLabel->getHeight() / 2);
+                                         120);
+            mLevelNameLabel->setVisible(true);
         }
-        else if (mFrameCounter > 200)
+        else if (mFrameCounter >= 200)
         {
+            mLevelNumberLabel->setVisible(false);
             mLevelNameLabel->setVisible(false);
         }
-
 
         if (mLevelLength - 240 < mGameScrollY)
         {
@@ -441,8 +452,10 @@ void Level::load(const std::string& filename)
     unsigned int row;
     unsigned int col;
 
-    std::string mLevelName = data[0];
+    mLevelName = data[0];
     data.erase(data.begin());
+
+    std::cout << "Level name = (" << mLevelName << ")" << std::endl;
 
     std::string motifName = data[0];
 

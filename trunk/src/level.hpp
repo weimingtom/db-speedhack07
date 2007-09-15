@@ -92,6 +92,7 @@ protected:
     gcn::Label* mTimeCaptionLabel;
     gcn::Label* mGameOverLabel;
     gcn::Label* mLevelCompleteLabel;
+    gcn::Label* mLevelNumberLabel;
     gcn::Label* mLevelNameLabel;
 
     unsigned int mState;
