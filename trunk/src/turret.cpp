@@ -33,8 +33,11 @@ void Turret::logic(Level* level)
 		if(mDirection == LEFT) { xSpeed = -1.5f; direction = M_PI/2.0f; }
 		if(mDirection == UP) { ySpeed = -1.5f; direction = 0.0f; }
 		if(mDirection == DOWN) { ySpeed = 1.5f; direction = 0.0f; }
+		for(int i=0; i<mShots; i++)
+		{
+			level->addEntity(new EnemyBullet(getCenterX(), getCenterY(), xSpeed, ySpeed, 1, direction));
+		}
 
-		level->addEntity(new EnemyBullet(getCenterX(), getCenterY(), xSpeed, ySpeed, 1, direction));
 		//new PlayerBullet(
 	}
 }
