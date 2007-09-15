@@ -14,7 +14,12 @@ PlayerBullet::PlayerBullet(int x, int y, float dx, float dy, unsigned int damage
 	{
 		vflip = true;
 	}
-	frame = (int)(drawingAngle * 5.0f / (M_PI / 2.0f));
+
+	frame = (int)(drawingAngle * 5.4f / (M_PI / 2.0f));
+
+	if (frame > 4) {
+		frame = 4;
+	}
 }
 
 

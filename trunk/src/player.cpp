@@ -198,10 +198,11 @@ void Player::logic(Level* level)
 			{			
 				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
-
-				float dx = sin(angle + getPodOffsetFloat(i) / 30.0f) * 8.0f;
-				float dy = cos(angle + getPodOffsetFloat(i) / 30.0f) * 8.0f + (mDY / 8);
-				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, angle);
+				
+				float a = angle + getPodOffsetFloat(i) / 30.0f;
+				float dx = sin(a) * 8.0f;
+				float dy = cos(a) * 8.0f + (mDY / 8);
+				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, a);
 				level->addEntity(bullet);
 			}
 		}
