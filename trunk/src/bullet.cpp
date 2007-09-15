@@ -39,7 +39,6 @@ void Bullet::logic(Level* level)
 }
 void Bullet::handleCollision(Entity *other, Level *level)
 {
-	//todo unessecary check?
 	if(other->getType() != Entity::PLAYER_BULLET_TYPE)
 	{
 		mIsToBeDeleted = true;

@@ -13,12 +13,12 @@ StaticShooter::StaticShooter(int x, int y, FireDirection direction)
   mFrameCount(0),
   mHitCount(4)
 {
-    //mAnimation = new Animation("sideshooter.bmp");
+    mAnimation = new Animation("turret.bmp");
 }
 
 StaticShooter::~StaticShooter()
 {
-    //delete mAnimation;
+    delete mAnimation;
 }
 
 void StaticShooter::logic(Level* level)
@@ -67,8 +67,17 @@ void StaticShooter::handleCollision(Entity *other, Level *level)
 
 void StaticShooter::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-	
-	//mAnimation->drawFrame(dest, mRenderAsHit?2:(mFrameCount%10)<5?0:1, getX(), getY() - scrolly);
+	int frame = mRenderAsHit?2:(mFrameCount%20)<10?0:1;
+
+	if(mDirection==UP||mDirection==DOWN) {
+		mAnimation->drawRotatedFrame(dest, frame, getX(), getY() - scrolly, mDirection==UP?-64:64, false);
+	}
+	else
+	{
+		mAnimation->drawFrame(dest, frame, getX(), getY() - scrolly, mDirection==LEFT?true:false, false);
+	}
+	mRenderAsHit = false;
+	/*
 	if(mRenderAsHit)
 	{
 		rectfill(dest, getX(), getY()-scrolly, getX()+getWidth(), getY()-scrolly+getHeight(), makecol(255,255,255));
@@ -76,7 +85,7 @@ void StaticShooter::draw(BITMAP *dest, int scrolly, unsigned int layer)
 	} else {
 		rectfill(dest, getX(), getY()-scrolly, getX()+getWidth(), getY()-scrolly+getHeight(), makecol(255,0,0));
 	}
-	
+	*/
 }
 
 bool StaticShooter::isToBeDeleted()

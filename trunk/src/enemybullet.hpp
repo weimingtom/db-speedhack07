@@ -10,7 +10,7 @@ class EnemyBullet: public Bullet
 public:
 	EnemyBullet(int x, int y, float dx, float dy, unsigned int damage, float drawingAngle);
 
-	void EnemyBullet::draw(BITMAP *dest, int scrolly, unsigned int layer);
+	//void EnemyBullet::draw(BITMAP *dest, int scrolly, unsigned int layer);
 protected:
 	Animation mAnimation;
 	int frame;

@@ -26,8 +26,9 @@ EnemyBullet::EnemyBullet(int x, int y, float dx, float dy, unsigned int damage, 
 	frame += 5 * d;
 }
 
-
+/*
 void EnemyBullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	mAnimation.drawFrame(dest, frame, mX - 2, mY -2 - scrolly, false, vflip);
 }
+*/

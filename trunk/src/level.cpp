@@ -440,15 +440,23 @@ void Level::load(const std::string& filename)
                     entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, true);
                     mHibernatingEntities.push_back(entity);
                    break;
-                case 'S':
+                case 'r':
 					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::RIGHT);
                     mHibernatingEntities.push_back(entity);
                    break;
-				case 's':
+				case 'l':
 					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::LEFT);
                     mHibernatingEntities.push_back(entity);
                    break;
-                case 'E':
+                case 'u':
+					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::UP);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+				case 'd':
+					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::DOWN);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+				case 'E':
                     entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
                     mHibernatingEntities.push_back(entity);
                     break;
