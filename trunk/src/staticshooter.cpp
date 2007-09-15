@@ -43,14 +43,10 @@ void StaticShooter::handleCollision(Entity *other, Level *level)
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
 		int dx = getCenterX() - other->getCenterX();
-		//int dy = getCenterY() - other->getCenterY();
 
 		mHitCount--;
 		mRenderAsHit = true;
-//		mDy += 1.0;
-		//std::cout << "dx: " << dx << std::endl;
-//		mDx += dx / 20.0f;
-		//spawnDebris(level, 1, mX, mY, mW, mH);
+
 		if(mHitCount <= 0)
 		{
 			mIsToBeDeleted = true;
@@ -77,15 +73,6 @@ void StaticShooter::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		mAnimation->drawFrame(dest, frame, getX(), getY() - scrolly, mDirection==LEFT?true:false, false);
 	}
 	mRenderAsHit = false;
-	/*
-	if(mRenderAsHit)
-	{
-		rectfill(dest, getX(), getY()-scrolly, getX()+getWidth(), getY()-scrolly+getHeight(), makecol(255,255,255));
-		mRenderAsHit = false;
-	} else {
-		rectfill(dest, getX(), getY()-scrolly, getX()+getWidth(), getY()-scrolly+getHeight(), makecol(255,0,0));
-	}
-	*/
 }
 
 bool StaticShooter::isToBeDeleted()
