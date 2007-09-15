@@ -7,6 +7,7 @@
 #include "mine.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
+#include "planet.hpp"
 
 #include <iostream>
 
@@ -14,7 +15,8 @@ Level::Level(const std::string& filename)
 : mGameScrollY(0),
   mBackgroundScrollY(0),
   mScrollSpeed(0.0f),
-  mGameScrollFloat(0.0f)
+  mGameScrollFloat(0.0f),
+  mLevelLength(0)
 {
     load(filename);
 	mPlayer = new Player();
@@ -235,6 +237,7 @@ void Level::load(const std::string& filename)
     {
         mMotif = SPACE_MOTIF;
         mBackground = new StarsBackground();
+		mEntities.push_back(new Planet());
     }
     else
     {
@@ -250,6 +253,8 @@ void Level::load(const std::string& filename)
         {
             break;
         }
+
+		mLevelLength = row * BLOCK_SIZE + BLOCK_SIZE;
 
         for (col = 0; col < data[row].size(); col++)
         {

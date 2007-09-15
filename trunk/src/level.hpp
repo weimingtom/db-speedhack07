@@ -30,6 +30,8 @@ public:
 
     int getScrollY() { return mGameScrollY; }
 
+	int getLevelLength() { return mLevelLength; }
+
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;
@@ -76,6 +78,8 @@ protected:
 	float mGameScrollFloat;
 
     std::vector<Entity*> mStaticEntities;
+
+	int mLevelLength;
 };
 
 #endif
