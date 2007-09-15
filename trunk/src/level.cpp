@@ -151,10 +151,10 @@ void Level::draw(BITMAP* dest)
 	}
 
 	drawMousePointer(subdest);
+    vline(subdest, 0, 0, 239, makecol(100, 100, 100));
+    vline(subdest, 239, 0, 239, makecol(100, 100, 100));
 
     destroy_bitmap(subdest);
-    vline(dest, 59, 0, 240, makecol(100, 100, 100));
-    vline(dest, 300, 0, 240, makecol(100, 100, 100));
 
     mGraphics->setTarget(dest);
     mGui->draw();
