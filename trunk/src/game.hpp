@@ -13,6 +13,8 @@
 #include "gui/dbsh07button.hpp"
 #include "gui/extendedallegroinput.hpp"
 #include "gui/shop.hpp"
+#include "gui/optionaldialog.hpp"
+#include "gui/dialog.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -38,7 +40,8 @@ protected:
 		EXIT,
         LEVEL,
         PAUSE,
-        SHOP
+        SHOP,
+        BONUS_LEVEL_OR_SHOP
     };
 
     void setState(State state);
@@ -95,7 +98,8 @@ protected:
     bool mPauseButtonPressed;
 
     Shop* mShop;
-
+    OptionalDialog* mOptionalDialog;
+    Dialog* mDialog;
 };
 
 #endif

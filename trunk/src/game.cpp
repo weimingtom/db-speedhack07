@@ -47,7 +47,7 @@ mLevel(NULL)
 	initGui();
 	initMusic();
 
-    setState(SHOP);
+    setState(MENU);
 }
 
 Game::~Game()
@@ -68,6 +68,8 @@ Game::~Game()
     delete mStartButton;
 
     delete mShop;
+    delete mOptionalDialog;
+    delete mDialog;
 }
 
 void Game::logic()
@@ -78,12 +80,32 @@ void Game::logic()
     {
         case SPLASHSCREEN:
             mSplashScreen->logic();
-
             if (mSplashScreen->isDrawingDone())
             {
 				clear_keybuf();
                 setState(MENU);
             }
+            break;
+        case BONUS_LEVEL_OR_SHOP:
+            mLevel->logic();
+            if (mOptionalDialog->getState() == OptionalDialog::NONE
+                && !mOptionalDialog->isVisible()
+                    && !mDialog->isVisible())
+            {
+                mOptionalDialog->setVisible(true);
+            }
+            else if (!mDialog->isVisible()
+                && mOptionalDialog->getState() == OptionalDialog::SHOP)
+            {
+                setState(SHOP);
+            }
+            else if (!mDialog->isVisible()
+                && mOptionalDialog->getState() == OptionalDialog::SHOP)
+            {
+                //setState(BONUS_LEVEL);
+            }
+
+            mGui->logic();
             break;
         case SHOP:
         case MENU:
@@ -91,12 +113,14 @@ void Game::logic()
 			break;
         case LEVEL:
             mLevel->logic();
-
             if (mLevel->isGameOver())
             {
                 setState(MENU);
             }
-
+            else if (mLevel->isLevelComplete())
+            {
+                setState(BONUS_LEVEL_OR_SHOP);
+            }
             break;
         case PAUSE:
             break;
@@ -135,6 +159,13 @@ void Game::draw()
     case SPLASHSCREEN:
         mSplashScreen->draw(mBuffer);
         break;
+    case BONUS_LEVEL_OR_SHOP:
+        clear_to_color(mBuffer, makecol(0, 0, 0));
+        mLevel->draw(mBuffer);
+        mAllegroGraphics->setTarget(mBuffer);
+        mGui->draw();
+        draw_sprite(mBuffer, mouse_sprite, mouse_x / 2, mouse_y / 2);
+        break;
     case SHOP:
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
@@ -144,8 +175,6 @@ void Game::draw()
     case LEVEL:
         clear_to_color(mBuffer, makecol(0, 0, 0));
         mLevel->draw(mBuffer);
-//          mAllegroGraphics->setTarget(mBuffer);
-//            mGui->draw();
         break;
     case PAUSE:
         break;
@@ -159,7 +188,6 @@ void Game::draw()
 
 void Game::run()
 {
-  
 	long frame = getTick();
 	int graphicframes = 0;
 	int second = getTick() / TICKS_PER_SECOND;
@@ -199,6 +227,7 @@ void Game::run()
 		}
 	}
 }
+
 void Game::initGui()
 {
 	mGui = new gcn::Gui();
@@ -224,6 +253,24 @@ void Game::initGui()
 	mTopBackgroundIcon = new gcn::Icon(mTopBackgroundImage);
 	mTop->add(mTopBackgroundIcon);
 
+    mShop = new Shop();
+    mShop->setSize(320, 240);
+    mShop->setOpaque(false);
+    mShop->addActionListener(this);
+    mTop->add(mShop);
+    mShop->setVisible(false);
+
+    mOptionalDialog = new OptionalDialog();
+    mOptionalDialog->setSize(320, 75);
+    mOptionalDialog->setVisible(false);
+    mOptionalDialog->addActionListener(this);
+    mTop->add(mOptionalDialog, 0, 240 - 75);
+
+    mDialog = new Dialog();
+    mDialog->setSize(320, 75);
+    mTop->add(mDialog, 0, 240 - 75);
+    mDialog->setVisible(false);
+
     mMainMenuContainer = new gcn::Container();
 	mMainMenuContainer->setSize(320, 240);
 	mMainMenuContainer->setOpaque(false);
@@ -232,13 +279,6 @@ void Game::initGui()
 	mBallzLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
 	mBallzLogoIcon = new gcn::Icon(mBallzLogoImage);
 	mMainMenuContainer->add(mBallzLogoIcon, 0, 10);
-
-    mShop = new Shop();
-    mShop->setSize(320, 240);
-    mShop->setOpaque(false);
-    mShop->addActionListener(this);
-    mTop->add(mShop);
-    mShop->setVisible(false);
 
     mStartButton = new DBSH07Button("START GAME");
     mStartButton->addActionListener(this);
@@ -249,7 +289,6 @@ void Game::initGui()
     mExitButton = new DBSH07Button("EXIT");
     mExitButton->addActionListener(this);
     mMainMenuContainer->add(mExitButton, 125, 150 + mStartButton->getHeight()*2);
-
 
 	mCreditsContainer = new gcn::Container();
 	mCreditsContainer->setSize(320, 240);
@@ -315,6 +354,21 @@ void Game::action(const gcn::ActionEvent& actionEvent)
     {
         startLevel();
     }
+    else if (actionEvent.getSource() == mOptionalDialog)
+    {
+        if (mOptionalDialog->getState() == OptionalDialog::BONUS_LEVEL)
+        {
+            mOptionalDialog->setVisible(false);
+            mDialog->setText("I think I'll try my luck in a bonus level!");
+            mDialog->setVisible(true);
+        }
+        else if (mOptionalDialog->getState() == OptionalDialog::SHOP)
+        {
+            mOptionalDialog->setVisible(false);
+            mDialog->setText("I think I'll head for the shop!");
+            mDialog->setVisible(true);
+        }
+    }
 }
 void Game::keyPressed(gcn::KeyEvent &keyEvent)
 {
@@ -343,6 +397,10 @@ void Game::startLevel()
     {
         mLevel = new Level("level1.txt");
     }
+    else if (GameState::getInstance()->getLevel() == 2)
+    {
+        mLevel = new Level("level2.txt");
+    }
 
     setState(LEVEL);
 }
@@ -354,12 +412,28 @@ void Game::setState(State state)
         mShop->setVisible(true);
         mMainMenuContainer->setVisible(false);
         mCreditsContainer->setVisible(false);
+        mOptionalDialog->setVisible(false);
+        mTopBackgroundIcon->setVisible(true);
+        playMusic("shop.xm", 1.0f);
     }
     else if (state == MENU)
     {
         mShop->setVisible(false);
         mMainMenuContainer->setVisible(true);
         mCreditsContainer->setVisible(false);
+        mOptionalDialog->setVisible(false);
+        mTopBackgroundIcon->setVisible(true);
+    }
+    else if (state == BONUS_LEVEL_OR_SHOP)
+    {
+        mTopBackgroundIcon->setVisible(false);
+        mShop->setVisible(false);
+        mMainMenuContainer->setVisible(false);
+        mCreditsContainer->setVisible(false);
+        mOptionalDialog->setVisible(false);
+        mOptionalDialog->setState(OptionalDialog::NONE);
+        mDialog->setVisible(true);
+        mDialog->setText("You can now choose to either head for a bonus lever or enter the shop!");
     }
    
     mState = state; 

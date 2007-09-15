@@ -49,6 +49,7 @@ Level::~Level()
     delete mEnergyOrbsLabel;
     delete mGameOverLabel;
     delete mTimeLabel;
+    delete mLevelCompleteLabel;
 
     std::list<Entity *>::iterator it;
 
@@ -65,7 +66,7 @@ bool Level::isGameOver()
 
 bool Level::isLevelComplete()
 {
-    return false;
+    return mState == LEVEL_COMPLETE && mFrameCounter > 200;
 }
 
 void Level::initGui()
@@ -102,11 +103,19 @@ void Level::initGui()
     mTop->add(mTimeCaptionLabel, 5, mLivesLabel->getHeight() * 3);
 
     mGameOverLabel = new gcn::Label("GAME OVER");
-    mGameOverLabel->adjustSize();
-    mGameOverLabel->setVisible(false    );
+    mGameOverLabel->setVisible(false);
     mTop->add(mGameOverLabel, 
               160 - mGameOverLabel->getWidth() / 2 + 20,
               120 - mGameOverLabel->getHeight() / 2);
+
+    mLevelCompleteLabel = new gcn::Label("LEVEL " 
+                                         + toString(GameState::getInstance()->getLevel()) 
+                                         + " COMPLETE!!");
+    mLevelCompleteLabel->setVisible(false);
+    mTop->add(mLevelCompleteLabel,
+              160 - mLevelCompleteLabel->getWidth() / 2 + 20,
+              120 - mLevelCompleteLabel->getHeight() / 2);
+
 }
 // Predicate function used to remove entities.
 static bool isNull(Entity *e) 
@@ -211,8 +220,26 @@ void Level::logic()
 	        (*it)->logic(this);
         }
     }
+    else if (mState == LEVEL_COMPLETE)
+    {
+        mBackground->logic(this);
+        std::list<Entity *>::iterator it;
+
+        for (it = mEntities.begin(); it != mEntities.end(); it++)
+        {
+	        (*it)->logic(this);
+        }
+    }
     else if (mState == GAME)
     {
+        if (mLevelLength - 240 < mGameScrollY)
+        {
+            mState = LEVEL_COMPLETE;
+            mFrameCounter = 0;
+            mLevelCompleteLabel->setVisible(true);
+            return;
+        }
+
 		if(mShakeAmount > 0) mShakeAmount /= 1.045;
 
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
@@ -339,7 +366,7 @@ void Level::spawnNewPlayer()
 
 void Level::updateScrolling()
 {
-    if (mPlayer->getState() == Player::KILLED)
+    if (mPlayer->getState() == Player::KILLED || mState == LEVEL_COMPLETE)
     {
         // Do nothing, that is freeze the camera.
     }

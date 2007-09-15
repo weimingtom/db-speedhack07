@@ -54,7 +54,7 @@ protected:
         DIALOG,
         GAME,
         GAMEOVER,
-        LEVELCOMPLETE
+        LEVEL_COMPLETE
     };
 
 	void updateScrolling();
@@ -88,6 +88,7 @@ protected:
     gcn::Label* mTimeLabel;
     gcn::Label* mTimeCaptionLabel;
     gcn::Label* mGameOverLabel;
+    gcn::Label* mLevelCompleteLabel;
     unsigned int mState;
     std::list<std::string> mDialogText;
     int mFrameCounter;

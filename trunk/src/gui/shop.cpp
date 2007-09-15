@@ -2,6 +2,7 @@
 
 #include "stringutil.hpp"
 #include "gamestate.hpp"
+#include "resourcehandler.hpp"
 
 Shop::Shop()
 {
@@ -29,6 +30,8 @@ Shop::Shop()
     mDialog = new Dialog();
     mDialog->setSize(320, 75);
     add(mDialog, 0, 240 - 75);
+
+    mBuySample = ResourceHandler::getInstance()->getSample("shopbuy.wav");
 }
 
 Shop::~Shop()
@@ -62,6 +65,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setLives(GameState::getInstance()->getLives() + 1);
         mLivesLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getLives()) + "x~");
         mLivesLabel->adjustSize();
+        play_sample(mBuySample, 255, 128, 1000, 0);
     }
     else if (actionEvent.getSource() == mBuyPodButton)
     {
@@ -76,6 +80,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setPods(GameState::getInstance()->getPods() + 1);
         mPodsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getPods()) + "x{");
         mPodsLabel->adjustSize();
+        play_sample(mBuySample, 255, 128, 1000, 0);
     }
 
     mEnergyOrbsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
@@ -85,6 +90,10 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
 void Shop::setVisible(bool visible)
 {
     Container::setVisible(visible);
-    mDialog->setText("Welcome to the shop!");
-    mDialog->setVisible(true);
+    
+    if (visible)
+    {
+        mDialog->setText("Welcome to the shop!");
+        mDialog->setVisible(true);
+    }
 }

@@ -25,6 +25,7 @@ protected:
     gcn::Label* mPodsLabel;
     gcn::Label* mEnergyOrbsLabel;
     Dialog* mDialog;
+    SAMPLE* mBuySample;
 };
 
 #endif
