@@ -83,10 +83,10 @@ void Level::initGui()
     mDialog->setVisible(false);
     mTop->add(mDialog, 60, 240 - 75);
 
-    mLivesLabel = new gcn::Label("1x~");
+    mLivesLabel = new gcn::Label(toString(GameState::getInstance()->getLives())+"x~");
     mTop->add(mLivesLabel, 5, 0);
 
-    mEnergyOrbsLabel = new gcn::Label("1x}");
+    mEnergyOrbsLabel = new gcn::Label(toString(GameState::getInstance()->getEnergyOrbs())+"x}");
     mTop->add(mEnergyOrbsLabel, 5, mLivesLabel->getHeight());
 
     mTimeLabel = new gcn::Label("000.00");
