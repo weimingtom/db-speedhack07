@@ -6,7 +6,8 @@
 Mine::Mine(int x, int y, bool isMagnetic)
 : Enemy(x, y, 16, 16, true),
   mToBeDeleted(false),
-  mHitCount(10)
+  mHitCount(10),
+  mIsMagnetic(isMagnetic)
 {
     mAnimation = new Animation("mine.bmp");
 	mRenderAsHit = false;
@@ -24,6 +25,14 @@ Mine::~Mine()
 
 void Mine::logic(Level* level)
 {
+	if(mIsMagnetic) {
+		int playerDiffX = level->getPlayer()->getCenterX() - getX();
+		int playerDiffY = level->getPlayer()->getCenterY() - getY();
+		
+		mDx += playerDiffX/5000.0f;
+		mDy += playerDiffY/5000.0f;
+	}
+
 	float targetDy = 0.4;
 	float dyDy = targetDy - mDy;
 	float dxDx = -mDx;

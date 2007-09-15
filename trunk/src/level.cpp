@@ -262,7 +262,12 @@ void Level::load(const std::string& filename)
                     entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, false);
                     mHibernatingEntities.push_back(entity);
                    break;
-                   case '1':
+                case 'm':
+                    entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, true);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+
+				case '1':
                     if (mMotif == SPACE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
@@ -326,6 +331,11 @@ int Level::getMouseX()
 int Level::getMouseY()
 {
 	return mouse_y / 2 + mGameScrollY;
+}
+
+Player* Level::getPlayer()
+{
+	return mPlayer;
 }
 
 bool Level::isFirePressed()

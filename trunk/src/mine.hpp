@@ -21,6 +21,7 @@ protected:
     bool mToBeDeleted;
 	int mHitCount;
 	bool mRenderAsHit;
+	bool mIsMagnetic;
 	float mDy, mDx;
 	float mY, mX;
 	int mFrameCount;

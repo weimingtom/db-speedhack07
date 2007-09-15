@@ -22,6 +22,7 @@ public:
 
 	int getMouseX();
 	int getMouseY();
+	Player* getPlayer();
 	bool isFirePressed();
     bool isBrakePressed();
     bool isBurnPressed();
