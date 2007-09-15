@@ -39,7 +39,6 @@ mLevel(NULL)
 	install_sound(DIGI_AUTODETECT, MIDI_NONE, NULL);
 
     initTimer();
-    mState = MENU; //SPLASHSCREEN;
 
     mScreenBuffer = create_bitmap(640, 480);
 	mBuffer = create_bitmap(320, 240);
@@ -47,6 +46,8 @@ mLevel(NULL)
     mSplashScreen = new SplashScreen();
 	initGui();
 	initMusic();
+
+    setState(SHOP);
 }
 
 Game::~Game()
@@ -65,6 +66,8 @@ Game::~Game()
     delete mImageFont;
     delete mTop;
     delete mStartButton;
+
+    delete mShop;
 }
 
 void Game::logic()
@@ -79,9 +82,10 @@ void Game::logic()
             if (mSplashScreen->isDrawingDone())
             {
 				clear_keybuf();
-                mState = MENU;
+                setState(MENU);
             }
             break;
+        case SHOP:
         case MENU:
             mGui->logic();
 			break;
@@ -90,7 +94,7 @@ void Game::logic()
 
             if (mLevel->isGameOver())
             {
-                mState = MENU;
+                setState(MENU);
             }
 
             break;
@@ -104,16 +108,16 @@ void Game::logic()
    
     if (key[KEY_Q]) 
     {
-        mState = EXIT;
+        setState(EXIT);
     }
 
     if (key[KEY_P] && !mPauseButtonPressed && mState == PAUSE)
     {
-        mState = LEVEL;
+        setState(LEVEL);
     }
     else if (key[KEY_P] && !mPauseButtonPressed && mState == LEVEL)
     {
-        mState = PAUSE;
+        setState(PAUSE);
     }
 
     mPauseButtonPressed = key[KEY_P] != 0;
@@ -131,6 +135,7 @@ void Game::draw()
     case SPLASHSCREEN:
         mSplashScreen->draw(mBuffer);
         break;
+    case SHOP:
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
         mGui->draw();
@@ -219,14 +224,21 @@ void Game::initGui()
 	mTopBackgroundIcon = new gcn::Icon(mTopBackgroundImage);
 	mTop->add(mTopBackgroundIcon);
 
-	mBallzLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
-	mBallzLogoIcon = new gcn::Icon(mBallzLogoImage);
-	mTop->add(mBallzLogoIcon, 0, 10);
-
-	mMainMenuContainer = new gcn::Container();
+    mMainMenuContainer = new gcn::Container();
 	mMainMenuContainer->setSize(320, 240);
 	mMainMenuContainer->setOpaque(false);
 	mTop->add(mMainMenuContainer);
+
+	mBallzLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
+	mBallzLogoIcon = new gcn::Icon(mBallzLogoImage);
+	mMainMenuContainer->add(mBallzLogoIcon, 0, 10);
+
+    mShop = new Shop();
+    mShop->setSize(320, 240);
+    mShop->setOpaque(false);
+    mShop->addActionListener(this);
+    mTop->add(mShop);
+    mShop->setVisible(false);
 
     mStartButton = new DBSH07Button("START GAME");
     mStartButton->addActionListener(this);
@@ -297,7 +309,11 @@ void Game::action(const gcn::ActionEvent& actionEvent)
     }
     else if (actionEvent.getSource() == mExitButton)
     {
-        mState = EXIT;
+        setState(EXIT);
+    }
+    else if (actionEvent.getSource() == mShop)
+    {
+        startLevel();
     }
 }
 void Game::keyPressed(gcn::KeyEvent &keyEvent)
@@ -311,7 +327,7 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
         }
         else
         {
-            mState = EXIT;
+            setState(EXIT);
         }
     }
 }
@@ -328,5 +344,23 @@ void Game::startLevel()
         mLevel = new Level("level1.txt");
     }
 
-    mState = LEVEL;
+    setState(LEVEL);
+}
+
+void Game::setState(State state)
+{
+    if (state == SHOP)
+    {
+        mShop->setVisible(true);
+        mMainMenuContainer->setVisible(false);
+        mCreditsContainer->setVisible(false);
+    }
+    else if (state == MENU)
+    {
+        mShop->setVisible(false);
+        mMainMenuContainer->setVisible(true);
+        mCreditsContainer->setVisible(false);
+    }
+   
+    mState = state; 
 }

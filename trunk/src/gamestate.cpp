@@ -15,7 +15,8 @@ GameState* GameState::getInstance()
 GameState::GameState()
 : mLives(1),
 mLevel(1),
-mEnergyOrbs(0)
+mEnergyOrbs(23),
+mPods(1)
 {
 
 }
@@ -48,4 +49,14 @@ void GameState::setEnergyOrbs(unsigned int energyOrbs)
 unsigned int GameState::getEnergyOrbs()
 {
     return mEnergyOrbs;
+}
+
+void GameState::setPods(unsigned int pods)
+{
+    mPods = pods;
+}
+
+unsigned int GameState::getPods()
+{
+    return mPods;
 }

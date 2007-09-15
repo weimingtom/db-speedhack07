@@ -11,6 +11,8 @@ public:
     void setLevel(unsigned int level);
     void setEnergyOrbs(unsigned int energyOrbs);
     unsigned int getEnergyOrbs();
+    void setPods(unsigned int pods);
+    unsigned int getPods();
 
 private:
     GameState();
@@ -18,5 +20,6 @@ private:
     unsigned int mLives;
     unsigned int mLevel;
     unsigned int mEnergyOrbs;
+    unsigned int mPods;
 };
 #endif

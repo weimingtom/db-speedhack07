@@ -12,6 +12,7 @@
 #include "guichan/allegro.hpp"
 #include "gui/dbsh07button.hpp"
 #include "gui/extendedallegroinput.hpp"
+#include "gui/shop.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -36,8 +37,13 @@ protected:
 		MENU,
 		EXIT,
         LEVEL,
-        PAUSE
+        PAUSE,
+        SHOP
     };
+
+    void setState(State state);
+
+   
 
     State mState;
     BITMAP* mBuffer;
@@ -87,6 +93,8 @@ protected:
     DBSH07Button* mExitButton;
 
     bool mPauseButtonPressed;
+
+    Shop* mShop;
 
 };
 
