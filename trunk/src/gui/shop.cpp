@@ -139,5 +139,7 @@ void Shop::setVisible(bool visible)
     {
         mDialog->setText("C CUDDELZ: Welcome to the shop! To buy items you need energy orbs. Have fun!");
         mDialog->setVisible(true);
+        mEnergyOrbsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
+        mEnergyOrbsLabel->adjustSize();
     }
 }
