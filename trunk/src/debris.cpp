@@ -50,9 +50,9 @@ void Debris::logic(Level *level)
 	}
 
 	if (mX > Level::LEVEL_WIDTH ||
-		mY > 240 + level->getScrollY() ||
+		mY > 500 + level->getScrollY() ||
 		mX + mW <= 0 ||
-		mY + mH <= 0)
+		mY + mH <= level->getScrollY())
 	{
 		mToBeDeleted = true;
 	}

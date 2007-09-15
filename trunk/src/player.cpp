@@ -15,7 +15,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(8),
+	mNumPods(5),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {

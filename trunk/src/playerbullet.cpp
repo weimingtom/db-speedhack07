@@ -20,6 +20,10 @@ PlayerBullet::PlayerBullet(int x, int y, float dx, float dy, unsigned int damage
 	if (frame > 4) {
 		frame = 4;
 	}
+
+	int d = std::min((int)damage - 1, 1);
+
+	frame += 5 * d;
 }
 
 
