@@ -14,16 +14,25 @@ public:
     void setVisible(bool visible);
 
 protected:
+    static const int CANNON_UPGRADE_COST = 30;
     static const int POD_COST = 20;
     static const int LIFE_COST = 10;
 
+    gcn::Label* mItemLabel;
+    gcn::Label* mCostLabel;
+    gcn::Label* mYouHaveLabel;
     gcn::Label* mShopLabel;
     DBSH07Button* mLeaveButton;
     DBSH07Button* mBuyLifeButton;
     DBSH07Button* mBuyPodButton;
-    gcn::Label* mLivesLabel;
-    gcn::Label* mPodsLabel;
+    DBSH07Button* mBuyCannonUpgradeButton;
+    gcn::Label* mLifeCostLabel;
+    gcn::Label* mLivesEquipedLabel;
+    gcn::Label* mPodCostLabel;
+    gcn::Label* mPodsEquipedLabel;
     gcn::Label* mEnergyOrbsLabel;
+    gcn::Label* mCannonUpgradeEquipedLabel;
+    gcn::Label* mCannonUpgradeCostLabel;
     Dialog* mDialog;
     SAMPLE* mBuySample;
 };

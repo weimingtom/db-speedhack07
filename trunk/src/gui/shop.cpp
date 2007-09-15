@@ -6,7 +6,7 @@
 
 Shop::Shop()
 {
-    mShopLabel = new gcn::Label("THE MEGA UPGRADE SHOP");
+    mShopLabel = new gcn::Label("THE LOVE UPGRADE SHOP");
     add(mShopLabel, 20, 10);
     mLeaveButton = new DBSH07Button("LEAVE SHOP");
     add(mLeaveButton, 20, 200);
@@ -15,17 +15,38 @@ Shop::Shop()
     mEnergyOrbsLabel = new gcn::Label("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
     add(mEnergyOrbsLabel, 20, 24);
 
-    mBuyLifeButton = new DBSH07Button("BUY LIFE ~ COST "+toString(LIFE_COST)+"}");
+    mItemLabel = new gcn::Label("ITEM\x83");
+    add(mItemLabel, 24, 80);
+
+    mCostLabel = new gcn::Label("COST\x83");
+    add(mCostLabel, 170, 80);
+
+    mYouHaveLabel = new gcn::Label("EQUIPPED\x83");
+    add(mYouHaveLabel, 225, 80);
+
+    mBuyLifeButton = new DBSH07Button("LIFE ~");
     add(mBuyLifeButton, 20, 100);
     mBuyLifeButton->addActionListener(this);
-    mLivesLabel = new gcn::Label("YOU HAVE " + toString(GameState::getInstance()->getLives()) + "x~");
-    add(mLivesLabel, 210, 104);
+    mLifeCostLabel = new gcn::Label(toString(LIFE_COST)+"}");
+    add(mLifeCostLabel, 170, 104);
+    mLivesEquipedLabel = new gcn::Label(toString(GameState::getInstance()->getLives()) + "x~");
+    add(mLivesEquipedLabel, 225, 104);
 
-    mBuyPodButton = new DBSH07Button("BUY FIREING POD { COST "+toString(POD_COST)+"}");
+    mBuyPodButton = new DBSH07Button("FIREING POD {");
     add(mBuyPodButton, 20, 100 + mBuyLifeButton->getHeight());
     mBuyPodButton->addActionListener(this);
-    mPodsLabel = new gcn::Label("YOU HAVE " + toString(GameState::getInstance()->getPods()) + "x{");
-    add(mPodsLabel, 210, 103 + mBuyLifeButton->getHeight());
+    mPodCostLabel = new gcn::Label(toString(POD_COST)+"}");
+    add(mPodCostLabel, 170, 104 + mBuyLifeButton->getHeight());
+    mPodsEquipedLabel = new gcn::Label(toString(GameState::getInstance()->getPods()) + "x{");
+    add(mPodsEquipedLabel, 225, 103 + mBuyLifeButton->getHeight());
+
+    mBuyCannonUpgradeButton = new DBSH07Button("CANNON UPGRADE");
+    add(mBuyCannonUpgradeButton, 20, 100 + mBuyLifeButton->getHeight() * 2);
+    mBuyCannonUpgradeButton->addActionListener(this);
+    mCannonUpgradeCostLabel = new gcn::Label(toString(CANNON_UPGRADE_COST)+"}");
+    add(mCannonUpgradeCostLabel, 170, 104 + mBuyLifeButton->getHeight() * 2);
+    mCannonUpgradeEquipedLabel = new gcn::Label("LEVEL " + toString(GameState::getInstance()->getCannonLevel()));
+    add(mCannonUpgradeEquipedLabel, 225, 103 + mBuyLifeButton->getHeight() * 2);
 
     mDialog = new Dialog();
     mDialog->setSize(320, 75);
@@ -36,9 +57,17 @@ Shop::Shop()
 
 Shop::~Shop()
 {
-    delete mPodsLabel;
+    delete mCannonUpgradeCostLabel;
+    delete mPodCostLabel;
+    delete mLifeCostLabel;
+    delete mCostLabel;
+    delete mYouHaveLabel;
+    delete mItemLabel;
+    delete mBuyCannonUpgradeButton;
+    delete mCannonUpgradeEquipedLabel;
+    delete mPodsEquipedLabel;
     delete mEnergyOrbsLabel;
-    delete mLivesLabel;
+    delete mLivesEquipedLabel;
     delete mDialog;
     delete mShopLabel;
     delete mLeaveButton;
@@ -56,30 +85,45 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
     {
         if (GameState::getInstance()->getEnergyOrbs() < LIFE_COST)
         {
-            mDialog->setText("I'm sorry but you don't have enough }");
+            mDialog->setText("C I'm sorry but you don't have enough } for buying a life.");
             mDialog->setVisible(true);
             return;
         }
         
         GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() - LIFE_COST);
         GameState::getInstance()->setLives(GameState::getInstance()->getLives() + 1);
-        mLivesLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getLives()) + "x~");
-        mLivesLabel->adjustSize();
+        mLivesEquipedLabel->setCaption(toString(GameState::getInstance()->getLives()) + "x~");
+        mLivesEquipedLabel->adjustSize();
         play_sample(mBuySample, 255, 128, 1000, 0);
     }
     else if (actionEvent.getSource() == mBuyPodButton)
     {
         if (GameState::getInstance()->getEnergyOrbs() < POD_COST)
         {
-            mDialog->setText("I'm sorry but you don't have enough }");
+            mDialog->setText("C I'm sorry but you don't have enough } for buying a pod.");
             mDialog->setVisible(true);
             return;
         }
         
         GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() - POD_COST);
         GameState::getInstance()->setPods(GameState::getInstance()->getPods() + 1);
-        mPodsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getPods()) + "x{");
-        mPodsLabel->adjustSize();
+        mPodsEquipedLabel->setCaption(toString(GameState::getInstance()->getPods()) + "x{");
+        mPodsEquipedLabel->adjustSize();
+        play_sample(mBuySample, 255, 128, 1000, 0);
+    }
+    else if (actionEvent.getSource() == mBuyCannonUpgradeButton)
+    {
+        if (GameState::getInstance()->getEnergyOrbs() < CANNON_UPGRADE_COST)
+        {
+            mDialog->setText("C I'm sorry but you don't have enough } for a cannon upgrade.");
+            mDialog->setVisible(true);
+            return;
+        }
+        
+        GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() - CANNON_UPGRADE_COST);
+        GameState::getInstance()->setCannonLevel(GameState::getInstance()->getCannonLevel() + 1);
+        mCannonUpgradeEquipedLabel->setCaption("LEVEL " + toString(GameState::getInstance()->getCannonLevel()));
+        mCannonUpgradeEquipedLabel->adjustSize();
         play_sample(mBuySample, 255, 128, 1000, 0);
     }
 
@@ -93,7 +137,7 @@ void Shop::setVisible(bool visible)
     
     if (visible)
     {
-        mDialog->setText("Welcome to the shop!");
+        mDialog->setText("C Welcome to the shop! To buy items you need energy orbs. Have fun!");
         mDialog->setVisible(true);
     }
 }

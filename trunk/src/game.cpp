@@ -240,7 +240,7 @@ void Game::initGui()
 	mGui->setInput(mAllegroInput);
 	gcn::Image::setImageLoader(mAllegroImageLoader);
 
-	mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 126);
+	mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 131);
 	mImageFont->setGlyphSpacing(-1);
 	gcn::Widget::setGlobalFont(mImageFont);
 
