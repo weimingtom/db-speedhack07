@@ -19,6 +19,10 @@ void Electro::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		mAnimation.drawFrame(dest, mFrameCounter / 3, mX, mY - scrolly);
 	}
 }
+bool Electro::killsPlayer()
+{
+	return isOn();
+}
 
 bool Electro::isOn()
 {

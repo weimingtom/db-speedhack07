@@ -7,6 +7,7 @@ EnemyBullet::EnemyBullet(int x, int y, float dx, float dy, unsigned int damage, 
 	mFrameCounter(0)
 {
 
+	mKillsPlayer = true;
 }
 
 void EnemyBullet::logic(Level* level)

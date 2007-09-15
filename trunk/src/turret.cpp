@@ -16,6 +16,7 @@ Turret::Turret(int x, int y, FireDirection direction, int shots)
   mShots(shots)
 {
     mAnimation = new Animation("turret.bmp");
+	mKillsPlayer = true;
 }
 
 Turret::~Turret()

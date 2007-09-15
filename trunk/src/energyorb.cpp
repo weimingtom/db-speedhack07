@@ -6,6 +6,7 @@ EnergyOrb::EnergyOrb(int x, int y)
 : Entity(x, y, Level::BLOCK_SIZE, Level::BLOCK_SIZE, true),
 mFrameCount(0)
 {
+	mKillsPlayer = false;
     mAnimation = new Animation("energyorb.bmp");
 }
 

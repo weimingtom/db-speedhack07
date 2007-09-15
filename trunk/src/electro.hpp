@@ -20,6 +20,7 @@ public:
 	bool drawInLayer(unsigned int layer) { return layer == Entity::ENEMY_LAYER; }
 
 	virtual bool stopsBullets() { return false; };
+	bool killsPlayer();
 
 	bool isCollidable();
 

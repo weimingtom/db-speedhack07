@@ -53,6 +53,7 @@ public:
     virtual bool drawInLayer(unsigned int layer) = 0;
 
 	virtual bool stopsBullets() { return true; };
+	virtual bool killsPlayer() { return mKillsPlayer; };
 
     static const int BACKGROUND_LAYER = 0;
     static const int PLAYER_LAYER = 1;
@@ -72,5 +73,6 @@ public:
 protected:
 	int mX, mY, mW, mH;
 	bool mCollidable;
+	bool mKillsPlayer;
 };
 #endif

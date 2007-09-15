@@ -18,6 +18,7 @@ Floater::Floater(int x, int y, int hitCount)
 	mDy = 0;
 	mDx = 0;
 	mFrameCount = 0;
+	mKillsPlayer = false;
 
 	mExplosionSample = ResourceHandler::getInstance()->getSample("explo2.wav");
 }

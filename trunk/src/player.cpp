@@ -349,3 +349,11 @@ int Player::getSpeed()
 {
 	return mDY / 8;
 }
+
+void Player::handleCollision(Entity *other, Level *level)
+{
+	if(other->killsPlayer())
+	{
+		kill();
+	}
+}

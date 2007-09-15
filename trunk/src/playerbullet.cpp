@@ -5,6 +5,7 @@ PlayerBullet::PlayerBullet(int x, int y, float dx, float dy, unsigned int damage
 	:Bullet(x, y, 6, 6, Entity::PLAYER_BULLET_TYPE, dx, dy, "bullet.bmp", 1),
 	mAnimation("shot.bmp")
 {
+	mKillsPlayer = false;
 	if (drawingAngle < 0)
 	{
 		vflip = false;

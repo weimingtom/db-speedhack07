@@ -22,7 +22,9 @@ public:
     void setState(unsigned int state);
     unsigned int getState();
 	int getSpeed();
-
+	void handleCollision(Entity *other, Level *level);
+	
+	
 	static const int AIR_RESISTANCE_LOW = 2;
 	static const int AIR_RESISTANCE_MEDIUM = 3;
 	static const int AIR_RESISTANCE_HIGH = 5;
