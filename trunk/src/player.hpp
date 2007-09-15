@@ -9,6 +9,7 @@ class Player: public Entity
 public:
     Player();
     ~Player();
+    void reset();
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
     void logic(Level* level);
     bool isToBeDeleted();

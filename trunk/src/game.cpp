@@ -46,9 +46,6 @@ mLevel(NULL)
 
     mSplashScreen = new SplashScreen();
 	initGui();
-
-    GameState::getInstance()->setLevel(1);
-
 	initMusic();
 }
 
@@ -231,13 +228,13 @@ void Game::initGui()
 	mMainMenuContainer->setOpaque(false);
 	mTop->add(mMainMenuContainer);
 
-    mStartButton = new DBSH07Button("Start game");
+    mStartButton = new DBSH07Button("START GAME");
     mStartButton->addActionListener(this);
     mMainMenuContainer->add(mStartButton, 125, 150);
-    mCreditsButton = new DBSH07Button("Credits");
+    mCreditsButton = new DBSH07Button("CREDITS");
     mCreditsButton->addActionListener(this);
     mMainMenuContainer->add(mCreditsButton, 125, 150 + mStartButton->getHeight());
-    mExitButton = new DBSH07Button("Exit");
+    mExitButton = new DBSH07Button("EXIT");
     mExitButton->addActionListener(this);
     mMainMenuContainer->add(mExitButton, 125, 150 + mStartButton->getHeight()*2);
 

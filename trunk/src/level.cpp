@@ -9,6 +9,7 @@
 #include "resourcehandler.hpp"
 #include "gamestate.hpp"
 #include "planet.hpp"
+#include "energyorb.hpp"
 
 #include <iostream>
 
@@ -234,15 +235,13 @@ void Level::spawnNewPlayer()
 {
     if (GameState::getInstance()->getLives() >= 1)
     {
-        mPlayer = new Player();
+        mPlayer->reset();
         mPlayer->setY(mGameScrollY);
-        addEntity(mPlayer);
 
         GameState::getInstance()->setLives(GameState::getInstance()->getLives() - 1);
     }
     else
     {
-        mPlayer = NULL;
         mState = GAMEOVER;
         mGameOverLabel->setVisible(true);
         mFrameCounter = 0;
@@ -251,12 +250,6 @@ void Level::spawnNewPlayer()
 
 void Level::updateScrolling()
 {
-    // The player might have been deleted prior to this update.
-    if (mPlayer == NULL)
-    {
-        return;
-    }
-
     if (mPlayer->getState() == Player::KILLED)
     {
         // Do nothing, that is freeze the camera.
@@ -351,7 +344,9 @@ void Level::load(const std::string& filename)
                     entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, true);
                     mHibernatingEntities.push_back(entity);
                    break;
-
+                case 'E':
+                    entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
+                    mHibernatingEntities.push_back(entity);
 				case '1':
                     if (mMotif == SPACE_MOTIF)
                     {

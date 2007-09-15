@@ -9,11 +9,14 @@ public:
     void setLives(unsigned int lives);
     unsigned int getLevel();
     void setLevel(unsigned int level);
+    void setEnergyOrbs(unsigned int energyOrbs);
+    unsigned int getEnergyOrbs();
 
 private:
     GameState();
     static GameState* mInstance;
     unsigned int mLives;
     unsigned int mLevel;
+    unsigned int mEnergyOrbs;
 };
 #endif

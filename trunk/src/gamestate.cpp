@@ -13,7 +13,9 @@ GameState* GameState::getInstance()
 }
 
 GameState::GameState()
-: mLives(1)
+: mLives(1),
+mLevel(1),
+mEnergyOrbs(0)
 {
 
 }
@@ -36,4 +38,14 @@ unsigned int GameState::getLevel()
 void GameState::setLevel(unsigned int level)
 {
     mLevel = level;
+}
+
+void GameState::setEnergyOrbs(unsigned int energyOrbs)
+{
+    mEnergyOrbs = energyOrbs;
+}
+
+unsigned int GameState::getEnergyOrbs()
+{
+    return mEnergyOrbs;
 }

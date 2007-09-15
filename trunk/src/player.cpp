@@ -8,24 +8,30 @@
 
 Player::Player() :
 	Entity(115, 20, 10, 20, true),
-	mFrameCounter(0),
-	mDX(0),
-	mDY(0),
-	mAirResistance(AIR_RESISTANCE_LOW),
-	mShotPressed(false),
-	mShotReleased(true),
-	mShotBurstCounter(0),
-	mNumPods(5),
 	mPlayerAni("player.bmp", 1),
-	mPodAni("pod.bmp", 3),
-    mState(NEW),
-    mImortalButtonPressed(false)
+	mPodAni("pod.bmp", 3)
 {
+    reset();
 }
 
 Player::~Player()
 {
+}
 
+void Player::reset()
+{
+    mX = 115;
+    mY = 20;
+    mAirResistance = AIR_RESISTANCE_LOW;
+    mFrameCounter = 0;
+    mDX = 0;
+    mDY = 0;
+    mShotPressed = false;
+    mShotReleased = true;
+    mShotBurstCounter = 0;
+    mNumPods = 5;
+    mState = NEW;
+    mImortalButtonPressed = false;  
 }
 
 void Player::kill()
@@ -311,7 +317,7 @@ void Player::movementLogic(Level* level)
 
 bool Player::isToBeDeleted()
 {
-    return mState == DEAD;
+    return false;
 }
 
 int Player::getSpeed()
