@@ -7,7 +7,7 @@
 class Block: public Entity
 {
 public:
-    Block(int x, int y, int width, int height, const std::string& filename, int hitCount);
+    Block(int x, int y, int width, int height, const std::string& filename, int hitCount, bool withOrb = false);
     ~Block();
     void logic(Level* level);
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
@@ -22,6 +22,7 @@ protected:
     int mHitCount;
 	bool mIsHit;
     int mFrameCounter;
+	bool mWithOrb;
 };
 
 #endif

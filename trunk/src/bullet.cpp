@@ -7,7 +7,7 @@
 
 
 Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy, const std::string& filename, int damage)
-:Entity(x, y, w, h, true),
+:Entity(x - w / 2, y - w / 2, w, h, true),
  mType(type),
  mIsToBeDeleted(false)
 {
@@ -19,8 +19,8 @@ Bullet::Bullet(int x, int y, int w, int h, unsigned int type, float dx, float dy
 	mType = type;
 	mDx = dx;
 	mDy = dy;
-	mX = x;
-	mY = y;
+	mX = x - w / 2.0f;
+	mY = y - w / 2.0f;
 	//mFileName = fileName;
 	mDamage = damage;
 }

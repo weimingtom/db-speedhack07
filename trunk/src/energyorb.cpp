@@ -18,6 +18,7 @@ EnergyOrb::~EnergyOrb()
 void EnergyOrb::logic(Level* level)
 {
     mFrameCount++;
+	mY--;
 }
 
 void EnergyOrb::draw(BITMAP *dest, int scrolly, unsigned int layer)

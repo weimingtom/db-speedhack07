@@ -2,14 +2,15 @@
 
 #include "block.hpp"
 #include "level.hpp"
+#include "energyorb.hpp"
 
 
-
-Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount)
+Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount, bool withOrb)
 : Entity(x, y, width, height, true),
   mToBeDeleted(false),
   mHitCount(hitCount),
-  mFrameCounter(0)
+  mFrameCounter(0),
+  mWithOrb(withOrb)
 {
     mAnimation = new Animation(filename);
 	mIsHit = false;
@@ -62,6 +63,11 @@ void Block::handleCollision(Entity *other, Level *level)
 		{
 			level->spawnDebris(3, mX, mY, mW, mH);
 			mToBeDeleted = true;
+
+			if (mWithOrb)
+			{
+				level->addEntity(new EnergyOrb(mX, mY));
+			}
 		}
 	}
 }

@@ -16,7 +16,8 @@ GameState::GameState()
 : mLives(3),
 mLevel(1),
 mEnergyOrbs(0),
-mPods(1)
+mPods(1),
+mCannonLevel(4)
 {
 
 }
@@ -59,4 +60,14 @@ void GameState::setPods(unsigned int pods)
 unsigned int GameState::getPods()
 {
     return mPods;
+}
+
+void GameState::setCannonLevel(unsigned int cannonLevel)
+{
+	mCannonLevel = cannonLevel;
+}
+
+unsigned int GameState::getCannonLevel()
+{
+	return mCannonLevel;
 }

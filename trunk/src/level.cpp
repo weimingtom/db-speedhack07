@@ -217,7 +217,6 @@ void Level::logic()
 		<< mEnemyBulletEntities.size() << std::endl;
 
         */
-	if(key[KEY_SPACE]) { addShakeAmount(100); }
 
     if (mState == DIALOG)
     {
@@ -574,8 +573,28 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'E':
-                    entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
-                    mHibernatingEntities.push_back(entity);
+					if (mMotif == SPACE_MOTIF)
+                    {
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "spaceblock_e.bmp",
+												 6,
+												 true);                        
+                    }
+					else if (mMotif == WATER_MOTIF)
+                    {
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "spaceblock_e.bmp",
+												 6,
+												 true);                        
+                    }
+
+					mHibernatingEntities.push_back(staticEntity);
                     break;
 				case 'f':
                     entity = new Floater(col*BLOCK_SIZE,row*BLOCK_SIZE, 2);

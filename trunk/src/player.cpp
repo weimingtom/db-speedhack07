@@ -3,6 +3,7 @@
 #include "playerbullet.hpp"
 #include "util.hpp"
 #include "resourcehandler.hpp"
+#include "gamestate.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -35,7 +36,7 @@ void Player::reset()
     mShotPressed = false;
     mShotReleased = true;
     mShotBurstCounter = 0;
-    mNumPods = 10;
+	mNumPods = GameState::getInstance()->getPods();
     mState = NEW;
     mImortalButtonPressed = false;
 }
@@ -96,7 +97,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
     {
         mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
     }
-	//rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
+//	rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
 
 	for (int i = 0; i < mNumPods; i++)
 	{
@@ -314,9 +315,39 @@ void Player::movementLogic(Level* level)
 			int y = mY + mW;
 
 			float dx = sin(angle) * 10.0f;
-			float dy = cos(angle) * 10.0f + (mDY / 8);
-			PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 2, angle);
-			level->addEntity(bullet);			
+			float dy = cos(angle) * 10.0f;
+
+			PlayerBullet *bullet;
+			switch (GameState::getInstance()->getCannonLevel())
+			{
+			case 1:
+				bullet = new PlayerBullet(x, y, dx, dy + (mDY / 8), 2, angle);
+				level->addEntity(bullet);			
+				break;	
+			case 2:
+				bullet = new PlayerBullet(x + (int)(dy * 0.5f), y - (int)(dx * 0.5f), dx, dy + (mDY / 8), 2, angle);
+				level->addEntity(bullet);
+				bullet = new PlayerBullet(x - (int)(dy * 0.5f), y + (int)(dx * 0.5f), dx, dy + (mDY / 8), 2, angle);				
+				level->addEntity(bullet);
+				break;
+			case 3:
+				bullet = new PlayerBullet(x + (int)(dy * 0.5f), y - (int)(dx * 0.5f), dx, dy + (mDY / 8), 3, angle);
+				level->addEntity(bullet);
+				bullet = new PlayerBullet(x - (int)(dy * 0.5f), y + (int)(dx * 0.5f), dx, dy + (mDY / 8), 3, angle);				
+				level->addEntity(bullet);
+				break;
+			case 4:
+				bullet = new PlayerBullet(x + (int)(dy * 0.33f), y - (int)(dx * 0.33f), dx, dy + (mDY / 8), 3, angle);
+				level->addEntity(bullet);
+				bullet = new PlayerBullet(x - (int)(dy * 0.33f), y + (int)(dx * 0.33f), dx, dy + (mDY / 8), 3, angle);				
+				level->addEntity(bullet);
+				bullet = new PlayerBullet(x + (int)(dy * 1.0f), y - (int)(dx * 1.0f), dx, dy + (mDY / 8), 2, angle);				
+				level->addEntity(bullet);
+				bullet = new PlayerBullet(x - (int)(dy * 1.0f), y + (int)(dx * 1.0f), dx, dy + (mDY / 8), 2, angle);				
+				level->addEntity(bullet);
+				break;
+			}
+			
 			play_sample(mShotSample, 50, 128, 1000, 0);
 		}		
 

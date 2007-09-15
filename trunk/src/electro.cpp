@@ -16,7 +16,10 @@ void Electro::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	if (isOn())
 	{
-		mAnimation.drawFrame(dest, mFrameCounter / 3, mX, mY - scrolly);
+		int frame = mFrameCounter / 3;
+		bool vflip = ((frame / 3) & 1) != 0;
+		bool hflip = ((frame / 6) & 1) != 0;
+		mAnimation.drawFrame(dest, frame, mX, mY - scrolly, hflip, vflip);
 	}
 }
 bool Electro::killsPlayer()
