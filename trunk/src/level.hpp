@@ -106,6 +106,8 @@ protected:
 	bool mLogicDoneOnce;
 	float mShakeAmount;
 	int mAirResistance;
+
+    std::string mLevelName;
 };
 
 #endif

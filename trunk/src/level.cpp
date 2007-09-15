@@ -418,9 +418,12 @@ void Level::load(const std::string& filename)
     unsigned int row;
     unsigned int col;
 
-    std::string backgroundName = data[0];
+    std::string mLevelName = data[0];
+    data.erase(data.begin());
 
-    if (backgroundName == "SPACE")
+    std::string motifName = data[0];
+
+    if (motifName == "SPACE")
     {
         mMotif = SPACE_MOTIF;
         mBackground = new StarsBackground();
@@ -428,7 +431,7 @@ void Level::load(const std::string& filename)
 		playMusic("greaty.xm", 1.0f);
 		mAirResistance = Player::AIR_RESISTANCE_LOW;
     }
-    else if (backgroundName == "WATER")
+    else if (motifName == "WATER")
     {
         mMotif = WATER_MOTIF;
         mBackground = new WaterBackground();

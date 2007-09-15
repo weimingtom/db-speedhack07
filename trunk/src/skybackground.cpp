@@ -31,7 +31,6 @@ void SkyBackground::logic(Level* level)
 
 	for (unsigned int i = 0; i < mParticles.size(); i++) 
     {
-		mParticles[i].x += mParticles[i].dx;
 		mParticles[i].y += mParticles[i].dy;
 	}
 
