@@ -68,10 +68,6 @@ public:
     static const int POWER_UP_TYPE = 6;
 
 protected:
-
-	void spawnDebris(Level *level, int amount, int x, int y, int w, int h);
-    void spawnExplosions(Level *level, int amount, int x, int y, int w, int h);
-
 	int mX, mY, mW, mH;
 	bool mCollidable;
 };

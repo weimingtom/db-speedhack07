@@ -36,6 +36,9 @@ public:
 
 	int getLevelLength() { return mLevelLength; }
 
+	void spawnDebris(int amount, int x, int y, int w, int h);
+    void spawnExplosions(int amount, int x, int y, int w, int h);
+
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;

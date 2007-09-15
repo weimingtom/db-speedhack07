@@ -31,7 +31,7 @@ void Player::reset()
     mShotPressed = false;
     mShotReleased = true;
     mShotBurstCounter = 0;
-    mNumPods = 5;
+    mNumPods = 3;
     mState = NEW;
     mImortalButtonPressed = false;  
 }
@@ -162,9 +162,8 @@ void Player::logic(Level* level)
 
         if (mFrameCounter % 10 < 2)
         {
-
-            spawnDebris(level, 1, mX, mY, mW, mH);
-            spawnExplosions(level, 1, mX, mY, mW, mH);
+            level->spawnDebris(1, mX, mY, mW, mH);
+            level->spawnExplosions(1, mX, mY, mW, mH);
         }
 
         if (mFrameCounter > 100)
@@ -311,6 +310,7 @@ void Player::movementLogic(Level* level)
 				int y = mY + 8;
 				
 				float a = angle + getPodOffsetFloat(i) / 30.0f;
+				a = getPodOffsetFloat(i) / 50.0f;
 				float dx = sin(a) * 8.0f;
 				float dy = cos(a) * 8.0f + (mDY / 8);
 				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, a);

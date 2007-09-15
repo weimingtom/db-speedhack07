@@ -14,6 +14,7 @@
 #include "energyorb.hpp"
 #include "music.hpp"
 #include "util.hpp"
+#include "debris.hpp"
 
 #include <iostream>
 
@@ -382,11 +383,17 @@ void Level::load(const std::string& filename)
     if (backgroundName == "SPACE")
     {
         mMotif = SPACE_MOTIF;
-        mBackground = new WaterBackground();
-		//mEntities.push_back(new Planet());
+        mBackground = new StarsBackground();
+		mEntities.push_back(new Planet());
 		playMusic("greaty.xm", 1.0f);
     }
-    else
+    else if (backgroundName == "WATER")
+    {
+        mMotif = WATER_MOTIF;
+        mBackground = new WaterBackground();
+		playMusic("greaty.xm", 1.0f);
+    }
+	else
     {
         throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE)!");
     }
@@ -620,4 +627,50 @@ void Level::checkStaticCollision(std::list<Entity*>& list)
             }
         }
     }
+}
+
+void Level::spawnDebris(int amount, int x, int y, int w, int h)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		Debris *d = new Debris(x + rand() % w,
+							   y + rand() % h,
+							   (frand() - 0.5f) * 5.0f,
+							   (frand() - 0.2f) * 10.0f,
+							   "debris.bmp", 
+                               2);
+
+		addEntity(d);
+	}
+
+	if (mMotif == WATER_MOTIF)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			Debris *d = new Debris(x + rand() % w,
+								   y + rand() % h,
+								   (frand() - 0.5f) * 5.0f,
+								   (frand() - 0.5f) * 10.0f,
+								   rand() & 1 ? "bubble.bmp" : "bubblesmall.bmp", 
+								   2);
+
+			addEntity(d);
+		}
+	}
+}
+
+void Level::spawnExplosions(int amount, int x, int y, int w, int h)
+{
+	for (int i = 0; i < amount; i++)
+	{
+		Debris *d = new Debris(x + rand() % w,
+							   y + rand() % h,
+							   (frand() - 0.5f) * 5.0f,
+							   (frand() - 0.2f) * 10.0f,
+							   "explosion.bmp", 
+                               3, 
+                               true);
+
+		addEntity(d);
+	}
 }

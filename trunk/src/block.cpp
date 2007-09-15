@@ -40,7 +40,7 @@ void Block::handleCollision(Entity *other, Level *level)
         // and spawn debri.
         if (mHitCount - 1 >= 0)
         {
-            spawnDebris(level, 3, mX, mY, mW, mH);
+            level->spawnDebris(3, mX, mY, mW, mH);
 		    mToBeDeleted = true;
         }
 
@@ -60,7 +60,7 @@ void Block::handleCollision(Entity *other, Level *level)
 		mIsHit = true;
 		if(mHitCount <= 0)
 		{
-			spawnDebris(level, 3, mX, mY, mW, mH);
+			level->spawnDebris(3, mX, mY, mW, mH);
 			mToBeDeleted = true;
 		}
 	}

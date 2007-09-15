@@ -90,8 +90,8 @@ void Mine::handleCollision(Entity *other, Level *level)
 	}
 	if(!mCollidable)
 	{
-		spawnDebris(level, 8, mX, mY, mW, mH);
-        spawnExplosions(level, 10, mX, mY, mW, mH);
+		level->spawnDebris(8, mX, mY, mW, mH);
+        level->spawnExplosions(10, mX, mY, mW, mH);
 		level->addShakeAmount(100);
 		int pan = (getCenterX() * 256) / 240;
 		if (pan < 0)
