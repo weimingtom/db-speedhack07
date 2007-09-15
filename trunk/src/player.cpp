@@ -336,16 +336,19 @@ void Player::movementLogic(Level* level)
 				bullet = new PlayerBullet(x - (int)(dy * 0.5f), y + (int)(dx * 0.5f), dx, dy + (mDY / 8), 3, angle);				
 				level->addEntity(bullet);
 				break;
-			case 4:
-				bullet = new PlayerBullet(x + (int)(dy * 0.33f), y - (int)(dx * 0.33f), dx, dy + (mDY / 8), 3, angle);
-				level->addEntity(bullet);
-				bullet = new PlayerBullet(x - (int)(dy * 0.33f), y + (int)(dx * 0.33f), dx, dy + (mDY / 8), 3, angle);				
-				level->addEntity(bullet);
-				bullet = new PlayerBullet(x + (int)(dy * 1.0f), y - (int)(dx * 1.0f), dx, dy + (mDY / 8), 2, angle);				
-				level->addEntity(bullet);
-				bullet = new PlayerBullet(x - (int)(dy * 1.0f), y + (int)(dx * 1.0f), dx, dy + (mDY / 8), 2, angle);				
-				level->addEntity(bullet);
-				break;
+			default:
+				{
+					int pow = GameState::getInstance()->getCannonLevel() - 4;
+					bullet = new PlayerBullet(x + (int)(dy * 1.0f), y - (int)(dx * 1.0f), dx * 0.85, dy * 0.85 + (mDY / 8), 2 + pow, angle);				
+					level->addEntity(bullet);
+					bullet = new PlayerBullet(x - (int)(dy * 1.0f), y + (int)(dx * 1.0f), dx * 0.85, dy * 0.85 + (mDY / 8), 2 + pow, angle);				
+					level->addEntity(bullet);
+					bullet = new PlayerBullet(x + (int)(dy * 0.4f), y - (int)(dx * 0.4f), dx, dy + (mDY / 8), 3 + pow, angle);
+					level->addEntity(bullet);
+					bullet = new PlayerBullet(x - (int)(dy * 0.4f), y + (int)(dx * 0.4f), dx, dy + (mDY / 8), 3 + pow, angle);				
+					level->addEntity(bullet);
+					break;
+				}
 			}
 			
 			play_sample(mShotSample, 50, 128, 1000, 0);

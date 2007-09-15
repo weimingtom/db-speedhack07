@@ -22,7 +22,7 @@ PlayerBullet::PlayerBullet(int x, int y, float dx, float dy, unsigned int damage
 		frame = 4;
 	}
 
-	int d = std::min((int)damage - 1, 1);
+	int d = std::min((int)damage - 1, 2);
 
 	frame += 5 * d;
 }

@@ -17,7 +17,7 @@ GameState::GameState()
 mLevel(1),
 mEnergyOrbs(100),
 mPods(1),
-mCannonLevel(4)
+mCannonLevel(7)
 {
 
 }
