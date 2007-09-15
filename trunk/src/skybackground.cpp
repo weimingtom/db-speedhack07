@@ -11,28 +11,19 @@ SkyBackground::SkyBackground() :
 {
 	mBackgroundColors = ResourceHandler::getInstance()->getBitmap("skybackground.bmp");
 
-	for (int i = 0; i < 100; i++)
-	{
-		float x = frand() * 240 * 20;
-		float y = frand() * 240 * 20;
-		float z = frand() * 15 + 5;
-        float dy = frand() * 5 + 1;
-		mParticles.push_back(Particle(x, y, z, dy));
-	}	
+    mCloud1 = new Animation("cloud1.bmp", 1);
+    mCloud2 = new Animation("cloud2.bmp", 1);
 }
 
 SkyBackground::~SkyBackground()
 {
+    delete mCloud1;
+    delete mCloud2;
 }
 
 void SkyBackground::logic(Level* level)
 {
 	mLevelLength = level->getLevelLength();
-
-	for (unsigned int i = 0; i < mParticles.size(); i++) 
-    {
-		mParticles[i].y += mParticles[i].dy;
-	}
 
 	mFrameCounter++;
 }
@@ -65,13 +56,9 @@ void SkyBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 
 	clear_to_color(dest, bgColor);
 
-	for (unsigned int i = 0; i < mParticles.size(); i++)
-	{
-		int x = mod(int(mParticles[i].x / mParticles[i].z), 240);
-		int y = mod(int((mParticles[i].y - scrolly) / mParticles[i].z), 240);
+    mCloud2->drawFrame(dest, 0, 0, - ((scrolly / 3) % 480));
+    mCloud2->drawFrame(dest, 0, 0, -((scrolly  / 3) % 480) + 480);
 
-		int c = (i * 100) / mParticles.size();
-
-		putpixel(dest, x, y, makecol(100 + c, 120 + c, 150 + c));
-	}
+    mCloud1->drawFrame(dest, 0, 0, - ((scrolly * 2) % 480));
+    mCloud1->drawFrame(dest, 0, 0, - ((scrolly * 2) % 480) + 480);
 }

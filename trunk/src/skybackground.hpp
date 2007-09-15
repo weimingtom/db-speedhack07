@@ -2,6 +2,7 @@
 #define DBSP07_SKYBACKGROUND_HPP
 
 #include "entity.hpp"
+#include "animation.hpp"
 
 #include <vector>
 
@@ -20,13 +21,7 @@ protected:
 	int mLevelLength;
 	int mFrameCounter;
 
-	class Particle {
-	public:
-		Particle(float _x, float _y, float _z, float _dy) :
-		  x(_x), y(_y), z(_z), dy(_dy) {}
-		float x, y, z, dy;
-	};
-
-	std::vector<Particle> mParticles;
+    Animation* mCloud1;
+    Animation* mCloud2;
 };
 #endif
