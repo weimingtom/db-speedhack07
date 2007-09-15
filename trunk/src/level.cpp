@@ -20,7 +20,8 @@ Level::Level(const std::string& filename)
   mScrollSpeed(0.0f),
   mGameScrollFloat(0.0f),
   mFrameCounter(0),
-  mLevelLength(0)
+  mLevelLength(0),
+  mTimeCounter(0)
 {
     load(filename);
 	mPlayer = new Player();
@@ -41,6 +42,7 @@ Level::~Level()
     delete mLivesLabel;
     delete mEnergyOrbsLabel;
     delete mGameOverLabel;
+    delete mTimeLabel;
 
     std::list<Entity *>::iterator it;
 
@@ -81,17 +83,23 @@ void Level::initGui()
     mDialog->setVisible(false);
     mTop->add(mDialog, 40, 240 - 75);
 
-    mLivesLabel = new gcn::Label(" 1x~");
-    mTop->add(mLivesLabel, 0, 0);
+    mLivesLabel = new gcn::Label("1x~");
+    mTop->add(mLivesLabel, 5, 0);
 
-    mEnergyOrbsLabel = new gcn::Label(" 1x}");
-    mTop->add(mEnergyOrbsLabel, 0, mLivesLabel->getHeight());
+    mEnergyOrbsLabel = new gcn::Label("1x}");
+    mTop->add(mEnergyOrbsLabel, 5, mLivesLabel->getHeight());
+
+    mTimeLabel = new gcn::Label("T00:00.00");
+    mTop->add(mTimeLabel, 5, mLivesLabel->getHeight()*4);
+
+    mTimeCaptionLabel = new gcn::Label("TIME");
+    mTop->add(mTimeCaptionLabel, 5, mLivesLabel->getHeight() * 3);
 
     mGameOverLabel = new gcn::Label("GAME OVER");
     mGameOverLabel->adjustSize();
     mGameOverLabel->setVisible(false);
     mTop->add(mGameOverLabel, 
-              160 - mGameOverLabel->getWidth() / 2,
+              160 - mGameOverLabel->getWidth() / 2 + 20,
               120 - mGameOverLabel->getHeight() / 2);
 }
 // Predicate function used to remove entities.
@@ -102,7 +110,7 @@ static bool isNull(Entity *e)
 
 void Level::draw(BITMAP* dest)
 {
-    BITMAP* subdest = create_sub_bitmap(dest, 40, 0, 240, 240); 	
+    BITMAP* subdest = create_sub_bitmap(dest, 60, 0, 240, 240); 	
 
     mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::BACKGROUND_LAYER);
 
@@ -122,6 +130,8 @@ void Level::draw(BITMAP* dest)
 	drawMousePointer(subdest);
 
     destroy_bitmap(subdest);
+    vline(dest, 59, 0, 240, makecol(100, 100, 100));
+    vline(dest, 300, 0, 240, makecol(100, 100, 100));
 
     mGraphics->setTarget(dest);
     mGui->draw();
@@ -229,7 +239,7 @@ void Level::logic()
         }
         else
         {
-            mLivesLabel->setCaption(" " + toString(GameState::getInstance()->getLives()) + "x~");
+            mLivesLabel->setCaption("0" + toString(GameState::getInstance()->getLives()) + "x~");
         }
         
         mLivesLabel->adjustSize();
@@ -240,12 +250,41 @@ void Level::logic()
         }
         else
         {
-            mEnergyOrbsLabel->setCaption(" " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
+            mEnergyOrbsLabel->setCaption("0" + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
         }
         
         mEnergyOrbsLabel->adjustSize();
 
+        int hundredsOfSecond = (mTimeCounter * 2) % 100;
+        int seconds = mTimeCounter / 50;
+
+        std::string time = "";
+
+        if (seconds < 10)
+        {
+            time += "00";
+        }
+        else if (seconds < 100)
+        {
+            time += "0";
+        }
+       
+
+        time += toString(seconds) + ".";
+
+        if (hundredsOfSecond < 10)
+        {
+            time += "0";
+        }
+
+        time += toString(hundredsOfSecond);
+
+        mTimeLabel->setCaption(time);
+        mTimeLabel->adjustSize();
+
         mGui->logic();
+
+        mTimeCounter++;
     }
 
     mFrameCounter++;

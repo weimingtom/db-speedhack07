@@ -81,10 +81,13 @@ protected:
     Dialog* mDialog;
     gcn::Label* mLivesLabel;
     gcn::Label* mEnergyOrbsLabel;
+    gcn::Label* mTimeLabel;
+    gcn::Label* mTimeCaptionLabel;
     gcn::Label* mGameOverLabel;
     unsigned int mState;
     std::list<std::string> mDialogText;
     int mFrameCounter;
+    int mTimeCounter;
 
 	float mScrollSpeed;
 	float mGameScrollFloat;
