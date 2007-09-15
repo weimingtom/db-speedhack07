@@ -7,7 +7,13 @@
 class Debris : public Entity
 {
 public:
-	Debris(int x, int y, float dx, float dy, const std::string& file, int animSpeed = 5, int autoRemove = false);
+	Debris(int x, 
+           int y, 
+           float dx, 
+           float dy, 
+           const std::string& file, 
+           int animSpeed = 5, 
+           bool autoRemove = false);
 	
 	virtual void draw(BITMAP *dest, int scrolly, unsigned int layer);
 

@@ -3,11 +3,11 @@
 #include "debris.hpp"
 #include "level.hpp"
 
-Debris::Debris(int x, int y, float dx, float dy, const std::string& file, int animSpeed, int autoRemove) :
+Debris::Debris(int x, int y, float dx, float dy, const std::string& file, int animSpeed, bool autoRemove) :
 	Entity(false),
 	mAnimation(file),
 	mAnimSpeed(animSpeed),
-	mAutoRemove(false),
+	mAutoRemove(autoRemove),
 	mToBeDeleted(false),
 	mFrameCounter(0)
 {

@@ -68,8 +68,8 @@ void Mine::handleCollision(Entity *other, Level *level)
 		//spawnDebris(level, 1, mX, mY, mW, mH);
 		if(mHitCount <= 0)
 		{
-			//todo some explosions
 			spawnDebris(level, 2, mX, mY, mW, mH);
+            spawnExplosions(level, 10, mX, mY, mW, mH);
 			mToBeDeleted = true;
 			mCollidable = false; //do not collide while blinking
 		}
