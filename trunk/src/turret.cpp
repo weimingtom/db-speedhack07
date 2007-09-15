@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 
 #include "turret.hpp"
 #include "enemybullet.hpp"
@@ -27,18 +28,33 @@ void Turret::logic(Level* level)
 	mFrameCount++;
 	if(mFrameCount%60 == 0)
 	{
-		//mIsTimeToFire = true;
-		float xSpeed=0, ySpeed=0, direction=0;
-		if(mDirection == RIGHT) { xSpeed = 1.5f; direction = M_PI/2.0f; }
-		if(mDirection == LEFT) { xSpeed = -1.5f; direction = M_PI/2.0f; }
-		if(mDirection == UP) { ySpeed = -1.5f; direction = 0.0f; }
-		if(mDirection == DOWN) { ySpeed = 1.5f; direction = 0.0f; }
-		for(int i=0; i<mShots; i++)
-		{
-			level->addEntity(new EnemyBullet(getCenterX(), getCenterY(), xSpeed, ySpeed, 1, direction));
+		float speed = 1.5;
+		float shootingArc = (M_PI*(1/4.0f));
+		float leftArc = M_PI - shootingArc;
+		float angle = M_PI/2.0f;
+		
+		if(mShots <= 1) {
+				if(mDirection == LEFT) angle += M_PI;
+				if(mDirection == DOWN) angle -= M_PI/2.0f;
+				if(mDirection == UP) angle += M_PI/2.0f;
+				float xSpeed=std::sin(angle)*speed, ySpeed=std::cos(angle)*speed;
+
+				level->addEntity(new EnemyBullet(getCenterX(), getCenterY(), xSpeed, ySpeed, 1, angle));
+
+		} else {
+			for(int i=0; i<mShots; i++)
+			{
+				angle = shootingArc*(i/((float)(mShots-1)));
+				angle += leftArc/2.0f;
+				if(mDirection == LEFT) angle += M_PI;
+				if(mDirection == DOWN) angle -= M_PI/2.0f;
+				if(mDirection == UP) angle += M_PI/2.0f;
+				float xSpeed=std::sin(angle)*speed, ySpeed=std::cos(angle)*speed;
+
+				level->addEntity(new EnemyBullet(getCenterX(), getCenterY(), xSpeed, ySpeed, 1, angle));
+			}
 		}
 
-		//new PlayerBullet(
 	}
 }
 
