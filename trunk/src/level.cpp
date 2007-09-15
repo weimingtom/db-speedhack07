@@ -6,6 +6,7 @@
 #include "block.hpp"
 #include "mine.hpp"
 #include "turret.hpp"
+#include "floater.hpp"
 #include "waterbackground.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
@@ -555,6 +556,10 @@ void Level::load(const std::string& filename)
                    break;
 				case 'E':
                     entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
+                    mHibernatingEntities.push_back(entity);
+                    break;
+				case 'f':
+                    entity = new Floater(col*BLOCK_SIZE,row*BLOCK_SIZE, 2);
                     mHibernatingEntities.push_back(entity);
                     break;
 				case '~':
