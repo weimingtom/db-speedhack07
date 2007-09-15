@@ -31,4 +31,7 @@ SPACE
 1.............1
 1.......0.....1
 DIALOG
-B Hello!
+D HAHAHA!
+B KILL KILL
+F Love!
+C Hug!

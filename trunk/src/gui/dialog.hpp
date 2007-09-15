@@ -45,6 +45,22 @@ private:
     gcn::ImageFont* mFont;
 
     SAMPLE* mBeepSample;
+
+    gcn::Image* mBomb;
+    gcn::Image* mFluffyLove;
+    gcn::Image* mCuddelz;
+    gcn::Image* mDoctorMad;
+
+    enum
+    {
+        NONE,
+        BOMB,
+        FLUFFY_LOVE,
+        CUDDELZ,
+        DOCTOR_MAD
+    };
+
+    unsigned int mCharacter;
 };
 
 #endif

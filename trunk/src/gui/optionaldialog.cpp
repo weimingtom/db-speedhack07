@@ -16,7 +16,7 @@ OptionalDialog::OptionalDialog()
 
     mShopButton = new DBSH07Button("Shop");
     mShopButton->addActionListener(this);
-    add(mShopButton, 20, mQueryLabel->getHeight() + mBonusLevelButton->getHeight());
+    add(mShopButton, 20, mQueryLabel->getHeight() + mBonusLevelButton->getHeight() + 5);
 }
 
 OptionalDialog::~OptionalDialog()

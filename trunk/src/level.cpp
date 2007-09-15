@@ -201,11 +201,15 @@ void Level::logic()
 
     if (mState == DIALOG)
     {
-         mGui->logic();
+        mPlayer->setState(Player::IDLE);
+        mBackground->logic(this);
+        mPlayer->logic(this);
+        mGui->logic();
 
         if (!mDialog->isVisible() && mDialogText.empty())
         {
             mState = GAME;
+            mPlayer->setState(Player::NEW);
         }
         else if (!mDialog->isVisible())
         {
@@ -414,7 +418,7 @@ void Level::load(const std::string& filename)
     if (backgroundName == "SPACE")
     {
         mMotif = SPACE_MOTIF;
-        mBackground = new BonusBackground();
+        mBackground = new StarsBackground();
 		mEntities.push_back(new Planet());
 		playMusic("greaty.xm", 1.0f);
     }

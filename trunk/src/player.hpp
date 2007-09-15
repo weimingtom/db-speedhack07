@@ -19,6 +19,7 @@ public:
 	float getPodOffsetFloat(int i);
 	float getPodDepth(int i);
     void kill();
+    void setState(unsigned int state);
     unsigned int getState();
 	int getSpeed();
 
@@ -35,7 +36,8 @@ public:
         KILLED,
         DEAD,
         IMORTAL,
-        NEW
+        NEW,
+        IDLE
     };
 
 private:

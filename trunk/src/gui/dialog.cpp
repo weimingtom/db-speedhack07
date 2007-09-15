@@ -8,7 +8,8 @@
 Dialog::Dialog()
     :mWriteSpeed(3),
     mWriteFast(false),
-    mFrameCounter(0)
+    mFrameCounter(0),
+    mCharacter(NONE)
 {
     mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
     mCornerUL = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-cornerul.bmp"));
@@ -17,6 +18,10 @@ Dialog::Dialog()
 	mCornerDR = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-cornerdr.bmp"));
 	mHorizontal = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-horizontal.bmp"));
 	mVertical = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-vertical.bmp"));
+    mBomb = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("bomb.bmp"));
+    mFluffyLove = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("fluffylove.bmp"));
+    mCuddelz= gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("cuddelz.bmp"));
+    mDoctorMad = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("doctormad.bmp"));
 
     mFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 127);
     mFont->setGlyphSpacing(-2);
@@ -28,6 +33,10 @@ Dialog::Dialog()
 
 Dialog::~Dialog()
 {
+    delete mDoctorMad;
+    delete mCuddelz;
+    delete mFluffyLove;
+    delete mBomb;
     delete mCornerUL;
     delete mCornerUR;
     delete mCornerDL;
@@ -95,14 +104,24 @@ void Dialog::draw(gcn::Graphics *graphics)
 		    end = textLeft.rfind(" ", i);
 	    }
 	    
+        int x;
+        if (mCharacter == NONE)
+        {
+            x = 5;
+        }
+        else
+        {
+            x = 64;
+        }
+
         std::string row = textLeft.substr(0, end);
 	    if (end != textLeft.length()) 
         {
-		    graphics->drawText(row, 64, mFont->getHeight() * rownum + 8);
+            graphics->drawText(row, x, mFont->getHeight() * rownum + 8);
 	    } 
         else
         {
-            graphics->drawText(row, 64, mFont->getHeight() * rownum + 8);
+            graphics->drawText(row, x, mFont->getHeight() * rownum + 8);
 
 	    }
 	    rownum++;
@@ -123,12 +142,54 @@ void Dialog::draw(gcn::Graphics *graphics)
                            getHeight() - 15 - mFont->getHeight());
     }
 
+    if (mCharacter == BOMB)
+    {
+        graphics->drawImage(mBomb, 5, 8);
+    }
+    else if (mCharacter == FLUFFY_LOVE)
+    {
+        graphics->drawImage(mFluffyLove, 5, 8);
+    }
+    else if (mCharacter == CUDDELZ)
+    {
+        graphics->drawImage(mCuddelz, 5, 8);
+    }
+    else if (mCharacter == DOCTOR_MAD)
+    {
+        graphics->drawImage(mDoctorMad, 5, 8);
+    }
+
     graphics->popClipArea();
 }
 
 void Dialog::setText(const std::string &text)
 {
-    mText = text;
+    if (text.size() > 1 && text.at(0) == 'B')
+    {
+        mCharacter = BOMB;
+        mText = text.substr(1, text.size() - 1);
+    }
+    else if (text.size() > 1 && text.at(0) == 'F')
+    {
+        mCharacter = FLUFFY_LOVE;
+        mText = text.substr(1, text.size() - 1);
+    }
+    else if (text.size() > 1 && text.at(0) == 'C')
+    {
+        mCharacter = CUDDELZ;
+        mText = text.substr(1, text.size() - 1);
+    }
+    else if (text.size() > 1 && text.at(0) == 'D')
+    {
+        mCharacter = DOCTOR_MAD;
+        mText = text.substr(1, text.size() - 1);
+    }
+    else
+    {
+        mCharacter = NONE;
+       mText = text;
+    }
+
     mWriteFast = false;
     mLettersWritten = 0;
     mWriteSpeed = 3;  

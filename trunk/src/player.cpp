@@ -20,6 +20,11 @@ Player::~Player()
 {
 }
 
+void Player::setState(unsigned int state)
+{
+    mState = state;
+}
+
 void Player::reset()
 {
     mX = 115;
