@@ -441,19 +441,35 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(entity);
                    break;
                 case 'r':
-					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::RIGHT);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::RIGHT, 1);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'l':
-					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::LEFT);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::LEFT, 1);
                     mHibernatingEntities.push_back(entity);
                    break;
                 case 'u':
-					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::UP);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::UP, 1);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'd':
-					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::DOWN);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::DOWN, 1);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+                case 'R':
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::RIGHT, 3);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+				case 'L':
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::LEFT, 3);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+                case 'U':
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::UP, 3);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+				case 'D':
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::DOWN, 3);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'E':

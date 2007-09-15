@@ -15,7 +15,7 @@ public:
 		RIGHT
     };
 
-    Turret(int x, int y, FireDirection direction);
+    Turret(int x, int y, FireDirection direction, int shots);
     ~Turret();
     void logic(Level* level);
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
@@ -33,7 +33,7 @@ protected:
 	bool mIsToBeDeleted;
 	bool mRenderAsHit;
 	FireDirection mDirection;
-	//bool mIsTimeToFire;
+	int mShots;
 	
 };
 

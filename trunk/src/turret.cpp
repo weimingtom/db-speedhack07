@@ -6,12 +6,13 @@
 #include "level.hpp"
 #include "util.hpp"
 
-Turret::Turret(int x, int y, FireDirection direction)
+Turret::Turret(int x, int y, FireDirection direction, int shots)
 : Enemy(x, y, 16, 16, true),
   mIsToBeDeleted(false),
   mDirection(direction),
   mFrameCount(0),
-  mHitCount(4)
+  mHitCount(4),
+  mShots(shots)
 {
     mAnimation = new Animation("turret.bmp");
 }
