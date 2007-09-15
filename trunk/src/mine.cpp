@@ -67,8 +67,6 @@ void Mine::handleCollision(Entity *other, Level *level)
 		//spawnDebris(level, 1, mX, mY, mW, mH);
 		if(mHitCount <= 0)
 		{
-			spawnDebris(level, 2, mX, mY, mW, mH);
-            spawnExplosions(level, 10, mX, mY, mW, mH);
 			mToBeDeleted = true;
 			mCollidable = false; //do not collide while blinking
 		}
@@ -83,8 +81,15 @@ void Mine::handleCollision(Entity *other, Level *level)
     }
     else if(other->isCollidable())
 	{
+		mCollidable = false;
 		mToBeDeleted = true;
 	}
+	if(!mCollidable)
+	{
+		spawnDebris(level, 8, mX, mY, mW, mH);
+        spawnExplosions(level, 10, mX, mY, mW, mH);
+	}
+
 }
 
 void Mine::draw(BITMAP *dest, int scrolly, unsigned int layer)

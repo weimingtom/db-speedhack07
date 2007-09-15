@@ -5,6 +5,7 @@
 #include "stringutil.hpp"
 #include "block.hpp"
 #include "mine.hpp"
+#include "staticshooter.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
 #include "gamestate.hpp"
@@ -175,7 +176,7 @@ void Level::logic()
         checkCollision(mEnemyEntities, mPlayerEntities);
         checkStaticCollision(mPlayerEntities);
         checkStaticCollision(mPlayerBulletEntities);
-        //checkCollision(mEnemyEntities, mEnemyEntities);
+        checkCollision(mEnemyEntities, mEnemyEntities);
      
         std::list<Entity *>::iterator it;
 
@@ -342,6 +343,14 @@ void Level::load(const std::string& filename)
                    break;
                 case 'm':
                     entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, true);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+                case 'S':
+					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::RIGHT);
+                    mHibernatingEntities.push_back(entity);
+                   break;
+				case 's':
+					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::LEFT);
                     mHibernatingEntities.push_back(entity);
                    break;
                 case 'E':
