@@ -21,6 +21,9 @@ public:
     void addEntity(Entity* entity);
     void spawnNewPlayer();
 
+    bool isGameOver();
+    bool isLevelComplete();
+
 	int getMouseX();
 	int getMouseY();
 	Player* getPlayer();
@@ -45,13 +48,16 @@ protected:
     enum State
     {
         DIALOG,
-        GAME
+        GAME,
+        GAMEOVER,
+        LEVELCOMPLETE
     };
 
 	void updateScrolling();
 	void drawMousePointer(BITMAP *dest);
     void checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2);
     void checkStaticCollision(std::list<Entity*>& list);
+    void initGui();
 
     std::list<Entity*> mEntities;
     std::list<Entity*> mHibernatingEntities;
@@ -71,8 +77,11 @@ protected:
     gcn::ImageFont* mImageFont;
     gcn::Container* mTop;
     Dialog* mDialog;
+    gcn::Label* mLivesLabel;
+    gcn::Label* mGameOverLabel;
     unsigned int mState;
     std::list<std::string> mDialogText;
+    int mFrameCounter;
 
 	float mScrollSpeed;
 	float mGameScrollFloat;

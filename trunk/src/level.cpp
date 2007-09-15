@@ -7,6 +7,7 @@
 #include "mine.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
+#include "gamestate.hpp"
 #include "planet.hpp"
 
 #include <iostream>
@@ -16,12 +17,48 @@ Level::Level(const std::string& filename)
   mBackgroundScrollY(0),
   mScrollSpeed(0.0f),
   mGameScrollFloat(0.0f),
+  mFrameCounter(0),
   mLevelLength(0)
 {
     load(filename);
 	mPlayer = new Player();
 	addEntity(mPlayer);
 
+    initGui();
+}
+
+Level::~Level()
+{
+    delete mGui;
+    delete mImageLoader;
+    delete mGraphics;
+    delete mInput;
+    delete mTop;
+    delete mImageFont;
+    delete mDialog;
+    delete mLivesLabel;
+    delete mGameOverLabel;
+
+    std::list<Entity *>::iterator it;
+
+    for (it = mEntities.begin(); it != mEntities.end(); it++)
+    {
+        delete (*it);
+    }
+}
+
+bool Level::isGameOver()
+{
+    return mState == GAMEOVER && mFrameCounter > 200;
+}
+
+bool Level::isLevelComplete()
+{
+    return false;
+}
+
+void Level::initGui()
+{
     mGui = new gcn::Gui();
     mGraphics = new gcn::AllegroGraphics();
     mInput = new gcn::ExtendedAllegroInput();
@@ -40,26 +77,17 @@ Level::Level(const std::string& filename)
     mDialog->setSize(240, 75);
     mDialog->setVisible(false);
     mTop->add(mDialog, 40, 240 - 75);
+
+    mLivesLabel = new gcn::Label(" 1x~");
+    mTop->add(mLivesLabel, 0, 0);
+
+    mGameOverLabel = new gcn::Label("GAME OVER");
+    mGameOverLabel->adjustSize();
+    mGameOverLabel->setVisible(false);
+    mTop->add(mGameOverLabel, 
+              160 - mGameOverLabel->getWidth() / 2,
+              120 - mGameOverLabel->getHeight() / 2);
 }
-
-Level::~Level()
-{
-    delete mGui;
-    delete mImageLoader;
-    delete mGraphics;
-    delete mInput;
-    delete mTop;
-    delete mImageFont;
-    delete mDialog;
-
-    std::list<Entity *>::iterator it;
-
-    for (it = mEntities.begin(); it != mEntities.end(); it++)
-    {
-        delete (*it);
-    }
-}
-
 // Predicate function used to remove entities.
 static bool isNull(Entity *e) 
 {
@@ -130,6 +158,15 @@ void Level::logic()
 
         mBackgroundScrollY++;
     }
+    else if (mState == GAMEOVER)
+    {
+        std::list<Entity *>::iterator it;
+
+        for (it = mEntities.begin(); it != mEntities.end(); it++)
+        {
+	        (*it)->logic(this);
+        }
+    }
     else if (mState == GAME)
     {
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
@@ -175,23 +212,51 @@ void Level::logic()
 
         mEntities.remove_if(isNull);
 
-        //mBackgroundScrollY++;
-
 	    updateScrolling();
 
+        if (GameState::getInstance()->getLives() > 9)
+        {
+            mLivesLabel->setCaption(toString(GameState::getInstance()->getLives()) + "x~");
+        }
+        else
+        {
+            mLivesLabel->setCaption(" " + toString(GameState::getInstance()->getLives()) + "x~");
+        }
+        
+        mLivesLabel->adjustSize();
         mGui->logic();
     }
+
+    mFrameCounter++;
 }
 
 void Level::spawnNewPlayer()
 {
-    mPlayer = new Player();
-    mPlayer->setY(mGameScrollY);
-    addEntity(mPlayer);
+    if (GameState::getInstance()->getLives() >= 1)
+    {
+        mPlayer = new Player();
+        mPlayer->setY(mGameScrollY);
+        addEntity(mPlayer);
+
+        GameState::getInstance()->setLives(GameState::getInstance()->getLives() - 1);
+    }
+    else
+    {
+        mPlayer = NULL;
+        mState = GAMEOVER;
+        mGameOverLabel->setVisible(true);
+        mFrameCounter = 0;
+    }
 }
 
 void Level::updateScrolling()
 {
+    // The player might have been deleted prior to this update.
+    if (mPlayer == NULL)
+    {
+        return;
+    }
+
     if (mPlayer->getState() == Player::KILLED)
     {
         // Do nothing, that is freeze the camera.

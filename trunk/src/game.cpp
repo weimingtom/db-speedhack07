@@ -2,6 +2,7 @@
 
 #include <allegro.h>
 
+#include "gamestate.hpp"
 #include "resourcehandler.hpp"
 #include "timer.hpp"
 #include "exception.hpp"
@@ -10,7 +11,8 @@
 #include <iostream>
 
 Game::Game()
-:mPauseButtonPressed(false)
+:mPauseButtonPressed(false),
+mLevel(NULL)
 {
     allegro_init();
     install_keyboard();
@@ -44,7 +46,8 @@ Game::Game()
 
     mSplashScreen = new SplashScreen();
 	initGui();
-    mLevel = new Level("level1.txt");
+
+    GameState::getInstance()->setLevel(1);
 
 	initMusic();
 }
@@ -87,6 +90,12 @@ void Game::logic()
 			break;
         case LEVEL:
             mLevel->logic();
+
+            if (mLevel->isGameOver())
+            {
+                mState = MENU;
+            }
+
             break;
         case PAUSE:
             break;
@@ -282,7 +291,7 @@ void Game::action(const gcn::ActionEvent& actionEvent)
 {
     if (actionEvent.getSource() == mStartButton)
     {
-        mState = LEVEL;
+        startLevel();
     }
     else if (actionEvent.getSource() == mCreditsButton)
     {
@@ -308,4 +317,19 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             mState = EXIT;
         }
     }
+}
+
+void Game::startLevel()
+{
+    if (mLevel != NULL)
+    {
+        delete mLevel;
+    }
+
+    if (GameState::getInstance()->getLevel() == 1)
+    {
+        mLevel = new Level("level1.txt");
+    }
+
+    mState = LEVEL;
 }

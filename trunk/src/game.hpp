@@ -28,6 +28,7 @@ protected:
 
 	void action(const gcn::ActionEvent& actionEvent);
 	void keyPressed(gcn::KeyEvent &keyEvent);
+    void startLevel();
 
     enum State
     {
@@ -44,7 +45,6 @@ protected:
     SplashScreen* mSplashScreen;
     
     Level* mLevel;
-
 
 	gcn::AllegroGraphics* mAllegroGraphics;
     gcn::AllegroImageLoader* mAllegroImageLoader;
