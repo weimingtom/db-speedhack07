@@ -15,7 +15,7 @@ WaterBackground::WaterBackground() :
 	{
 		float x = frand() * 240 * 20;
 		float y = frand() * 240 * 20;
-		float z = frand() * 18 + 1;
+		float z = frand() * 15 + 5;
 		mParticles.push_back(Particle(x, y, z));
 	}	
 }
@@ -29,8 +29,8 @@ void WaterBackground::logic(Level* level)
 	mLevelLength = level->getLevelLength();
 
 	for (unsigned int i = 0; i < mParticles.size(); i++) {
-		mParticles[i].dx += std::sin(mFrameCounter / 20.0) * 10 + std::sin(mFrameCounter / 2.0 + i) * 2 + frand() - 0.5;
-		mParticles[i].dy += std::sin(mFrameCounter / 20.0) + std::sin(mFrameCounter / 2.0 + i) * 2 + frand() - 1.5;
+		mParticles[i].dx += std::sin(mFrameCounter / 50.0) * 3 + std::sin(mFrameCounter / 7.0 + i) * 2 + frand() - 0.5;
+		mParticles[i].dy += std::cos(mFrameCounter / 50.0) + std::sin(mFrameCounter / 8.0 + i) * 2 + frand() - 3.5;
 		mParticles[i].dx *= 0.95;
 		mParticles[i].dy *= 0.95;
 		mParticles[i].x += mParticles[i].dx;
@@ -72,6 +72,9 @@ void WaterBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 	{
 		int x = mod(int(mParticles[i].x / mParticles[i].z), 240);
 		int y = mod(int((mParticles[i].y - scrolly) / mParticles[i].z), 240);
-		putpixel(dest, x, y, makecol(128, 128, 128));
+
+		int c = (i * 100) / mParticles.size();
+
+		putpixel(dest, x, y, makecol(100 + c, 120 + c, 150 + c));
 	}
 }
