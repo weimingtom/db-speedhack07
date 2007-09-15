@@ -5,7 +5,7 @@
 #include "stringutil.hpp"
 #include "block.hpp"
 #include "mine.hpp"
-#include "staticshooter.hpp"
+#include "turret.hpp"
 #include "waterbackground.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
@@ -441,19 +441,19 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(entity);
                    break;
                 case 'r':
-					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::RIGHT);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::RIGHT);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'l':
-					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::LEFT);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::LEFT);
                     mHibernatingEntities.push_back(entity);
                    break;
                 case 'u':
-					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::UP);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::UP);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'd':
-					entity = new StaticShooter(col*BLOCK_SIZE,row*BLOCK_SIZE, StaticShooter::DOWN);
+					entity = new Turret(col*BLOCK_SIZE,row*BLOCK_SIZE, Turret::DOWN);
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'E':

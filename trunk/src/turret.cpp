@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "staticshooter.hpp"
+#include "turret.hpp"
 #include "enemybullet.hpp"
 #include "playerbullet.hpp"
 #include "level.hpp"
 #include "util.hpp"
 
-StaticShooter::StaticShooter(int x, int y, FireDirection direction)
+Turret::Turret(int x, int y, FireDirection direction)
 : Enemy(x, y, 16, 16, true),
   mIsToBeDeleted(false),
   mDirection(direction),
@@ -16,12 +16,12 @@ StaticShooter::StaticShooter(int x, int y, FireDirection direction)
     mAnimation = new Animation("turret.bmp");
 }
 
-StaticShooter::~StaticShooter()
+Turret::~Turret()
 {
     delete mAnimation;
 }
 
-void StaticShooter::logic(Level* level)
+void Turret::logic(Level* level)
 {
 	mFrameCount++;
 	if(mFrameCount%60 == 0)
@@ -38,7 +38,7 @@ void StaticShooter::logic(Level* level)
 	}
 }
 
-void StaticShooter::handleCollision(Entity *other, Level *level)
+void Turret::handleCollision(Entity *other, Level *level)
 {
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
@@ -61,7 +61,7 @@ void StaticShooter::handleCollision(Entity *other, Level *level)
 
 }
 
-void StaticShooter::draw(BITMAP *dest, int scrolly, unsigned int layer)
+void Turret::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	int frame = mRenderAsHit?2:(mFrameCount%20)<10?0:1;
 
@@ -75,7 +75,7 @@ void StaticShooter::draw(BITMAP *dest, int scrolly, unsigned int layer)
 	mRenderAsHit = false;
 }
 
-bool StaticShooter::isToBeDeleted()
+bool Turret::isToBeDeleted()
 {
     return mIsToBeDeleted && !mRenderAsHit;
 }

@@ -1,10 +1,10 @@
-#ifndef DBSH07_STATICSHOOTER_HPP
-#define DBSH07_STATICSHOOTER_HPP
+#ifndef DBSH07_TURRET_HPP
+#define DBSH07_TURRET_HPP
 
 #include "enemy.hpp"
 #include "animation.hpp"
 
-class StaticShooter: public Enemy
+class Turret: public Enemy
 {
 public:
 	enum FireDirection
@@ -15,8 +15,8 @@ public:
 		RIGHT
     };
 
-    StaticShooter(int x, int y, FireDirection direction);
-    ~StaticShooter();
+    Turret(int x, int y, FireDirection direction);
+    ~Turret();
     void logic(Level* level);
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
     bool drawInLayer(unsigned int layer) { return layer == Entity::ENEMY_LAYER; }
