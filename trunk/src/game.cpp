@@ -359,13 +359,13 @@ void Game::action(const gcn::ActionEvent& actionEvent)
         if (mOptionalDialog->getState() == OptionalDialog::BONUS_LEVEL)
         {
             mOptionalDialog->setVisible(false);
-            mDialog->setText("I think I'll try my luck in a bonus level!");
+            mDialog->setText("B I think I'll try my luck in a bonus level!");
             mDialog->setVisible(true);
         }
         else if (mOptionalDialog->getState() == OptionalDialog::SHOP)
         {
             mOptionalDialog->setVisible(false);
-            mDialog->setText("I think I'll head for the shop!");
+            mDialog->setText("B I think I'll head for the shop!");
             mDialog->setVisible(true);
         }
     }
@@ -379,7 +379,7 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             mCreditsContainer->setVisible(false);
             mMainMenuContainer->setVisible(true);
         }
-        else
+        else if (mState != BONUS_LEVEL_OR_SHOP)
         {
             setState(EXIT);
         }
@@ -433,7 +433,8 @@ void Game::setState(State state)
         mOptionalDialog->setVisible(false);
         mOptionalDialog->setState(OptionalDialog::NONE);
         mDialog->setVisible(true);
-        mDialog->setText("You can now choose to either head for a bonus lever or enter the shop!");
+        mDialog->setText("F FLUFFY LOVE: You can now choose to either head for a bonus lever or enter" 
+                         " a shop where you can buy things from Cuddelz!");
     }
    
     mState = state; 

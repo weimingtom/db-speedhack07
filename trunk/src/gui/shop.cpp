@@ -85,7 +85,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
     {
         if (GameState::getInstance()->getEnergyOrbs() < LIFE_COST)
         {
-            mDialog->setText("C I'm sorry but you don't have enough } for buying a life.");
+            mDialog->setText("C CUDDELZ: I'm sorry but you don't have enough } for buying a life.");
             mDialog->setVisible(true);
             return;
         }
@@ -100,7 +100,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
     {
         if (GameState::getInstance()->getEnergyOrbs() < POD_COST)
         {
-            mDialog->setText("C I'm sorry but you don't have enough } for buying a pod.");
+            mDialog->setText("C CUDDELZ: I'm sorry but you don't have enough } for buying a pod.");
             mDialog->setVisible(true);
             return;
         }
@@ -115,7 +115,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
     {
         if (GameState::getInstance()->getEnergyOrbs() < CANNON_UPGRADE_COST)
         {
-            mDialog->setText("C I'm sorry but you don't have enough } for a cannon upgrade.");
+            mDialog->setText("C CUDDELZ: I'm sorry but you don't have enough } for a cannon upgrade.");
             mDialog->setVisible(true);
             return;
         }
@@ -137,7 +137,7 @@ void Shop::setVisible(bool visible)
     
     if (visible)
     {
-        mDialog->setText("C Welcome to the shop! To buy items you need energy orbs. Have fun!");
+        mDialog->setText("C CUDDELZ: Welcome to the shop! To buy items you need energy orbs. Have fun!");
         mDialog->setVisible(true);
     }
 }

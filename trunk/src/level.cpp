@@ -86,7 +86,7 @@ void Level::initGui()
     gcn::Image::setImageLoader(mImageLoader);
     mGui->setInput(mInput);
     mGui->setGraphics(mGraphics);
-    mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 126);
+    mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 131);
 	mImageFont->setGlyphSpacing(-1);
 	gcn::Widget::setGlobalFont(mImageFont);
     mTop = new gcn::Container();
@@ -225,7 +225,14 @@ void Level::logic()
         mPlayer->logic(this);
         mGui->logic();
 
-        if (!mDialog->isVisible() && mDialogText.empty())
+        if (key[KEY_ESC])
+        {
+            mDialog->setVisible(false);
+            mState = GAME;
+            mPlayer->setState(Player::NEW);
+            mFrameCounter = 0;
+        }
+        else if (!mDialog->isVisible() && mDialogText.empty())
         {
             mState = GAME;
             mPlayer->setState(Player::NEW);

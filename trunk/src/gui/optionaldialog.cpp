@@ -6,15 +6,15 @@ OptionalDialog::OptionalDialog()
     setBackgroundColor(gcn::Color(0x000000));
     setSize(190, 50);
 
-    mQueryLabel = new gcn::Label("What do you want to do?");
+    mQueryLabel = new gcn::Label("Where do you want to go?");
     mQueryLabel->adjustSize();
     add(mQueryLabel);
 
-    mBonusLevelButton = new DBSH07Button("Bonus level");
+    mBonusLevelButton = new DBSH07Button("To the bonus level");
     mBonusLevelButton->addActionListener(this);
     add(mBonusLevelButton, 20, mQueryLabel->getHeight() + 5);
 
-    mShopButton = new DBSH07Button("Shop");
+    mShopButton = new DBSH07Button("To the shop");
     mShopButton->addActionListener(this);
     add(mShopButton, 20, mQueryLabel->getHeight() + mBonusLevelButton->getHeight() + 5);
 }
