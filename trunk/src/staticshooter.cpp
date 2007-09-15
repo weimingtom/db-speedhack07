@@ -9,11 +9,11 @@
 StaticShooter::StaticShooter(int x, int y, FireDirection direction)
 : Enemy(x, y, 16, 16, true),
   mIsToBeDeleted(false),
-  mDirection(direction)
+  mDirection(direction),
+  mFrameCount(0),
+  mHitCount(4)
 {
     //mAnimation = new Animation("sideshooter.bmp");
-	mFrameCount = 0;
-	//mIsTimeToFire = false;
 }
 
 StaticShooter::~StaticShooter()
@@ -24,9 +24,8 @@ StaticShooter::~StaticShooter()
 void StaticShooter::logic(Level* level)
 {
 	mFrameCount++;
-	if(mFrameCount%40 == 0)
+	if(mFrameCount%60 == 0)
 	{
-		std::cout << "SHOOT" << std::endl;
 		//mIsTimeToFire = true;
 		float xSpeed=0, ySpeed=0, direction=0;
 		if(mDirection == RIGHT) { xSpeed = 1.5f; direction = M_PI/2.0f; }
@@ -41,7 +40,26 @@ void StaticShooter::logic(Level* level)
 
 void StaticShooter::handleCollision(Entity *other, Level *level)
 {
+	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
+	{
+		int dx = getCenterX() - other->getCenterX();
+		//int dy = getCenterY() - other->getCenterY();
+
+		mHitCount--;
+		mRenderAsHit = true;
+//		mDy += 1.0;
+		//std::cout << "dx: " << dx << std::endl;
+//		mDx += dx / 20.0f;
+		//spawnDebris(level, 1, mX, mY, mW, mH);
+		if(mHitCount <= 0)
+		{
+			mIsToBeDeleted = true;
+			mCollidable = false; //do not collide while blinking
+			spawnDebris(level, 8, mX, mY, mW, mH);
+		    spawnExplosions(level, 10, mX, mY, mW, mH);
 	
+		}
+	}
 
 
 }

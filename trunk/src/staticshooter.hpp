@@ -29,6 +29,7 @@ public:
 protected:
     Animation* mAnimation;
 	int mFrameCount;
+	int mHitCount;
 	bool mIsToBeDeleted;
 	bool mRenderAsHit;
 	FireDirection mDirection;
