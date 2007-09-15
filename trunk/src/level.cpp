@@ -15,6 +15,7 @@
 #include "music.hpp"
 #include "util.hpp"
 #include "debris.hpp"
+#include "bonusbackground.hpp"
 
 #include <iostream>
 
@@ -187,10 +188,14 @@ void Level::drawMousePointer(BITMAP *dest)
 void Level::logic()
 {
 	mLogicDoneOnce = true;
+
+    /*
 	std::cout << mPlayerEntities.size() << " " 
 		<< mPlayerBulletEntities.size() << " "
 		<< mEnemyEntities.size() << " "
 		<< mEnemyBulletEntities.size() << std::endl;
+
+        */
 	if(key[KEY_SPACE]) { addShakeAmount(100); }
 
     if (mState == DIALOG)
@@ -410,7 +415,7 @@ void Level::load(const std::string& filename)
     if (backgroundName == "SPACE")
     {
         mMotif = SPACE_MOTIF;
-        mBackground = new StarsBackground();
+        mBackground = new BonusBackground();
 		mEntities.push_back(new Planet());
 		playMusic("greaty.xm", 1.0f);
     }
