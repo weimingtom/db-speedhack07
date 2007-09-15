@@ -33,5 +33,5 @@ SPACE
 DIALOG
 D HAHAHA!
 B KILL KILL
-F Love!
+F Dr. Madness Or: How Fluffy Love Learned to Stop Worrying and Love the Bomb.
 C Hug!

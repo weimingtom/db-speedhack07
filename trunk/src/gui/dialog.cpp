@@ -164,25 +164,25 @@ void Dialog::draw(gcn::Graphics *graphics)
 
 void Dialog::setText(const std::string &text)
 {
-    if (text.size() > 1 && text.at(0) == 'B')
+    if (text.size() > 2 && text.at(0) == 'B')
     {
         mCharacter = BOMB;
-        mText = text.substr(1, text.size() - 1);
+        mText = text.substr(2, text.size() - 2);
     }
-    else if (text.size() > 1 && text.at(0) == 'F')
+    else if (text.size() > 2 && text.at(0) == 'F')
     {
         mCharacter = FLUFFY_LOVE;
-        mText = text.substr(1, text.size() - 1);
+        mText = text.substr(2, text.size() - 2);
     }
-    else if (text.size() > 1 && text.at(0) == 'C')
+    else if (text.size() > 2 && text.at(0) == 'C')
     {
         mCharacter = CUDDELZ;
-        mText = text.substr(1, text.size() - 1);
+        mText = text.substr(2, text.size() - 2);
     }
-    else if (text.size() > 1 && text.at(0) == 'D')
+    else if (text.size() > 2 && text.at(0) == 'D')
     {
         mCharacter = DOCTOR_MAD;
-        mText = text.substr(1, text.size() - 1);
+        mText = text.substr(2, text.size() - 2);
     }
     else
     {
