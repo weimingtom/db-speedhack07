@@ -96,7 +96,7 @@ protected:
     std::vector<Entity*> mStaticEntities;
 
 	int mLevelLength;
-
+	bool mLogicDoneOnce;
 	float mShakeAmount;
 };
 

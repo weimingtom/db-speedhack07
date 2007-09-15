@@ -6,11 +6,13 @@
 #include "block.hpp"
 #include "mine.hpp"
 #include "staticshooter.hpp"
+#include "waterbackground.hpp"
 #include "starsbackground.hpp"
 #include "resourcehandler.hpp"
 #include "gamestate.hpp"
 #include "planet.hpp"
 #include "energyorb.hpp"
+#include "music.hpp"
 #include "util.hpp"
 
 #include <iostream>
@@ -21,6 +23,7 @@ Level::Level(const std::string& filename)
   mScrollSpeed(0.0f),
   mGameScrollFloat(0.0f),
   mFrameCounter(0),
+  mLogicDoneOnce(false),
   mLevelLength(0),
   mShakeAmount(0),
   mTimeCounter(0)
@@ -112,9 +115,13 @@ static bool isNull(Entity *e)
 
 void Level::draw(BITMAP* dest)
 {
+	if (!mLogicDoneOnce)
+	{
+		logic();
+	}
+
 	int xOffs = 0, yOffs = 0;
 	int oldGameScrollY = mGameScrollY;
-
 
 	if(mShakeAmount > 100)
 	{
@@ -169,6 +176,7 @@ void Level::drawMousePointer(BITMAP *dest)
 
 void Level::logic()
 {
+	mLogicDoneOnce = true;
 	std::cout << mPlayerEntities.size() << " " 
 		<< mPlayerBulletEntities.size() << " "
 		<< mEnemyEntities.size() << " "
@@ -194,6 +202,7 @@ void Level::logic()
     }
     else if (mState == GAMEOVER)
     {
+		mBackground->logic(this);
         std::list<Entity *>::iterator it;
 
         for (it = mEntities.begin(); it != mEntities.end(); it++)
@@ -212,8 +221,8 @@ void Level::logic()
         checkCollision(mEnemyEntities, mEnemyEntities);
         checkStaticCollision(mPlayerEntities);
         checkStaticCollision(mPlayerBulletEntities);
-
      
+		mBackground->logic(this);
         std::list<Entity *>::iterator it;
 
         while (!mHibernatingEntities.empty() 
@@ -373,8 +382,9 @@ void Level::load(const std::string& filename)
     if (backgroundName == "SPACE")
     {
         mMotif = SPACE_MOTIF;
-        mBackground = new StarsBackground();
-		mEntities.push_back(new Planet());
+        mBackground = new WaterBackground();
+		//mEntities.push_back(new Planet());
+		playMusic("greaty.xm", 1.0f);
     }
     else
     {
