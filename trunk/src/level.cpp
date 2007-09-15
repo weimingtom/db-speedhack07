@@ -81,7 +81,7 @@ void Level::initGui()
     mDialog = new Dialog();
     mDialog->setSize(240, 75);
     mDialog->setVisible(false);
-    mTop->add(mDialog, 40, 240 - 75);
+    mTop->add(mDialog, 60, 240 - 75);
 
     mLivesLabel = new gcn::Label("1x~");
     mTop->add(mLivesLabel, 5, 0);
@@ -89,7 +89,7 @@ void Level::initGui()
     mEnergyOrbsLabel = new gcn::Label("1x}");
     mTop->add(mEnergyOrbsLabel, 5, mLivesLabel->getHeight());
 
-    mTimeLabel = new gcn::Label("T00:00.00");
+    mTimeLabel = new gcn::Label("000.00");
     mTop->add(mTimeLabel, 5, mLivesLabel->getHeight()*4);
 
     mTimeCaptionLabel = new gcn::Label("TIME");
@@ -97,7 +97,7 @@ void Level::initGui()
 
     mGameOverLabel = new gcn::Label("GAME OVER");
     mGameOverLabel->adjustSize();
-    mGameOverLabel->setVisible(false);
+    mGameOverLabel->setVisible(false    );
     mTop->add(mGameOverLabel, 
               160 - mGameOverLabel->getWidth() / 2 + 20,
               120 - mGameOverLabel->getHeight() / 2);
