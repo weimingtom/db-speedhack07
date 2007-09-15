@@ -54,6 +54,7 @@ Level::~Level()
     delete mGameOverLabel;
     delete mTimeLabel;
     delete mLevelCompleteLabel;
+    delete mLevelNameLabel;
 
     std::list<Entity *>::iterator it;
 
@@ -119,6 +120,10 @@ void Level::initGui()
     mTop->add(mLevelCompleteLabel,
               160 - mLevelCompleteLabel->getWidth() / 2 + 20,
               120 - mLevelCompleteLabel->getHeight() / 2);
+
+    mLevelNameLabel = new gcn::Label();
+    mLevelNameLabel->setVisible(false);
+    mTop->add(mLevelNameLabel);
 
 }
 // Predicate function used to remove entities.
@@ -218,6 +223,7 @@ void Level::logic()
         {
             mState = GAME;
             mPlayer->setState(Player::NEW);
+            mFrameCounter = 0;
         }
         else if (!mDialog->isVisible())
         {
@@ -250,6 +256,19 @@ void Level::logic()
     }
     else if (mState == GAME)
     {
+        if (mFrameCounter == 0)
+        {
+            mLevelNameLabel->setCaption(mLevelName);
+            mLevelNameLabel->adjustSize();
+            mLevelNameLabel->setPosition(160 - mLevelNameLabel->getWidth() / 2 + 20,
+                                         120 - mLevelNameLabel->getHeight() / 2);
+        }
+        else if (mFrameCounter > 200)
+        {
+            mLevelNameLabel->setVisible(false);
+        }
+
+
         if (mLevelLength - 240 < mGameScrollY)
         {
             mState = LEVEL_COMPLETE;

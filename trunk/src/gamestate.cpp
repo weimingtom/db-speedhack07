@@ -14,7 +14,7 @@ GameState* GameState::getInstance()
 
 GameState::GameState()
 : mLives(3),
-mLevel(2),
+mLevel(1),
 mEnergyOrbs(0),
 mPods(1)
 {
