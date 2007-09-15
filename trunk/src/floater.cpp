@@ -9,7 +9,7 @@
 Floater::Floater(int x, int y, int hitCount)
 : Enemy(x, y, 16, 16, true),
   mToBeDeleted(false),
-  mHitCount(80)
+  mHitCount(70)
 {
 	//mAnimation = new Animation("floater.bmp");
 	mRenderAsHit = false;
@@ -31,7 +31,7 @@ void Floater::logic(Level* level)
 {
 	static float f = 0;
 	f += 0.1;
-	if(mFrameCount % 40 == 0)
+	if(mFrameCount % 60 == 0)
 	{
 		float arc = M_PI*0.5f;
 		float leftArc = M_PI - arc;
@@ -52,8 +52,8 @@ void Floater::logic(Level* level)
 	int playerDiffX = targetX - (getX());
 	int playerDiffY = targetY - (getY());
 		
-	mDx = playerDiffX/20.0f;
-	mDy = playerDiffY/20.0f;
+	mDx = playerDiffX/4.0f;
+	mDy = playerDiffY/4.0f;
 	
 
 	mY += mDy;
