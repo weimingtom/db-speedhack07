@@ -181,9 +181,20 @@ void Level::logic()
     }
 }
 
+void Level::spawnNewPlayer()
+{
+    mPlayer = new Player();
+    mPlayer->setY(mGameScrollY);
+    addEntity(mPlayer);
+}
+
 void Level::updateScrolling()
 {
-    if (isBurnPressed())
+    if (mPlayer->getState() == Player::KILLED)
+    {
+        // Do nothing, that is freeze the camera.
+    }
+    else if (isBurnPressed())
     {
 	    float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed();
 	    float scrollAmount = wantedScroll - mGameScrollFloat;
@@ -200,10 +211,14 @@ void Level::updateScrolling()
 	    float scrollAmount = wantedScroll - mGameScrollFloat;
 	    float wantedSpeed = mPlayer->getSpeed();
 	    float speedAdjust = wantedSpeed - mScrollSpeed;
+        
         mScrollSpeed += speedAdjust / 20.0f;
         mGameScrollFloat += mScrollSpeed + scrollAmount / 10.0f;
     	
-	    mGameScrollY = (int)mGameScrollFloat;
+        if ((int)mGameScrollFloat > mGameScrollY)
+        {
+	       mGameScrollY = (int)mGameScrollFloat;
+        }
     }
 }
 

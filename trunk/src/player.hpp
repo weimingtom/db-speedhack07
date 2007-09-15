@@ -17,7 +17,8 @@ public:
 	int getPodOffset(int i);
 	float getPodOffsetFloat(int i);
 	float getPodDepth(int i);
-
+    void kill();
+    unsigned int getState();
 	int getSpeed();
 
 	static const int AIR_RESISTANCE_LOW = 2;
@@ -27,7 +28,18 @@ public:
 	static const int SHOT_FRAME_DELAY = 3;
 	static const int SHOT_POD_DELAY = 5;
 
+    enum State
+    {
+        NORMAL,
+        KILLED,
+        DEAD,
+        IMORTAL,
+        NEW
+    };
+
 private:
+    void movementLogic(Level* level);
+
 	int mFrameCounter;
 	int mDX, mDY;
 	int mAirResistance;
@@ -36,9 +48,12 @@ private:
 	bool mShotReleased;
 	int mShotBurstCounter;
 	int mNumPods;
+    unsigned int mState;
 
 	Animation mPlayerAni;
 	Animation mPodAni;
+
+    bool mImortalButtonPressed;
 };
 
 #endif

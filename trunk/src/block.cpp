@@ -32,6 +32,23 @@ void Block::logic(Level* level)
 
 void Block::handleCollision(Entity *other, Level *level)
 {
+    if (other->getType() == Entity::PLAYER_TYPE)
+    {
+        level->getPlayer()->kill();
+
+        // Only vulnerable block should not be deleted
+        // and spawn debri.
+        if (mHitCount - 1 >= 0)
+        {
+            spawnDebris(level, 3, mX, mY, mW, mH);
+		    mToBeDeleted = true;
+        }
+
+        return;
+    }
+
+    // Invulnerable block should not be effected by other entities
+    // then the player
     if (mHitCount - 1 < 0)
     {
         return;
@@ -43,12 +60,10 @@ void Block::handleCollision(Entity *other, Level *level)
 		mIsHit = true;
 		if(mHitCount <= 0)
 		{
-			//todo some explosions
 			spawnDebris(level, 3, mX, mY, mW, mH);
 			mToBeDeleted = true;
 		}
 	}
-
 }
 
 void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)

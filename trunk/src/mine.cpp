@@ -54,7 +54,6 @@ void Mine::logic(Level* level)
 
 void Mine::handleCollision(Entity *other, Level *level)
 {
-	
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
 		int dx = getCenterX() - other->getCenterX();
@@ -73,11 +72,19 @@ void Mine::handleCollision(Entity *other, Level *level)
 			mToBeDeleted = true;
 			mCollidable = false; //do not collide while blinking
 		}
-	} else if(other->isCollidable())
+	} 
+    else if (other->getType() == Entity::PLAYER_TYPE)
+    {
+        level->getPlayer()->kill();
+        spawnDebris(level, 2, mX, mY, mW, mH);
+        spawnExplosions(level, 10, mX, mY, mW, mH);
+		mToBeDeleted = true;
+		mCollidable = false;
+    }
+    else if(other->isCollidable())
 	{
 		mToBeDeleted = true;
 	}
-
 }
 
 void Mine::draw(BITMAP *dest, int scrolly, unsigned int layer)

@@ -19,6 +19,7 @@ public:
     void logic();
     void load(const std::string& filename);
     void addEntity(Entity* entity);
+    void spawnNewPlayer();
 
 	int getMouseX();
 	int getMouseY();

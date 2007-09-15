@@ -17,13 +17,29 @@ Player::Player() :
 	mShotBurstCounter(0),
 	mNumPods(5),
 	mPlayerAni("player.bmp", 1),
-	mPodAni("pod.bmp", 3)
+	mPodAni("pod.bmp", 3),
+    mState(NEW),
+    mImortalButtonPressed(false)
 {
 }
 
 Player::~Player()
 {
 
+}
+
+void Player::kill()
+{
+    if (mState == NORMAL)
+    {
+        mState = KILLED;
+        mFrameCounter = 0;
+    }
+}
+
+unsigned int Player::getState()
+{
+    return mState;
 }
 
 int Player::getPodOffset(int i)
@@ -57,7 +73,17 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		}
 	}
 
-	mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
+    if (mState == DEAD || mState == NEW || mState == IMORTAL)
+    {
+        if (mFrameCounter % 4 < 2)
+        {
+	        mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
+        }
+    }
+    else
+    {
+        mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
+    }
 	//rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
 
 	for (int i = 0; i < mNumPods; i++)
@@ -65,12 +91,84 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		if (getPodDepth(i) >= 0.0f)
 		{
 			int frame = getPodDepth(i) < 0.4f ? 1 : 0;
-			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
-		}
+            
+            if (mState == DEAD || mState == NEW || mState == IMORTAL)
+            {
+                if (mFrameCounter % 4 < 2)
+                {
+			        mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
+		        }
+            }
+            else
+            {
+                mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
+            }
+        }
 	}	
 }
 
 void Player::logic(Level* level)
+{
+    if (key[KEY_I] 
+        && !mImortalButtonPressed 
+        && mState == IMORTAL)
+    {
+        mState = NORMAL;
+    }
+    else if (key[KEY_I] 
+        && !mImortalButtonPressed 
+        && (mState == NEW || mState == NORMAL))
+    {
+        mState = IMORTAL;
+    }
+
+    mImortalButtonPressed = key[KEY_I];
+
+    if (mState == NEW)
+    {
+        movementLogic(level);
+
+        if (mFrameCounter > 100)
+        {
+            mState = NORMAL;
+        }
+    }
+    else if (mState == NORMAL || mState == IMORTAL)
+    {
+        movementLogic(level);
+    }
+    else if (mState == KILLED)
+    {
+        int targetDY = 64 / mAirResistance;
+
+        if (mDY < targetDY)
+        {
+	        mDY++;
+        }
+        else if (mDY > targetDY)
+        {
+	        mDY--;
+        }
+
+        mY += mDY / 8;
+
+        if (mFrameCounter % 10 < 2)
+        {
+            spawnDebris(level, 1, mX, mY, mW, mH);
+            spawnExplosions(level, 1, mX, mY, mW, mH);
+        }
+
+        if (mFrameCounter > 100)
+        {
+            mState = DEAD;
+            level->spawnNewPlayer();
+        }
+    }
+
+	mFrameCounter++;
+}
+
+void Player::movementLogic(Level* level)
 {
 	bool leftPressed = key[KEY_A] || key[KEY_LEFT];
 	bool rightPressed = key[KEY_D] || key[KEY_RIGHT];
@@ -209,13 +307,11 @@ void Player::logic(Level* level)
 
 		mShotBurstCounter--;		
 	}
-
-	mFrameCounter++;
 }
 
 bool Player::isToBeDeleted()
 {
-    return false;
+    return mState == DEAD;
 }
 
 int Player::getSpeed()
