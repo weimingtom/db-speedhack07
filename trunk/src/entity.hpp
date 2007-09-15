@@ -52,6 +52,8 @@ public:
 
     virtual bool drawInLayer(unsigned int layer) = 0;
 
+	virtual bool stopsBullets() { return true; };
+
     static const int BACKGROUND_LAYER = 0;
     static const int PLAYER_LAYER = 1;
     static const int ENEMY_LAYER = 2;

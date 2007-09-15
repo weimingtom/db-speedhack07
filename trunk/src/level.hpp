@@ -39,6 +39,9 @@ public:
 	void spawnDebris(int amount, int x, int y, int w, int h);
     void spawnExplosions(int amount, int x, int y, int w, int h);
 
+	int getAirResistance() { return mAirResistance; }
+	int setAirResistance(int a) { mAirResistance = a; }
+
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;
@@ -102,6 +105,7 @@ protected:
 	int mLevelLength;
 	bool mLogicDoneOnce;
 	float mShakeAmount;
+	int mAirResistance;
 };
 
 #endif

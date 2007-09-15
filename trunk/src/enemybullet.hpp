@@ -9,12 +9,13 @@ class EnemyBullet: public Bullet
 {
 public:
 	EnemyBullet(int x, int y, float dx, float dy, unsigned int damage, float drawingAngle);
+	void logic(Level* level);
+	void draw(BITMAP *dest, int scrolly, unsigned int layer);
 
-	//void EnemyBullet::draw(BITMAP *dest, int scrolly, unsigned int layer);
+	bool drawInLayer(unsigned int layer) { return layer == Entity::FOREGROUND_LAYER; }
 protected:
 	Animation mAnimation;
-	int frame;
-	bool vflip;
+	int mFrameCounter;
 };
 
 #endif

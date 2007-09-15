@@ -29,16 +29,15 @@ void Player::reset()
 {
     mX = 115;
     mY = 20;
-    mAirResistance = AIR_RESISTANCE_LOW;
     mFrameCounter = 0;
     mDX = 0;
     mDY = 0;
     mShotPressed = false;
     mShotReleased = true;
     mShotBurstCounter = 0;
-    mNumPods = 3;
+    mNumPods = 10;
     mState = NEW;
-    mImortalButtonPressed = false;  
+    mImortalButtonPressed = false;
 }
 
 void Player::kill()
@@ -152,7 +151,7 @@ void Player::logic(Level* level)
     }
     else if (mState == KILLED)
     {
-        int targetDY = 64 / mAirResistance;
+		int targetDY = 64 / level->getAirResistance();
 
         if (mDY < targetDY)
         {
@@ -192,7 +191,7 @@ void Player::movementLogic(Level* level)
 	mTargetX = level->getMouseX();
 	mTargetY = level->getMouseY();
 
-	int maxDX = 64 / mAirResistance;
+	int maxDX = 64 / level->getAirResistance();
 
 	if (leftPressed && !rightPressed && -mDX < maxDX)
 	{
@@ -237,6 +236,20 @@ void Player::movementLogic(Level* level)
 		mDX++;
 	}
 
+	if (mX < 0) {
+		mX = 0;
+		if (mDX < 0) {
+			mDX = 0;
+		}
+	}
+
+	if (mX + mW >= 240) {
+		mX = 240 - mW;
+		if (mDX > 0) {
+			mDX = 0;
+		}
+	}
+
     int targetDY;
     if (level->isBrakePressed())
     {
@@ -244,11 +257,11 @@ void Player::movementLogic(Level* level)
     }
     else if (level->isBurnPressed())
     {
-         targetDY = (64 / mAirResistance) * 2;
+		targetDY = (64 / level->getAirResistance()) * 2;
     }
     else
     {
-	    targetDY = 64 / mAirResistance;
+	    targetDY = 64 / level->getAirResistance();
     }
 
 	if (mDY < targetDY)
@@ -287,12 +300,12 @@ void Player::movementLogic(Level* level)
 	{
 		float angle = std::atan2((float)(mTargetX - getCenterX()), (float)(mTargetY - getCenterY()) + 0.01f);		
 
-		if (angle < -1.2) {
-			angle = -1.2;
+		if (angle < -1.4) {
+			angle = -1.4;
 		}
 
-		if (angle > 1.2) {
-			angle = 1.2;
+		if (angle > 1.4) {
+			angle = 1.4;
 		}
 
 		if (mShotBurstCounter % SHOT_FRAME_DELAY == 0)

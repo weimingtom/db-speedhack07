@@ -15,7 +15,9 @@
 #include "music.hpp"
 #include "util.hpp"
 #include "debris.hpp"
+#include "electro.hpp"
 #include "bonusbackground.hpp"
+
 
 #include <iostream>
 
@@ -28,7 +30,8 @@ Level::Level(const std::string& filename)
   mLogicDoneOnce(false),
   mLevelLength(0),
   mShakeAmount(0),
-  mTimeCounter(0)
+  mTimeCounter(0),
+  mAirResistance(1)
 {
     load(filename);
 	mPlayer = new Player();
@@ -160,6 +163,8 @@ void Level::draw(BITMAP* dest)
 			}
 		}
 	}
+
+	mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::FOREGROUND_LAYER);
 
 	drawMousePointer(subdest);
     vline(subdest, 0, 0, 239, makecol(100, 100, 100));
@@ -419,14 +424,17 @@ void Level::load(const std::string& filename)
     {
         mMotif = SPACE_MOTIF;
         mBackground = new StarsBackground();
-		mEntities.push_back(new Planet());
+		mEntities.push_back(new Planet("planet.bmp"));
 		playMusic("greaty.xm", 1.0f);
+		mAirResistance = Player::AIR_RESISTANCE_LOW;
     }
     else if (backgroundName == "WATER")
     {
         mMotif = WATER_MOTIF;
         mBackground = new WaterBackground();
-		playMusic("greaty.xm", 1.0f);
+		mEntities.push_back(new Planet("seabed.bmp"));
+		playMusic("world_on_fire.xm", 1.0f);
+		mAirResistance = Player::AIR_RESISTANCE_HIGH;
     }
 	else
     {
@@ -467,10 +475,18 @@ void Level::load(const std::string& filename)
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
-                                                 "spaceblock.bmp", data[row].at(col) - '0');
-
-                        mHibernatingEntities.push_back(staticEntity);
+                                                 "spaceblock.bmp", data[row].at(col) - '0');                        
                     }
+					else if (mMotif == WATER_MOTIF)
+                    {
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "waterblock.bmp", data[row].at(col) - '0');                        
+                    }
+
+					mHibernatingEntities.push_back(staticEntity);
                    break;
                 case 'M':
                     entity = new Mine(col*BLOCK_SIZE,row*BLOCK_SIZE, false);
@@ -516,6 +532,10 @@ void Level::load(const std::string& filename)
                     entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
                     mHibernatingEntities.push_back(entity);
                     break;
+				case '~':
+                    entity = new Electro(col*BLOCK_SIZE, row*BLOCK_SIZE);
+                    mHibernatingEntities.push_back(entity);
+                    break;
 				case '0':
                     if (mMotif == SPACE_MOTIF)
                     {
@@ -523,10 +543,18 @@ void Level::load(const std::string& filename)
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
-                                                 "spacesolidblock.bmp", -1);
-
-                        mHibernatingEntities.push_back(staticEntity);
+                                                 "spacesolidblock.bmp", -1);                     
                     }
+					else if (mMotif == WATER_MOTIF)
+                    {
+                        staticEntity = new Block(col * BLOCK_SIZE,
+                                                 row * BLOCK_SIZE, 
+                                                 BLOCK_SIZE,
+                                                 BLOCK_SIZE, 
+                                                 "spacesolidblock.bmp", -1);
+                    }
+					
+					mHibernatingEntities.push_back(staticEntity);
                    break;
                 default:
                     throw DBSH07_EXCEPTION("Unknown entity " + toString(data[row].at(col)));
@@ -582,7 +610,7 @@ void Level::addEntity(Entity* entity)
 
 int Level::getMouseX()
 {
-	return mouse_x / 2 - 40;
+	return mouse_x / 2 - 60;
 }
 
 int Level::getMouseY()
@@ -732,7 +760,7 @@ void Level::spawnExplosions(int amount, int x, int y, int w, int h)
 							   (frand() - 0.5f) * 5.0f,
 							   (frand() - 0.2f) * 10.0f,
 							   "explosion.bmp", 
-                               3, 
+                               2 + rand() % 3, 
                                true);
 
 		addEntity(d);

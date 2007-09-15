@@ -56,6 +56,11 @@ void Turret::logic(Level* level)
 		}
 
 	}
+
+	if (getY() + getHeight() + 64 < level->getScrollY())
+	{
+		mIsToBeDeleted = true;
+	}
 }
 
 void Turret::handleCollision(Entity *other, Level *level)

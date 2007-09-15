@@ -13,7 +13,7 @@ public:
     unsigned int getType() { return Entity::DECORATION_TYPE; }
     void logic(Level* level);
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
-    bool drawInLayer(unsigned int layer) { return layer == Entity::BACKGROUND_LAYER; }
+    bool drawInLayer(unsigned int layer) { return layer == Entity::BACKGROUND_LAYER || layer == Entity::FOREGROUND_LAYER; }
     bool isToBeDeleted() { return false; }
 protected:
     BITMAP *mBackgroundColors;

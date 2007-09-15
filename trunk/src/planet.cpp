@@ -1,9 +1,9 @@
 #include "planet.hpp"
 #include "level.hpp"
 
-Planet::Planet() :
+Planet::Planet(const std::string& file) :
 	Entity(false),
-	mAnimation("planet.bmp", 1),
+	mAnimation(file, 1),
 	mLevelLength(0)
 {
 }

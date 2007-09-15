@@ -7,7 +7,7 @@
 class Planet : public Entity
 {
 public:
-	Planet();
+	Planet(const std::string &file);
 	
 	virtual void draw(BITMAP *dest, int scrolly, unsigned int layer);
 
