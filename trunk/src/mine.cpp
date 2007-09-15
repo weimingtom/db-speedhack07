@@ -32,8 +32,8 @@ void Mine::logic(Level* level)
 		int playerDiffX = level->getPlayer()->getCenterX() - getX();
 		int playerDiffY = level->getPlayer()->getCenterY() - getY();
 		
-		mDx += playerDiffX/5000.0f;
-		mDy += playerDiffY/5000.0f;
+		mDx += playerDiffX/1000.0f;
+		mDy += playerDiffY/1000.0f;
 	}
 
 	float targetDy = 0.4;
