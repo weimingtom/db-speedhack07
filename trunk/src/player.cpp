@@ -162,6 +162,7 @@ void Player::logic(Level* level)
 
         if (mFrameCounter % 10 < 2)
         {
+
             spawnDebris(level, 1, mX, mY, mW, mH);
             spawnExplosions(level, 1, mX, mY, mW, mH);
         }
@@ -170,7 +171,10 @@ void Player::logic(Level* level)
         {
             mState = DEAD;
             level->spawnNewPlayer();
-        }
+		} else if(mFrameCounter == 0)
+		{
+			level->addShakeAmount(600);
+		}
     }
 
 	mFrameCounter++;

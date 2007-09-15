@@ -55,6 +55,7 @@ void StaticShooter::handleCollision(Entity *other, Level *level)
 		{
 			mIsToBeDeleted = true;
 			mCollidable = false; //do not collide while blinking
+			level->addShakeAmount(100);
 			spawnDebris(level, 8, mX, mY, mW, mH);
 		    spawnExplosions(level, 10, mX, mY, mW, mH);
 	
