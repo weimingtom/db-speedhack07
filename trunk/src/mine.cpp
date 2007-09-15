@@ -10,7 +10,7 @@ Mine::Mine(int x, int y, bool isMagnetic)
   mHitCount(10),
   mIsMagnetic(isMagnetic)
 {
-    mAnimation = new Animation("mine.bmp");
+	mAnimation = new Animation(isMagnetic?"magneticmine.bmp":"mine.bmp");
 	mRenderAsHit = false;
 	mY = getY();
 	mX = getX();

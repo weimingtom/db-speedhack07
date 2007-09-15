@@ -188,6 +188,7 @@ void Level::drawMousePointer(BITMAP *dest)
 void Level::logic()
 {
 	mLogicDoneOnce = true;
+	if(mShakeAmount > 0) mShakeAmount /= 1.045;
 
     /*
 	std::cout << mPlayerEntities.size() << " " 
@@ -244,8 +245,6 @@ void Level::logic()
             mLevelCompleteLabel->setVisible(true);
             return;
         }
-
-		if(mShakeAmount > 0) mShakeAmount /= 1.045;
 
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
         checkCollision(mPlayerEntities, mEnemyBulletEntities);
