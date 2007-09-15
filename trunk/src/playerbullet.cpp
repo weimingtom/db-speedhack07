@@ -1,9 +1,24 @@
 #include "playerbullet.hpp"
+#include "util.hpp"
 
 PlayerBullet::PlayerBullet(int x, int y, float dx, float dy, unsigned int damage, float drawingAngle)
-:Bullet(x, y, 5, 5, Entity::PLAYER_BULLET_TYPE, dx, dy, "bullet.bmp", 1)
+	:Bullet(x, y, 6, 6, Entity::PLAYER_BULLET_TYPE, dx, dy, "bullet.bmp", 1),
+	mAnimation("shot.bmp")
 {
-
+	if (drawingAngle < 0)
+	{
+		vflip = false;
+		drawingAngle = -drawingAngle;
+	}
+	else
+	{
+		vflip = true;
+	}
+	frame = (int)(drawingAngle * 5.0f / (M_PI / 2.0f));
 }
 
 
+void PlayerBullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
+{
+	mAnimation.drawFrame(dest, frame, mX - 2, mY -2 - scrolly, false, vflip);
+}

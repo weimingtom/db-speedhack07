@@ -49,8 +49,6 @@ void Bullet::handleCollision(Entity *other, Level *level)
 void Bullet::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
 	circlefill(dest, getX(), getY()-scrolly, 1, makecol(255, 200, 0));
-	
-	
 }
 
 

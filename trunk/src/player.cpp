@@ -1,13 +1,10 @@
 #include "player.hpp"
 #include "level.hpp"
 #include "playerbullet.hpp"
+#include "util.hpp"
 
 #include <cmath>
 #include <iostream>
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323
-#endif
 
 Player::Player() :
 	Entity(115, 20, 10, 20, true),
@@ -18,7 +15,7 @@ Player::Player() :
 	mShotPressed(false),
 	mShotReleased(true),
 	mShotBurstCounter(0),
-	mNumPods(3),
+	mNumPods(8),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -184,19 +181,30 @@ void Player::logic(Level* level)
 			angle = 1.2;
 		}
 
+		if (mShotBurstCounter % SHOT_FRAME_DELAY == 0)
+		{
+			int x = getCenterX();
+			int y = mY + mW;
+
+			float dx = sin(angle) * 10.0f;
+			float dy = cos(angle) * 10.0f + (mDY / 8);
+			PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 2, angle);
+			level->addEntity(bullet);
+		}
+
 		for (int i = 0; i < mNumPods; i++)
 		{
-			if (i % SHOT_FRAME_DELAY == mFrameCounter % SHOT_FRAME_DELAY)
+			if (i % SHOT_POD_DELAY == mFrameCounter % SHOT_POD_DELAY)
 			{			
 				int x = getCenterX() + getPodOffset(i);
 				int y = mY + 8;
 
-				float dx = sin(angle + getPodOffsetFloat(i) / 30.0f) * 10.0f;
-				float dy = cos(angle + getPodOffsetFloat(i) / 30.0f) * 10.0f + (mDY / 8);
-				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, 0);
+				float dx = sin(angle + getPodOffsetFloat(i) / 30.0f) * 8.0f;
+				float dy = cos(angle + getPodOffsetFloat(i) / 30.0f) * 8.0f + (mDY / 8);
+				PlayerBullet *bullet = new PlayerBullet(x, y, dx, dy, 1, angle);
 				level->addEntity(bullet);
 			}
-		}	
+		}
 
 		mShotBurstCounter--;		
 	}

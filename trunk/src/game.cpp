@@ -110,7 +110,7 @@ void Game::logic()
         mState = PAUSE;
     }
 
-    mPauseButtonPressed = key[KEY_P];
+    mPauseButtonPressed = key[KEY_P] != 0;
 }
 
 void Game::draw()
