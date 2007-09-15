@@ -1,5 +1,6 @@
 #include "energyorb.hpp"
 #include "level.hpp"
+#include "gamestate.hpp"
 
 EnergyOrb::EnergyOrb(int x, int y)
 : Entity(x, y, Level::BLOCK_SIZE, Level::BLOCK_SIZE, true),
@@ -25,10 +26,14 @@ void EnergyOrb::draw(BITMAP *dest, int scrolly, unsigned int layer)
 
 bool EnergyOrb::isToBeDeleted()
 {
-    return false;
+    return !isCollidable();
 }
 
 void EnergyOrb::handleCollision(Entity *other, Level *level)
 {
-
+    if (other->getType() == Entity::PLAYER_TYPE)
+    {
+        GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() + 1);
+        mCollidable = false;
+    }
 }

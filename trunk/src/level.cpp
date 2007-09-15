@@ -39,6 +39,7 @@ Level::~Level()
     delete mImageFont;
     delete mDialog;
     delete mLivesLabel;
+    delete mEnergyOrbsLabel;
     delete mGameOverLabel;
 
     std::list<Entity *>::iterator it;
@@ -82,6 +83,9 @@ void Level::initGui()
 
     mLivesLabel = new gcn::Label(" 1x~");
     mTop->add(mLivesLabel, 0, 0);
+
+    mEnergyOrbsLabel = new gcn::Label(" 1x}");
+    mTop->add(mEnergyOrbsLabel, 0, mLivesLabel->getHeight());
 
     mGameOverLabel = new gcn::Label("GAME OVER");
     mGameOverLabel->adjustSize();
@@ -174,9 +178,11 @@ void Level::logic()
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
         checkCollision(mPlayerEntities, mEnemyBulletEntities);
         checkCollision(mEnemyEntities, mPlayerEntities);
+        checkCollision(mPowerUpEntities, mPlayerEntities);
+        checkCollision(mEnemyEntities, mEnemyEntities);
         checkStaticCollision(mPlayerEntities);
         checkStaticCollision(mPlayerBulletEntities);
-        checkCollision(mEnemyEntities, mEnemyEntities);
+
      
         std::list<Entity *>::iterator it;
 
@@ -205,6 +211,7 @@ void Level::logic()
                 mPlayerBulletEntities.remove((*it));
                 mEnemyEntities.remove((*it));
                 mEnemyBulletEntities.remove((*it));
+                mPowerUpEntities.remove((*it));
 
 		        delete (*it);
 
@@ -226,6 +233,18 @@ void Level::logic()
         }
         
         mLivesLabel->adjustSize();
+
+        if (GameState::getInstance()->getEnergyOrbs() > 9)
+        {
+            mEnergyOrbsLabel->setCaption(toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
+        }
+        else
+        {
+            mEnergyOrbsLabel->setCaption(" " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
+        }
+        
+        mEnergyOrbsLabel->adjustSize();
+
         mGui->logic();
     }
 
@@ -356,6 +375,7 @@ void Level::load(const std::string& filename)
                 case 'E':
                     entity = new EnergyOrb(col*BLOCK_SIZE,row*BLOCK_SIZE);
                     mHibernatingEntities.push_back(entity);
+                    break;
 				case '1':
                     if (mMotif == SPACE_MOTIF)
                     {
@@ -406,6 +426,9 @@ void Level::addEntity(Entity* entity)
             break;
         case Entity::PLAYER_TYPE:
             mPlayerEntities.push_back(entity);
+            break;
+        case Entity::POWER_UP_TYPE:
+            mPowerUpEntities.push_back(entity);
             break;
     }
 

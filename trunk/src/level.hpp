@@ -65,6 +65,8 @@ protected:
     std::list<Entity*> mEnemyBulletEntities;
     std::list<Entity*> mPlayerEntities;
     std::list<Entity*> mPlayerBulletEntities;
+    std::list<Entity*> mPowerUpEntities;
+
     int mGameScrollY;
     int mBackgroundScrollY;
     Player* mPlayer;
@@ -78,6 +80,7 @@ protected:
     gcn::Container* mTop;
     Dialog* mDialog;
     gcn::Label* mLivesLabel;
+    gcn::Label* mEnergyOrbsLabel;
     gcn::Label* mGameOverLabel;
     unsigned int mState;
     std::list<std::string> mDialogText;

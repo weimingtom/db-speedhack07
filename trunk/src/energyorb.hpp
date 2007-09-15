@@ -13,7 +13,7 @@ public:
     void draw(BITMAP *dest, int scrolly, unsigned int layer);
     bool isToBeDeleted();
 	void handleCollision(Entity *other, Level *level);
-    unsigned int getType() { return Entity::BLOCK_TYPE; }
+    unsigned int getType() { return Entity::POWER_UP_TYPE; }
     bool drawInLayer(unsigned int layer) { return layer == Entity::ENEMY_LAYER; }
 protected:
     Animation* mAnimation;
