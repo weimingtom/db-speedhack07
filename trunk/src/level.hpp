@@ -19,6 +19,7 @@ public:
     void logic();
     void load(const std::string& filename);
     void addEntity(Entity* entity);
+	void addShakeAmount(int amount);
     void spawnNewPlayer();
 
     bool isGameOver();
@@ -95,6 +96,8 @@ protected:
     std::vector<Entity*> mStaticEntities;
 
 	int mLevelLength;
+
+	float mShakeAmount;
 };
 
 #endif

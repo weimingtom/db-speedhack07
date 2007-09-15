@@ -11,6 +11,7 @@
 #include "gamestate.hpp"
 #include "planet.hpp"
 #include "energyorb.hpp"
+#include "util.hpp"
 
 #include <iostream>
 
@@ -21,6 +22,7 @@ Level::Level(const std::string& filename)
   mGameScrollFloat(0.0f),
   mFrameCounter(0),
   mLevelLength(0),
+  mShakeAmount(0),
   mTimeCounter(0)
 {
     load(filename);
@@ -110,7 +112,21 @@ static bool isNull(Entity *e)
 
 void Level::draw(BITMAP* dest)
 {
-    BITMAP* subdest = create_sub_bitmap(dest, 60, 0, 240, 240); 	
+	int xOffs = 0, yOffs = 0;
+	int oldGameScrollY = mGameScrollY;
+
+
+	if(mShakeAmount > 100)
+	{
+		int shakeAmount = ((mShakeAmount - 100)/10.0f);
+		if(shakeAmount > 60) shakeAmount = 40;
+
+		xOffs = shakeAmount*(frand()-0.5f);
+		yOffs = shakeAmount*(frand()-0.5f);
+		mGameScrollY += yOffs;
+	}
+
+	BITMAP* subdest = create_sub_bitmap(dest, 60+xOffs, 0, 240, 240); 	
 
     mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::BACKGROUND_LAYER);
 
@@ -135,6 +151,7 @@ void Level::draw(BITMAP* dest)
 
     mGraphics->setTarget(dest);
     mGui->draw();
+	mGameScrollY = oldGameScrollY;
 }
 
 void Level::drawMousePointer(BITMAP *dest)
@@ -156,6 +173,7 @@ void Level::logic()
 		<< mPlayerBulletEntities.size() << " "
 		<< mEnemyEntities.size() << " "
 		<< mEnemyBulletEntities.size() << std::endl;
+	if(key[KEY_SPACE]) { addShakeAmount(100); }
 
     if (mState == DIALOG)
     {
@@ -185,6 +203,8 @@ void Level::logic()
     }
     else if (mState == GAME)
     {
+		if(mShakeAmount > 0) mShakeAmount /= 1.045;
+
         checkCollision(mEnemyEntities, mPlayerBulletEntities);
         checkCollision(mPlayerEntities, mEnemyBulletEntities);
         checkCollision(mEnemyEntities, mPlayerEntities);
@@ -448,6 +468,11 @@ void Level::load(const std::string& filename)
     {
         mState = GAME;
     }
+}
+
+void Level::addShakeAmount(int amount)
+{
+	mShakeAmount += amount;
 }
 
 void Level::addEntity(Entity* entity)
