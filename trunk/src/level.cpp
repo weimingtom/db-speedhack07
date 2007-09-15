@@ -164,7 +164,10 @@ void Level::draw(BITMAP* dest)
 		}
 	}
 
-	mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::FOREGROUND_LAYER);
+	if (mBackground->drawInLayer(Entity::FOREGROUND_LAYER))
+	{
+		mBackground->draw(subdest, mBackgroundScrollY + mGameScrollY, Entity::FOREGROUND_LAYER);
+	}
 
 	drawMousePointer(subdest);
     vline(subdest, 0, 0, 239, makecol(100, 100, 100));
