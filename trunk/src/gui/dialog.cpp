@@ -10,6 +10,7 @@ Dialog::Dialog()
     mWriteFast(false),
     mFrameCounter(0)
 {
+    mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
     mCornerUL = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-cornerul.bmp"));
 	mCornerUR = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-cornerur.bmp"));
 	mCornerDL = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-cornerdl.bmp"));
@@ -211,5 +212,6 @@ void Dialog::logic()
     if (mLettersWritten < mText.size() && ((mFrameCounter % mWriteSpeed) == 0))
     {
         mLettersWritten++;
+        play_sample(mBeepSample, 128, 128, 1500, 0);
     }
 }

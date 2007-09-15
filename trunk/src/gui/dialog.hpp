@@ -43,6 +43,8 @@ private:
     gcn::Image* mHorizontal;
     gcn::Image* mVertical;
     gcn::ImageFont* mFont;
+
+    SAMPLE* mBeepSample;
 };
 
 #endif
