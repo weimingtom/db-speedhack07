@@ -6,17 +6,21 @@
 #include "gamestate.hpp"
 #include "resourcehandler.hpp"
 
-PointSummary::PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int parBlocks,  unsigned int maxBlocks, unsigned int enemies, unsigned int parEnemies, unsigned int maxEnemies, unsigned int orbs, unsigned int time, unsigned int parTime)
+PointSummary::PointSummary(gcn::Container* mTop, 
+                           unsigned int blocks, 
+                           unsigned int maxBlocks, 
+                           unsigned int enemies, 
+                           unsigned int maxEnemies, 
+                           unsigned int orbs, 
+                           unsigned int time,
+                           unsigned int partime)
 :
 mBlocks(blocks),
-mParBlocks(parBlocks),
 mMaxBlocks(maxBlocks),
 mEnemies(enemies),
-mParEnemies(parEnemies),
 mMaxEnemies(maxEnemies),
 mOrbs(orbs),
 mTime(time),
-mParTime(time),
 mFrameCounter(50),
 mState(0),
 mCountingPoints(false),
@@ -24,19 +28,52 @@ mBlockPointsCounter(0),
 mEnemyPointsCounter(0),
 mOrbPointsCounter(0),
 mTimePointsCounter(0),
-mTotalPointsCounter(0)
+mTotalPointsCounter(0),
+mParTime(partime)
 {
 	initGui(mTop);
-	mBlockPoints = blocks*10; //todo
-	mEnemyPoints = enemies*20; //todo
-	mOrbPoints = orbs*30; //todo
-	mTimePoints = time/10; //todo
+    int b = blocks - mMaxBlocks / 2;
+    int mb = mMaxBlocks / 2;
+    if (b > 0)
+    {
+	    mBlockPoints = b / (float)mb * 7000;
+    }
+    else
+    {
+        mBlockPoints = 0;
+    }
 
+    int e = enemies - mMaxEnemies / 2;
+    int me = mMaxEnemies / 2;
+    if (e > 0)
+    {
+        mEnemyPoints = e / (float)me * 7000; 
+    }
+    else
+    {
+        mEnemyPoints = 0;
+    }
+
+    mOrbPoints = orbs * 500;
+
+    int t = time - mParTime / 2;
+    int mt = mParTime / 2;
+    if (t > 0)
+    {
+        mTimePoints = t / (float)mt * 7000;
+    }
+    else
+    {
+        mTimePoints = 0;
+    }
+
+    /*
 	//test
 	mBlockPoints = 2400;
 	mEnemyPoints = 3220;
 	mOrbPoints = 1000;
 	mTimePoints = 0;
+    */
 
 	mTotalPoints = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
 	

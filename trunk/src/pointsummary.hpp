@@ -7,7 +7,14 @@
 class PointSummary
 {
 public:
-    PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int parBlocks,  unsigned int maxBlocks, unsigned int enemies, unsigned int parEnemies, unsigned int maxEnemies, unsigned int orbs, unsigned int time, unsigned int parTime);
+    PointSummary(gcn::Container* mTop, 
+                 unsigned int blocks, 
+                 unsigned int maxBlocks, 
+                 unsigned int enemies,
+                 unsigned int maxEnemies, 
+                 unsigned int orbs, 
+                 unsigned int time,
+                 unsigned int partime);
     ~PointSummary();
 	void logic();
 	bool isDone();
@@ -17,13 +24,10 @@ protected:
 
 	unsigned int mOrbs;
 	unsigned int mEnemies;
-	unsigned int mParEnemies;
 	unsigned int mMaxEnemies;
 	unsigned int mBlocks;
-	unsigned int mParBlocks;
-	unsigned int mMaxBlocks;
+    unsigned int mMaxBlocks;
 	unsigned int mTime;
-	unsigned int mParTime;
 	unsigned int mState;
 
 	unsigned int mOrbPoints;
@@ -42,6 +46,8 @@ protected:
 	bool mCountingPoints;
 
 	unsigned int mFrameCounter;
+
+    unsigned int mParTime;
 
 //point count gui
 	gcn::Label* mBlocksDestroyedLabel;

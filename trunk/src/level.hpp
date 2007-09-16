@@ -124,6 +124,10 @@ protected:
 	int mAirResistance;
 
     std::string mLevelName;
+
+    unsigned int mNumberOfEnemies;
+    unsigned int mNumberOfBlocks;
+    unsigned int mLevelParTime;
 };
 
 #endif

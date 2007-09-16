@@ -37,7 +37,9 @@ Level::Level(const std::string& filename)
   mTimeCounter(0),
   mAirResistance(1),
   mKilledEnemies(0),
-  mDestroyedBlocks(0)
+  mDestroyedBlocks(0),
+  mNumberOfEnemies(0),
+  mNumberOfBlocks(0)
 {
     load(filename);
 	mPlayer = new Player();
@@ -335,7 +337,14 @@ void Level::logic()
 			mState = LEVEL_COMPLETE;
             mFrameCounter = 0;
             mLevelCompleteLabel->setVisible(true);			
-			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, 15, 30, mKilledEnemies, 10, 20, GameState::getInstance()->getEnergyOrbs(), mTimeCounter, 10000);
+			mPointSummary = new PointSummary(mTop, 
+                                             mDestroyedBlocks, 
+                                             mNumberOfBlocks, 
+                                             mKilledEnemies, 
+                                             mNumberOfEnemies, 
+                                             GameState::getInstance()->getEnergyOrbs(), 
+                                             mTimeCounter,
+                                             mLevelParTime);
             return;
         }
 
@@ -559,6 +568,9 @@ void Level::load(const std::string& filename)
 
     data.erase(data.begin());
 
+    mLevelParTime = fromString<int>(data[0]);
+    data.erase(data.begin());
+
     // Load entities
     for (row = 0; row < data.size(); row++)
     {
@@ -594,6 +606,7 @@ void Level::load(const std::string& filename)
                 case '4':
 				case '5':
 				case '6':
+                    mNumberOfBlocks++;
                     if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
@@ -655,6 +668,7 @@ void Level::load(const std::string& filename)
                    break;
 				case 'E':
 				case 'e':
+                    mNumberOfBlocks++;
 					if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
@@ -742,6 +756,7 @@ void Level::addEntity(Entity* entity)
             mEnemyBulletEntities.push_back(entity);
             break;
         case Entity::ENEMY_TYPE:
+            mNumberOfEnemies++;
             mEnemyEntities.push_back(entity);
             break;
         case Entity::PLAYER_BULLET_TYPE:
