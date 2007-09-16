@@ -31,6 +31,7 @@ protected:
 	int mFrameCounter;
 
 	Animation mAnimation;
+    Animation mAnimation2;
 };
 
 #endif
