@@ -27,7 +27,7 @@ void GameState::reset()
     mLives = 3;
     mLevel = 0;
     mPoints = 0;
-    mEnergyOrbs = 100;
+    mEnergyOrbs = 1;
     mPods = 1;
     mCannonLevel = 1;
     mMegaBlasts = 3;

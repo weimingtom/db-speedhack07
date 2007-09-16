@@ -31,49 +31,55 @@ mTimePointsCounter(0),
 mTotalPointsCounter(0),
 mParTime(partime)
 {
-	initGui(mTop);
-    int b = blocks - mMaxBlocks / 2;
-    int mb = mMaxBlocks / 2;
-    if (b > 0)
-    {
-	    mBlockPoints = b / (float)mb * 7000;
-    }
-    else
+    if (mMaxBlocks == 0)
     {
         mBlockPoints = 0;
     }
-
-    int e = enemies - mMaxEnemies / 2;
-    int me = mMaxEnemies / 2;
-    if (e > 0)
+    else
     {
-        mEnemyPoints = e / (float)me * 7000; 
+	    initGui(mTop);
+        int b = blocks - mMaxBlocks / 2;
+        int mb = mMaxBlocks / 2;
+        if (b > 0)
+        {
+	        mBlockPoints = b / (float)mb * 7000;
+        }
+        else
+        {
+            mBlockPoints = 0;
+        }
+    }
+
+    if (mMaxEnemies == 0)
+    {
+        mEnemyPoints = 0;
     }
     else
     {
-        mEnemyPoints = 0;
+        int e = enemies - mMaxEnemies / 2;
+        int me = mMaxEnemies / 2;
+        if (e > 0)
+        {
+            mEnemyPoints = e / (float)me * 7000; 
+        }
+        else
+        {
+            mEnemyPoints = 0;
+        }
     }
 
     mOrbPoints = orbs * 500;
 
-    int t = time - mParTime / 2;
-    int mt = mParTime / 2;
+    int t = mParTime - time;
+
     if (t > 0)
     {
-        mTimePoints = t / (float)mt * 7000;
+        mTimePoints = t * 10;
     }
     else
     {
         mTimePoints = 0;
     }
-
-    /*
-	//test
-	mBlockPoints = 2400;
-	mEnemyPoints = 3220;
-	mOrbPoints = 1000;
-	mTimePoints = 0;
-    */
 
 	mTotalPoints = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
 	
