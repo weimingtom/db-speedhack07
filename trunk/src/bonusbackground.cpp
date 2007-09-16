@@ -2,6 +2,9 @@
 
 #include "resourcehandler.hpp"
 #include <cmath>
+#include "debris.hpp"
+#include "level.hpp"
+#include "util.hpp"
 
 BonusBackground::BonusBackground()
 : Entity(false),
@@ -19,6 +22,18 @@ BonusBackground::~BonusBackground()
 void BonusBackground::logic(Level* level)
 {
     mFrameCounter++;
+
+    if (mFrameCounter % 5 == 0)
+    {
+        Debris *d = new Debris(rand() % 240,
+                           level->getScrollY() + 250,
+				           (frand() - 0.5f) * 5.0f,
+				           (frand() - 0.5f) * 10.0f,
+				            rand() & 1 ? "bonusdebrismiley.bmp" : "bonusdebriheart.bmp", 
+				           2);
+        level->addEntity(d);
+    }
+
 }
 
 void BonusBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)

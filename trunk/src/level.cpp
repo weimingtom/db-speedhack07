@@ -560,9 +560,16 @@ void Level::load(const std::string& filename)
 		playMusic("greaty.xm", 1.0f);
         mAirResistance = Player::AIR_RESISTANCE_MEDIUM;
     }
+    else if (motifName == "BONUS")
+    {
+        mMotif = BONUS_MOTIF;
+        mBackground = new BonusBackground();
+		playMusic("greaty.xm", 1.0f);
+        mAirResistance = Player::AIR_RESISTANCE_LOW;
+    }
 	else
     {
-        throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE, SKY and WATER)!");
+        throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE, SKY, WATER, CAVE and BONUS)!");
     }
 
     data.erase(data.begin());
@@ -608,7 +615,7 @@ void Level::load(const std::string& filename)
 				case '5':
 				case '6':
                     mNumberOfBlocks++;
-                    if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
+                    if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF || mMotif == BONUS_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -670,7 +677,7 @@ void Level::load(const std::string& filename)
 				case 'E':
 				case 'e':
                     mNumberOfBlocks++;
-					if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
+					if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF || mMotif == BONUS_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -706,7 +713,7 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(staticEntity);
                     break;
 				case '0':
-                    if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
+                    if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF || mMotif == BONUS_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 

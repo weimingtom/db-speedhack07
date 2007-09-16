@@ -50,6 +50,7 @@ public:
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;
     static const int CAVE_MOTIF = 3;
+    static const int BONUS_MOTIF = 4;
 
     static const int BLOCK_SIZE = 16;
     static const int LEVEL_WIDTH = 240;
