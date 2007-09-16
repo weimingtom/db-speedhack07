@@ -17,7 +17,8 @@ GameState::GameState()
 mLevel(2),
 mEnergyOrbs(100),
 mPods(1),
-mCannonLevel(7)
+mCannonLevel(7),
+mMegaBlasts(3)
 {
 
 }
@@ -70,4 +71,14 @@ void GameState::setCannonLevel(unsigned int cannonLevel)
 unsigned int GameState::getCannonLevel()
 {
 	return mCannonLevel;
+}
+
+void GameState::setMegaBlasts(unsigned int megaBlasts)
+{
+	mMegaBlasts = megaBlasts;
+}
+
+unsigned int GameState::getMegaBlasts()
+{
+	return mMegaBlasts;
 }

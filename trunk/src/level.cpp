@@ -58,6 +58,7 @@ Level::~Level()
     delete mLevelCompleteLabel;
     delete mLevelNameLabel;
     delete mLevelNumberLabel;
+    delete mMegaBlastsLabel;
 
     std::list<Entity *>::iterator it;
 
@@ -98,17 +99,47 @@ void Level::initGui()
     mDialog->setVisible(false);
     mTop->add(mDialog, 60, 240 - 75);
 
-    mLivesLabel = new gcn::Label(toString(GameState::getInstance()->getLives())+"x~");
-    mTop->add(mLivesLabel, 5, 0);
+    if (GameState::getInstance()->getLives() < 10)
+    {
+        mLivesLabel = new gcn::Label("0"+toString(GameState::getInstance()->getLives())+"x~");
+    }
+    else
+    {
+        mLivesLabel = new gcn::Label(toString(GameState::getInstance()->getLives())+"x~");
+    }
+    mTop->add(mLivesLabel, 5, 3);
 
-    mEnergyOrbsLabel = new gcn::Label(toString(GameState::getInstance()->getEnergyOrbs())+"x}");
-    mTop->add(mEnergyOrbsLabel, 5, mLivesLabel->getHeight());
+    if (GameState::getInstance()->getEnergyOrbs() < 100)
+    {
+        mEnergyOrbsLabel = new gcn::Label("00"+toString(GameState::getInstance()->getEnergyOrbs())+"x}");
+    }
+    else if (GameState::getInstance()->getEnergyOrbs() < 10)
+    {
+        mEnergyOrbsLabel = new gcn::Label("0"+toString(GameState::getInstance()->getEnergyOrbs())+"x}");
+    }
+    else
+    {
+        mEnergyOrbsLabel = new gcn::Label(toString(GameState::getInstance()->getEnergyOrbs())+"x}");
+    }
+
+    mTop->add(mEnergyOrbsLabel, 5, mLivesLabel->getHeight() + 3);
+
+    if (GameState::getInstance()->getMegaBlasts() < 10)
+    {
+        mMegaBlastsLabel = new gcn::Label("0"+toString(GameState::getInstance()->getMegaBlasts())+"x[");
+    }
+    else
+    {
+        mMegaBlastsLabel = new gcn::Label(toString(GameState::getInstance()->getMegaBlasts())+"x[");
+    }
+
+    mTop->add(mMegaBlastsLabel, 5, mLivesLabel->getHeight() * 2 + 3);
 
     mTimeLabel = new gcn::Label("000.00");
-    mTop->add(mTimeLabel, 5, mLivesLabel->getHeight()*4);
+    mTop->add(mTimeLabel, 5, mLivesLabel->getHeight()*5 + 3);
 
     mTimeCaptionLabel = new gcn::Label("TIME");
-    mTop->add(mTimeCaptionLabel, 5, mLivesLabel->getHeight() * 3);
+    mTop->add(mTimeCaptionLabel, 5, mLivesLabel->getHeight() * 6 + 3);
 
     mGameOverLabel = new gcn::Label("GAME OVER");
     mGameOverLabel->setVisible(false);
@@ -364,7 +395,18 @@ void Level::logic()
             mEnergyOrbsLabel->setCaption("0" + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
         }
         
-        mEnergyOrbsLabel->adjustSize();
+        mMegaBlastsLabel->adjustSize();
+
+        if (GameState::getInstance()->getMegaBlasts() > 9)
+        {
+            mMegaBlastsLabel->setCaption(toString(GameState::getInstance()->getMegaBlasts()) + "x[");
+        }
+        else
+        {
+            mMegaBlastsLabel->setCaption("0" + toString(GameState::getInstance()->getMegaBlasts()) + "x[");
+        }
+        
+        mMegaBlastsLabel->adjustSize();
 
         int hundredsOfSecond = (mTimeCounter * 2) % 100;
         int seconds = mTimeCounter / 50;
@@ -711,6 +753,11 @@ bool Level::isBrakePressed()
 bool Level::isBurnPressed()
 {
     return key[KEY_S] != 0;
+}
+
+bool Level::isMegaBlastPressed()
+{
+    return (mouse_b & 2) != 0;
 }
 
 void Level::checkCollision(std::list<Entity*>& list1, std::list<Entity*>& list2)

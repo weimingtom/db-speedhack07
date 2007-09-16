@@ -31,6 +31,7 @@ public:
 	bool isFirePressed();
     bool isBrakePressed();
     bool isBurnPressed();
+    bool isMegaBlastPressed();
 
     int getScrollY() { return mGameScrollY; }
 
@@ -87,6 +88,7 @@ protected:
     gcn::Container* mTop;
     Dialog* mDialog;
     gcn::Label* mLivesLabel;
+    gcn::Label* mMegaBlastsLabel;
     gcn::Label* mEnergyOrbsLabel;
     gcn::Label* mTimeLabel;
     gcn::Label* mTimeCaptionLabel;

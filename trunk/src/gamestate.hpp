@@ -15,6 +15,8 @@ public:
     unsigned int getPods();
 	void setCannonLevel(unsigned int cannonLevel);
 	unsigned int getCannonLevel();
+    void setMegaBlasts(unsigned int megaBlasts);
+    unsigned int getMegaBlasts();
 
 private:
     GameState();
@@ -24,5 +26,6 @@ private:
     unsigned int mEnergyOrbs;
     unsigned int mPods;
 	unsigned int mCannonLevel;
+    unsigned int mMegaBlasts;
 };
 #endif

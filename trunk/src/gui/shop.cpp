@@ -48,6 +48,14 @@ Shop::Shop()
     mCannonUpgradeEquipedLabel = new gcn::Label("LEVEL " + toString(GameState::getInstance()->getCannonLevel()));
     add(mCannonUpgradeEquipedLabel, 225, 103 + mBuyLifeButton->getHeight() * 2);
 
+    mBuyMegaBlastButton = new DBSH07Button("MEGA BLAST [");
+    add(mBuyMegaBlastButton, 20, 100 + mBuyLifeButton->getHeight() * 3);
+    mBuyMegaBlastButton->addActionListener(this);
+    mMegaBlastCostLabel = new gcn::Label(toString(MEGA_BLAST_COST)+"}");
+    add(mMegaBlastCostLabel, 170, 104 + mBuyLifeButton->getHeight() * 3);
+    mMegaBlastsEquippedLabel = new gcn::Label(toString(GameState::getInstance()->getMegaBlasts()) + "x[");
+    add(mMegaBlastsEquippedLabel, 225, 103 + mBuyLifeButton->getHeight() * 3);
+
     mDialog = new Dialog();
     mDialog->setSize(320, 75);
     add(mDialog, 0, 240 - 75);
@@ -57,6 +65,10 @@ Shop::Shop()
 
 Shop::~Shop()
 {
+
+    delete mBuyMegaBlastButton;
+    delete mMegaBlastsEquippedLabel;
+    delete mMegaBlastCostLabel;
     delete mCannonUpgradeCostLabel;
     delete mPodCostLabel;
     delete mLifeCostLabel;
@@ -126,6 +138,21 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         mCannonUpgradeEquipedLabel->adjustSize();
         play_sample(mBuySample, 255, 128, 1000, 0);
     }
+    else if (actionEvent.getSource() == mBuyMegaBlastButton)
+    {
+        if (GameState::getInstance()->getEnergyOrbs() < MEGA_BLAST_COST)
+        {
+            mDialog->setText("C CUDDELZ: I'm sorry but you don't have enough } for buying a mega blast.");
+            mDialog->setVisible(true);
+            return;
+        }
+        
+        GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() - MEGA_BLAST_COST);
+        GameState::getInstance()->setMegaBlasts(GameState::getInstance()->getMegaBlasts() + 1);
+        mMegaBlastsEquippedLabel->setCaption(toString(GameState::getInstance()->getMegaBlasts()) + "x[");
+        mMegaBlastsEquippedLabel->adjustSize();
+        play_sample(mBuySample, 255, 128, 1000, 0);
+    }
 
     mEnergyOrbsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
     mEnergyOrbsLabel->adjustSize();
@@ -141,5 +168,9 @@ void Shop::setVisible(bool visible)
         mDialog->setVisible(true);
         mEnergyOrbsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
         mEnergyOrbsLabel->adjustSize();
+        mMegaBlastsEquippedLabel->setCaption(toString(GameState::getInstance()->getMegaBlasts()) + "x[");
+        mMegaBlastsEquippedLabel->adjustSize();
+        mLivesEquipedLabel->setCaption(toString(GameState::getInstance()->getLives()) + "x~");
+        mLivesEquipedLabel->adjustSize();
     }
 }

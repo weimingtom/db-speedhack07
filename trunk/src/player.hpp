@@ -49,6 +49,7 @@ private:
 	int mDX, mDY;
 	int mTargetX, mTargetY;
 	bool mShotPressed;
+    bool mMegaBlastPressed;
 	bool mShotReleased;
 	int mShotBurstCounter;
 	int mNumPods;

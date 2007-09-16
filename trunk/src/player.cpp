@@ -4,6 +4,7 @@
 #include "util.hpp"
 #include "resourcehandler.hpp"
 #include "gamestate.hpp"
+#include "megablast.hpp"
 
 #include <cmath>
 #include <iostream>
@@ -35,6 +36,7 @@ void Player::reset()
     mDY = 0;
     mShotPressed = false;
     mShotReleased = true;
+    mMegaBlastPressed = false;
     mShotBurstCounter = 0;
 	mNumPods = GameState::getInstance()->getPods();
     mState = NEW;
@@ -276,6 +278,19 @@ void Player::movementLogic(Level* level)
 
 	mX += mDX / 8;
 	mY += mDY / 8;
+
+    // Mega blasting
+    if (level->isMegaBlastPressed() && !mMegaBlastPressed)
+    {
+        if (GameState::getInstance()->getMegaBlasts() > 0)
+        {
+            level->addEntity(new MegaBlast(0, level->getScrollY()));
+            GameState::getInstance()->setMegaBlasts(GameState::getInstance()->getMegaBlasts() - 1);
+        }
+    }
+    
+    mMegaBlastPressed = level->isMegaBlastPressed();
+
 
 	// Shooting
 	if (level->isFirePressed())
