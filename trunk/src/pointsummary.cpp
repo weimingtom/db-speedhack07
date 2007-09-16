@@ -4,6 +4,7 @@
 #include "pointsummary.hpp"
 #include "stringutil.hpp"
 #include "gamestate.hpp"
+#include "resourcehandler.hpp"
 
 PointSummary::PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int parBlocks,  unsigned int maxBlocks, unsigned int enemies, unsigned int parEnemies, unsigned int maxEnemies, unsigned int orbs, unsigned int time, unsigned int parTime)
 :
@@ -16,15 +17,24 @@ mMaxEnemies(maxEnemies),
 mOrbs(orbs),
 mTime(time),
 mParTime(time),
-mFrameCounter(0),
-mState(0)
+mFrameCounter(50),
+mState(0),
+mCountingPoints(false),
+mBlockPointsCounter(0),
+mEnemyPointsCounter(0),
+mOrbPointsCounter(0),
+mTimePointsCounter(0),
+mTotalPointsCounter(0)
 {
 	initGui(mTop);
 	mBlockPoints = blocks*10; //todo
 	mEnemyPoints = enemies*20; //todo
 	mOrbPoints = orbs*30; //todo
 	mTimePoints = time/10; //todo
-	mTotal = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
+	mTotalPoints = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
+	
+	mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
+
 }
 
 PointSummary::~PointSummary()
@@ -45,87 +55,127 @@ PointSummary::~PointSummary()
 
 bool PointSummary::isDone()
 {
-	return mState==13 && mFrameCounter >= 200;
+	return mState==13;
 }
 
 void PointSummary::logic()
 {
-	mFrameCounter++;
-	if(mFrameCounter%20==0 && mState != 11 && mState != 13)
+	if(!mCountingPoints)
 	{
-		mState++;
-		if(mState == 1)
+		mFrameCounter--;
+		if (mFrameCounter<=0)
 		{
-			mBlocksDestroyedLabel->setVisible(true);
-		}
-		else if (mState == 2)
-		{
-			mBlockPointsLabel->setVisible(true);
-		}
-		else if (mState == 3)
-		{
-			mEnemiesKilledLabel->setVisible(true);
-		}
-		else if (mState == 4)
-		{
-			mEnemyKillPointsLabel->setVisible(true);
-		}
-		else if (mState == 5)
-		{
-			mOrbsTakenLabel->setVisible(true);
-		}
-		else if (mState == 6)
-		{
-			mOrbsTakenPointsLabel->setVisible(true);
-		}
-		else if (mState == 7)
-		{
-			mTimePassedLabel->setVisible(true);
-		}
-		else if (mState == 8)
-		{
-			mTimeBonusLabel->setVisible(true);
-		}
-		else if (mState == 9)
-		{
-			mTotalLabel->setVisible(true);
-		}
-		else if (mState == 10)
-		{
-			mTotalPointsLabel->setVisible(true);
+			mState++;
+			mFrameCounter=10;
+			if(mState == 1)
+			{
+				mBlocksDestroyedLabel->setVisible(true);
+				//play_sample(mBeepSample, 128, 128, 500, 0);
+			}
+			else if (mState == 2)
+			{
+				mBlockPointsLabel->setVisible(true);
+				mCountingPoints=true;
+				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
+			else if (mState == 3)
+			{
+				mEnemiesKilledLabel->setVisible(true);
+				//play_sample(mBeepSample, 128, 128, 500, 0);
+			}
+			else if (mState == 4)
+			{
+				mEnemyKillPointsLabel->setVisible(true);
+				mCountingPoints=true;
+				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
+			else if (mState == 5)
+			{
+				mOrbsTakenLabel->setVisible(true);
+				//play_sample(mBeepSample, 128, 128, 500, 0);
+			}
+			else if (mState == 6)
+			{
+				mOrbsTakenPointsLabel->setVisible(true);
+				mCountingPoints=true;
+				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
+			else if (mState == 7)
+			{
+				mTimePassedLabel->setVisible(true);
+				//play_sample(mBeepSample, 128, 128, 500, 0);
+			}
+			else if (mState == 8)
+			{
+				mTimeBonusLabel->setVisible(true);
+				mCountingPoints=true;
+				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
+			else if (mState == 9)
+			{
+				mTotalLabel->setVisible(true);
+				//play_sample(mBeepSample, 128, 128, 500, 0);
+			}
+			else if (mState == 10)
+			{
+				mTotalPointsLabel->setVisible(true);
+				mCountingPoints=true;
+				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
 		}
 	}
-	if (mState == 11)
-	{
-		int sub = mTotal > 100?100:mTotal;
-		mTotal -= sub;
-		GameState::getInstance()->addPoints(sub);
 
-		if (mTotal <= 0) { mState = 12; mFrameCounter = 0; }
+	if (mCountingPoints)
+	{
+		int total;
+		int target;
+		if(mState==2) { target = mBlockPoints; total=mBlockPointsCounter; }
+		if(mState==4) { target = mEnemyPoints; total=mEnemyPointsCounter; }
+		if(mState==6) { target = mOrbPoints; total=mOrbPointsCounter; }
+		if(mState==8) { target = mTimePoints; total=mTimePointsCounter; }
+		if(mState==10) { target = mTotalPoints; total=mTotalPointsCounter; }
+
+		int diff = (target-total);
+		
+		int add = diff<100?diff:100;
+
+		if(mState==2) { mBlockPointsCounter += add; }
+		if(mState==4) { mEnemyPointsCounter += add; }
+		if(mState==6) { mOrbPointsCounter += add; }
+		if(mState==8) { mTimePointsCounter += add; }
+		if(mState==10) { mTotalPointsCounter += add; GameState::getInstance()->addPoints(add); }
+		
+		if(add == 0) { mCountingPoints = false; }
+
+		//mTotal -= sub;
+//		GameState::getInstance()->addPoints(sub);
+		play_sample(mBeepSample, 128, 128, 2500, 0);
+
+		//if (mTotal <= 0) { mState = 12; mFrameCounter = 0; }
 	}
 		mBlocksDestroyedLabel->setCaption("^x" + toString(mBlocks));
 		mBlocksDestroyedLabel->adjustSize();
-		mBlockPointsLabel->setCaption(": " + toString(mBlockPoints));
+		mBlockPointsLabel->setCaption(": " + toString((int)mBlockPointsCounter));
 		mBlockPointsLabel->adjustSize();
 
 		mEnemiesKilledLabel->setCaption("_x" + toString(mEnemies));
 		mEnemiesKilledLabel->adjustSize();
-		mEnemyKillPointsLabel->setCaption(": " + toString(mEnemyPoints));
+		mEnemyKillPointsLabel->setCaption(": " + toString((int)mEnemyPointsCounter));
 		mEnemyKillPointsLabel->adjustSize();
 
 		mOrbsTakenLabel->setCaption("}x" + toString(mOrbs));
 		mOrbsTakenLabel->adjustSize();
-		mOrbsTakenPointsLabel->setCaption(": " + toString(mOrbPoints));
+		mOrbsTakenPointsLabel->setCaption(": " + toString((int)mOrbPointsCounter));
 		mOrbsTakenPointsLabel->adjustSize();
 
 		mTimePassedLabel->setCaption("Time bonus");
 		mTimePassedLabel->adjustSize();
-		mTimeBonusLabel->setCaption(": " + toString(mTimePoints));
+		mTimeBonusLabel->setCaption(": " + toString((int)mTimePointsCounter));
 		mTimeBonusLabel->adjustSize();
 
 		mTotalLabel->setCaption("TOTAL");
 		mTotalLabel->adjustSize();
-		mTotalPointsLabel->setCaption(": " + toString(mTotal));
+		mTotalPointsLabel->setCaption(": " + toString((int)(mTotalPoints - mTotalPointsCounter)));
 		mTotalPointsLabel->adjustSize();
 }
 

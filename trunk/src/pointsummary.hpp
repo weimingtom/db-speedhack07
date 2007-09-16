@@ -2,6 +2,8 @@
 #define DBSH07_POINTSUMMARY_HPP
 
 #include "guichan.hpp"
+#include <allegro.h>
+
 class PointSummary
 {
 public:
@@ -28,7 +30,16 @@ protected:
 	unsigned int mEnemyPoints;
 	unsigned int mBlockPoints;
 	unsigned int mTimePoints;
-	unsigned int mTotal;
+	unsigned int mTotalPoints;
+
+	float mBlockPointsCounter;
+	float mEnemyPointsCounter;
+	float mOrbPointsCounter;
+	float mTimePointsCounter;
+	float mTotalPointsCounter;
+
+	bool mDoneCounting;
+	bool mCountingPoints;
 
 	unsigned int mFrameCounter;
 
@@ -44,6 +55,8 @@ protected:
 	gcn::Label* mOrbsTakenPointsLabel;
 	gcn::Label* mTimeBonusLabel;
 	gcn::Label* mTotalPointsLabel;
+
+	SAMPLE* mBeepSample;
 
 };
 
