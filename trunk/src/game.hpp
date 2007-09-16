@@ -70,6 +70,8 @@ protected:
     gcn::Container* mMainMenuContainer;
 
     gcn::Container* mCreditsContainer;
+	//gcn::Container* mHighScoreContainer;
+
     gcn::Image* mOlofImage;
     gcn::Icon* mOlofIcon;
     gcn::Label* mOlofLabel;
@@ -101,6 +103,7 @@ protected:
 
     DBSH07Button* mStartButton;
     DBSH07Button* mCreditsButton;
+	DBSH07Button* mHighScoreButton;
     DBSH07Button* mExitButton;
 
     bool mPauseButtonPressed;

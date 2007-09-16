@@ -295,15 +295,21 @@ void Game::initGui()
     mMainMenuContainer->add(mGameInfoIcon, 
                             160 - mGameInfoIcon->getWidth() / 2, 
                             240 - mGameInfoIcon->getHeight() - 2);
-    mStartButton = new DBSH07Button("START GAME");
+	mStartButton = new DBSH07Button("START GAME");
     mStartButton->addActionListener(this);
-    mMainMenuContainer->add(mStartButton, 40, 185);
-    mCreditsButton = new DBSH07Button("CREDITS");
+    mMainMenuContainer->add(mStartButton, 10, 185);
+
+	mCreditsButton = new DBSH07Button("CREDITS");
     mCreditsButton->addActionListener(this);
-    mMainMenuContainer->add(mCreditsButton, 130, 185);
-    mExitButton = new DBSH07Button("EXIT GAME");
+    mMainMenuContainer->add(mCreditsButton, 100, 185);
+    
+	mHighScoreButton = new DBSH07Button("HIGHSCORE");
+    mHighScoreButton->addActionListener(this);
+    mMainMenuContainer->add(mHighScoreButton, 165, 185);
+	
+	mExitButton = new DBSH07Button("EXIT GAME");
     mExitButton->addActionListener(this);
-    mMainMenuContainer->add(mExitButton, 200, 185);
+    mMainMenuContainer->add(mExitButton, 240, 185);
 
 	mCreditsContainer = new gcn::Container();
 	mCreditsContainer->setSize(320, 240);
