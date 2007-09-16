@@ -14,7 +14,7 @@ void MegaBlast::logic(Level* level)
 {
     mFrameCounter++;
 
-    level->addShakeAmount(600);
+    level->addShakeAmount(100);
 }
 
 void MegaBlast::draw(BITMAP *dest, int scrolly, unsigned int layer)

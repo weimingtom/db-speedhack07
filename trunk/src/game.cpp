@@ -414,7 +414,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
-        playMusic("shop.xm", 1.0f);
+        playMusic("shop.xm", 2.0f);
     }
     else if (state == MENU)
     {
