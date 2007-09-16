@@ -310,7 +310,7 @@ void Level::logic()
 		if(mFrameCounter>200) {
 			mLevelCompleteLabel->setVisible(false);
 			mState = POINT_COUNT;
-			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, mKilledEnemies, GameState::getInstance()->getEnergyOrbs(), mTimeCounter);
+			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, 15, 30, mKilledEnemies, 10, 20, GameState::getInstance()->getEnergyOrbs(), mTimeCounter, 10000);
 		}
 	}
 	else if (mState == POINT_COUNT)
@@ -438,41 +438,38 @@ void Level::logic()
         
         mMegaBlastsLabel->adjustSize();
 
-        int hundredsOfSecond = (mTimeCounter * 2) % 100;
-        int seconds = mTimeCounter / 50;
-
-        std::string time = "";
-
-        if (seconds < 10)
-        {
-            time += "00";
-        }
-        else if (seconds < 100)
-        {
-            time += "0";
-        }
-       
-
-        time += toString(seconds) + ".";
-
-        if (hundredsOfSecond < 10)
-        {
-            time += "0";
-        }
-
-        time += toString(hundredsOfSecond);
-
-        mTimeLabel->setCaption(time);
-        mTimeLabel->adjustSize();
-
-		mPointLabel->setCaption(toString(GameState::getInstance()->getPoints()));
-        mPointLabel->adjustSize();
-
         mGui->logic();
 
         mTimeCounter++;
+	}
+
+    std::string time = "";
+    int hundredsOfSecond = (mTimeCounter * 2) % 100;
+    int seconds = mTimeCounter / 50;
+    
+	if (seconds < 10)
+    {
+        time += "00";
+    }
+    else if (seconds < 100)
+    {
+        time += "0";
+    }
+   
+
+    time += toString(seconds) + ".";
+
+    if (hundredsOfSecond < 10)
+    {
+        time += "0";
     }
 
+    time += toString(hundredsOfSecond);
+    mTimeLabel->setCaption(time);
+    mTimeLabel->adjustSize();
+
+	mPointLabel->setCaption(toString(GameState::getInstance()->getPoints()));
+    mPointLabel->adjustSize();
     mFrameCounter++;
 }
 

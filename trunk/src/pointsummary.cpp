@@ -5,11 +5,17 @@
 #include "stringutil.hpp"
 #include "gamestate.hpp"
 
-PointSummary::PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int enemies, unsigned int orbs, unsigned int time)
-: mBlocks(blocks),
+PointSummary::PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int parBlocks,  unsigned int maxBlocks, unsigned int enemies, unsigned int parEnemies, unsigned int maxEnemies, unsigned int orbs, unsigned int time, unsigned int parTime)
+:
+mBlocks(blocks),
+mParBlocks(parBlocks),
+mMaxBlocks(maxBlocks),
 mEnemies(enemies),
+mParEnemies(parEnemies),
+mMaxEnemies(maxEnemies),
 mOrbs(orbs),
 mTime(time),
+mParTime(time),
 mFrameCounter(0),
 mState(0)
 {
@@ -97,29 +103,29 @@ void PointSummary::logic()
 
 		if (mTotal <= 0) { mState = 12; mFrameCounter = 0; }
 	}
-		mBlocksDestroyedLabel->setCaption(toString(mBlocks) + "x^");
+		mBlocksDestroyedLabel->setCaption("^x" + toString(mBlocks));
 		mBlocksDestroyedLabel->adjustSize();
-		mBlockPointsLabel->setCaption("- " + toString(mBlockPoints));
+		mBlockPointsLabel->setCaption(": " + toString(mBlockPoints));
 		mBlockPointsLabel->adjustSize();
 
-		mEnemiesKilledLabel->setCaption(toString(mEnemies) + "x_");
+		mEnemiesKilledLabel->setCaption("_x" + toString(mEnemies));
 		mEnemiesKilledLabel->adjustSize();
-		mEnemyKillPointsLabel->setCaption("- " + toString(mEnemyPoints));
+		mEnemyKillPointsLabel->setCaption(": " + toString(mEnemyPoints));
 		mEnemyKillPointsLabel->adjustSize();
 
-		mOrbsTakenLabel->setCaption(toString(mOrbs) + "x}");
+		mOrbsTakenLabel->setCaption("}x" + toString(mOrbs));
 		mOrbsTakenLabel->adjustSize();
-		mOrbsTakenPointsLabel->setCaption("- " + toString(mOrbPoints));
+		mOrbsTakenPointsLabel->setCaption(": " + toString(mOrbPoints));
 		mOrbsTakenPointsLabel->adjustSize();
 
 		mTimePassedLabel->setCaption("Time bonus");
 		mTimePassedLabel->adjustSize();
-		mTimeBonusLabel->setCaption("- " + toString(mTimePoints));
+		mTimeBonusLabel->setCaption(": " + toString(mTimePoints));
 		mTimeBonusLabel->adjustSize();
 
 		mTotalLabel->setCaption("TOTAL");
 		mTotalLabel->adjustSize();
-		mTotalPointsLabel->setCaption("- " + toString(mTotal));
+		mTotalPointsLabel->setCaption(": " + toString(mTotal));
 		mTotalPointsLabel->adjustSize();
 }
 

@@ -5,7 +5,7 @@
 class PointSummary
 {
 public:
-    PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int enemies, unsigned int orbs, unsigned int mTime);
+    PointSummary(gcn::Container* mTop, unsigned int blocks, unsigned int parBlocks,  unsigned int maxBlocks, unsigned int enemies, unsigned int parEnemies, unsigned int maxEnemies, unsigned int orbs, unsigned int time, unsigned int parTime);
     ~PointSummary();
 	void logic();
 	bool isDone();
@@ -15,8 +15,13 @@ protected:
 
 	unsigned int mOrbs;
 	unsigned int mEnemies;
+	unsigned int mParEnemies;
+	unsigned int mMaxEnemies;
 	unsigned int mBlocks;
+	unsigned int mParBlocks;
+	unsigned int mMaxBlocks;
 	unsigned int mTime;
+	unsigned int mParTime;
 	unsigned int mState;
 
 	unsigned int mOrbPoints;
