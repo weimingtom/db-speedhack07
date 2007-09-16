@@ -157,9 +157,7 @@ void Level::initGui()
               160 - mGameOverLabel->getWidth() / 2 + 20,
               120 - mGameOverLabel->getHeight() / 2);
 
-    mLevelCompleteLabel = new gcn::Label("LEVEL " 
-                                         + toString(GameState::getInstance()->getLevel()) 
-                                         + " COMPLETE!!");
+    mLevelCompleteLabel = new gcn::Label(GameState::getInstance()->getLevelDesignation(GameState::getInstance()->getLevel()) + " COMPLETE!!");
     mLevelCompleteLabel->setVisible(false);
     mTop->add(mLevelCompleteLabel,
               160 - mLevelCompleteLabel->getWidth() / 2 + 20,
@@ -332,7 +330,7 @@ void Level::logic()
     {
         if (mFrameCounter < 200)
         {
-            mLevelNumberLabel->setCaption("LEVEL " + toString(GameState::getInstance()->getLevel()) + ":");
+            mLevelNumberLabel->setCaption(GameState::getInstance()->getLevelDesignation(GameState::getInstance()->getLevel()) + ":");
             mLevelNumberLabel->adjustSize();
             mLevelNumberLabel->setPosition(160 - mLevelNumberLabel->getWidth() / 2 + 20,
                 120 - mLevelNumberLabel->getHeight());

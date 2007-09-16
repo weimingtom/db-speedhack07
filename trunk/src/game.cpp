@@ -57,7 +57,10 @@ Game::~Game()
     delete mSplashScreen;
 	destroy_bitmap(mBuffer);
 
-    delete mLevel;
+    if (mLevel != NULL)
+    {
+        delete mLevel;
+    }
 
     delete mGui;
     delete mAllegroGraphics;
@@ -100,9 +103,9 @@ void Game::logic()
                 setState(SHOP);
             }
             else if (!mDialog->isVisible()
-                && mOptionalDialog->getState() == OptionalDialog::SHOP)
+                && mOptionalDialog->getState() == OptionalDialog::BONUS_LEVEL)
             {
-                //setState(BONUS_LEVEL);
+                startNextLevel();
             }
 
             mGui->logic();
@@ -119,7 +122,8 @@ void Game::logic()
             }
             else if (mLevel->isLevelComplete())
             {
-                setState(BONUS_LEVEL_OR_SHOP);
+                std::cout << "LEVEL COMPLETE" << std::endl;
+                prepareNextLevel();
             }
             break;
         case PAUSE:
@@ -150,9 +154,6 @@ void Game::logic()
 void Game::draw()
 {
 	acquire_bitmap(mBuffer);
-
-     // TODO Remove the clear line. 
-    //clear_to_color(mBuffer, makecol(120, 160, 160));
 
     switch (mState) 
     {
@@ -339,7 +340,7 @@ void Game::action(const gcn::ActionEvent& actionEvent)
 {
     if (actionEvent.getSource() == mStartButton)
     {
-        startLevel();
+        prepareNextLevel();
     }
     else if (actionEvent.getSource() == mCreditsButton)
     {
@@ -352,7 +353,7 @@ void Game::action(const gcn::ActionEvent& actionEvent)
     }
     else if (actionEvent.getSource() == mShop)
     {
-        startLevel();
+        prepareNextLevel();
     }
     else if (actionEvent.getSource() == mOptionalDialog)
     {
@@ -384,25 +385,6 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             setState(EXIT);
         }
     }
-}
-
-void Game::startLevel()
-{
-    if (mLevel != NULL)
-    {
-        delete mLevel;
-    }
-
-    if (GameState::getInstance()->getLevel() == 1)
-    {
-        mLevel = new Level("level1.txt");
-    }
-    else if (GameState::getInstance()->getLevel() == 2)
-    {
-        mLevel = new Level("level2.txt");
-    }
-
-    setState(LEVEL);
 }
 
 void Game::setState(State state)
@@ -439,3 +421,37 @@ void Game::setState(State state)
    
     mState = state; 
 }
+
+void Game::prepareNextLevel()
+{
+    GameState::getInstance()->setLevel(GameState::getInstance()->getLevel() + 1);
+
+    if (GameState::getInstance()->getLevel() > GameState::getInstance()->getNumberOfLevels())
+    {
+        //setState(END);
+        setState(MENU);
+        GameState::getInstance()->reset();
+        return;
+    }
+
+    if (GameState::getInstance()->isLevelBonusLevel(GameState::getInstance()->getLevel()))
+    {
+        setState(BONUS_LEVEL_OR_SHOP);
+    }
+    else
+    {
+        startNextLevel();
+    }
+}
+
+void Game::startNextLevel()
+{
+    if (mLevel != NULL)
+    {
+        delete mLevel;
+    }
+
+    mLevel = new Level(GameState::getInstance()->getLevelFilename(GameState::getInstance()->getLevel()));
+    setState(LEVEL);
+}
+

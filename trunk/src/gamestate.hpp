@@ -1,6 +1,9 @@
 #ifndef DBSH07_GAMESTATE_HPP
 #define DBSH07_GAMESTATE_HPP
 
+#include <map>
+#include <vector>
+
 class GameState
 {
 public:
@@ -21,8 +24,15 @@ public:
     void setMegaBlasts(unsigned int megaBlasts);
     unsigned int getMegaBlasts();
 
+    const std::string& getLevelFilename(unsigned int level);
+    bool isLevelBonusLevel(unsigned int level);
+    const std::string& getLevelDesignation(unsigned int level);
+    unsigned int getNumberOfLevels();
+    void reset();
+
 private:
     GameState();
+    void loadLevelsData();
     static GameState* mInstance;
     unsigned int mLives;
     unsigned int mLevel;
@@ -33,5 +43,21 @@ private:
 	
 	unsigned int mCannonLevel;
     unsigned int mMegaBlasts;
+
+    class LevelData
+    {
+    public:
+        LevelData(const std::string& filename_, 
+                  bool bonus_, 
+                  const std::string& designation_)
+                  :filename(filename_),
+                  bonus(bonus_),
+                  designation(designation_)
+        {}
+        std::string filename;
+        bool bonus;
+        std::string designation;
+    };
+    std::vector<LevelData> mLevelsData;
 };
 #endif

@@ -31,7 +31,8 @@ protected:
 
 	void action(const gcn::ActionEvent& actionEvent);
 	void keyPressed(gcn::KeyEvent &keyEvent);
-    void startLevel();
+    void prepareNextLevel();
+    void startNextLevel();
 
     enum State
     {
@@ -41,7 +42,8 @@ protected:
         LEVEL,
         PAUSE,
         SHOP,
-        BONUS_LEVEL_OR_SHOP
+        BONUS_LEVEL_OR_SHOP,
+        END
     };
 
     void setState(State state);
