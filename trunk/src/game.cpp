@@ -284,7 +284,7 @@ void Game::initGui()
 
 	mLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
 	mLogoIcon = new gcn::Icon(mLogoImage);
-	mMainMenuContainer->add(mLogoIcon, 0, 60);
+	mMainMenuContainer->add(mLogoIcon, 0, 30);
 
     mGameInfoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("gameinfo.bmp"));
     mGameInfoIcon = new gcn::Icon(mGameInfoImage);
