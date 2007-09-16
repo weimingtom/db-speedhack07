@@ -56,7 +56,7 @@ void BonusBackground::rotoZoom(BITMAP *dest, float angle, float scale)
 		{
 			float sx = (x - 80) * co - (y - 60) * si;
 			float sy = (x - 80) * si + (y - 60) * co;
-			int c = getpixel(mRotoZoom, (int)(sx + 100000) & 15, (int)(sy + 100000) & 15);
+			int c = getpixel(mRotoZoom, (int)(sx + 100000) & 31, (int)(sy + 100000) & 31);
 			putpixel(mRotoZoomDest, x, y, c);
 		}
 	}

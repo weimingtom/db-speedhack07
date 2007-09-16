@@ -82,6 +82,13 @@ Game::~Game()
     delete mLogoIcon;
 
     delete mHighScoreContainer;
+    delete mCreditsContainer;
+    delete mOlofImage;
+    delete mOlofIcon;
+    delete mTedImage;
+    delete mTedIcon;
+    delete mPerImage;
+    delete mPerIcon;
 }
 
 void Game::logic()
@@ -345,27 +352,12 @@ void Game::initGui()
 	mTedLabel = new gcn::Label("TED STEEN");
 	mCreditsContainer->add(mTedLabel, 215, 165);
 
-	mCreditsText = new gcn::TextBox("We would like to thank Marcus Matern and Tomas Almgren\n"
-									"for helping out with making levels. Finally we would like\n"
-									"to thank Per's girlfriend Johanna for feeding us and putting\n"
-									"up with the whole idea of making this game in Per's and\n"
-									"Johanna's apartment.");
+	mCreditsText = new gcn::TextBox("We would like to thanks Berith Tivell\n"
+                                    "and Staffan Beijer for supplying us\n"
+                                    "with food during the competition.");
 	mCreditsText->setOpaque(false);
 	mCreditsText->setBorderSize(0);
-	mCreditsContainer->add(mCreditsText, 40, 180);
-
-
-/*
-	mInfoText = new gcn::TextBox("Team Darkbits Tins 07\n"
-								 "     http://darkbits.org\n"
-									   "           Version 1.0");
-	mInfoTextFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("fontsmallgrey.bmp"), 32, 126);
-	mInfoTextFont->setGlyphSpacing(-1);
-	mInfoText->setFont(mInfoTextFont);
-	mInfoText->setOpaque(false);
-	mInfoText->setBorderSize(0);
-	mMainMenuContainer->add(mInfoText, 110, 200);
-*/
+	mCreditsContainer->add(mCreditsText, 40, 190);
 }
 void Game::action(const gcn::ActionEvent& actionEvent)
 {

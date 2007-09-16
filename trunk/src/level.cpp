@@ -564,7 +564,7 @@ void Level::load(const std::string& filename)
     {
         mMotif = BONUS_MOTIF;
         mBackground = new BonusBackground();
-		playMusic("greaty.xm", 1.0f);
+		playMusic("finalman-quickie.xm", 1.0f);
         mAirResistance = Player::AIR_RESISTANCE_LOW;
     }
 	else
