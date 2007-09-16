@@ -50,6 +50,7 @@ void Player::kill()
     {
         mState = KILLED;
         mFrameCounter = 0;
+		play_sample(mExplosionSample, 255, 128, 400, 0);
     }
 }
 
@@ -171,8 +172,13 @@ void Player::logic(Level* level)
         if (mFrameCounter % 10 < 2)
         {
             level->spawnDebris(1, mX, mY, mW, mH);
-            level->spawnExplosions(1, mX, mY, mW, mH);
+            level->spawnExplosions(1, mX, mY, mW, mH);			
         }
+
+		if (mFrameCounter % 10 == 0)
+		{
+			play_sample(mExplosionSample, 128, 128, 600 + rand() % 400, 0);
+		}
 
         if (mFrameCounter > 100)
         {

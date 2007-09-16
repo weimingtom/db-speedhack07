@@ -41,7 +41,7 @@ void EnergyOrb::handleCollision(Entity *other, Level *level)
 		{
 			GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() + 1);
 			mCollidable = false;
+			play_sample(mSample, 128, 128, 1000, 0);
 		}
-        play_sample(mSample, 128, 128, 1000, 0);
     }
 }
