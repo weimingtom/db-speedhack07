@@ -62,6 +62,31 @@ void HighScoreContainer::setVisible(bool visible)
     {
         GameState::getInstance()->addHighScore(mHash, GameState::getInstance()->getPoints());
     }
+    else if (mState == ENTER_SCORE && !visible)
+    {
+        std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
+
+        for (int row = 0; row < highScores.size() && row < 10; row++)
+	    {
+            if (mState == ENTER_SCORE 
+                && highScores[row].name == mHash
+                && highScores[row].points == GameState::getInstance()->getPoints())
+            {
+               highScores[row].name = "ANONYMOUS!";
+            }
+        }
+
+        for (unsigned int i = 0; i < mLabels.size(); i++)
+        {
+            mLabels[i]->setVisible(true);
+        }
+
+        GameState::getInstance()->saveHighScore();
+        GameState::getInstance()->setPoints(0);
+        mState = VIEW;
+       
+        mTextField->setVisible(false);
+    }
 
     std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
 
