@@ -19,6 +19,7 @@
 #include "electro.hpp"
 #include "bonusbackground.hpp"
 #include "skybackground.hpp"
+#include "cavebackground.hpp"
 
 
 
@@ -557,6 +558,13 @@ void Level::load(const std::string& filename)
 		playMusic("world_on_fire.xm", 1.0f);
         mAirResistance = Player::AIR_RESISTANCE_MEDIUM;
     }
+    else if (motifName == "CAVE")
+    {
+        mMotif = CAVE_MOTIF;
+        mBackground = new CaveBackground();
+		playMusic("greaty.xm", 1.0f);
+        mAirResistance = Player::AIR_RESISTANCE_MEDIUM;
+    }
 	else
     {
         throw DBSH07_EXCEPTION("Unknown motif (Available is SPACE, SKY and WATER)!");
@@ -598,7 +606,7 @@ void Level::load(const std::string& filename)
                                                  BLOCK_SIZE, 
                                                  "spaceblock.bmp", data[row].at(col) - '0');                        
                     }
-					else if (mMotif == WATER_MOTIF)
+					else if (mMotif == WATER_MOTIF || mMotif == CAVE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -650,24 +658,25 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(entity);
                    break;
 				case 'E':
-					if (mMotif == SPACE_MOTIF)
+				case 'e':
+					if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
                                                  "spaceblock_e.bmp",
-												 6,
+												 data[row].at(col) == 'E' ? 6 : 3,
 												 true);                        
                     }
-					else if (mMotif == WATER_MOTIF)
+					else if (mMotif == WATER_MOTIF || mMotif == CAVE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
                                                  "spaceblock_e.bmp",
-												 6,
+												 data[row].at(col) == 'E' ? 6 : 3,
 												 true);                        
                     }
 
@@ -690,7 +699,7 @@ void Level::load(const std::string& filename)
                                                  BLOCK_SIZE, 
                                                  "spacesolidblock.bmp", -1);                     
                     }
-					else if (mMotif == WATER_MOTIF)
+					else if (mMotif == WATER_MOTIF || mMotif == CAVE_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 

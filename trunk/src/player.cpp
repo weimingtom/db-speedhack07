@@ -15,6 +15,7 @@ Player::Player() :
 	mPodAni("pod.bmp", 3)
 {
 	mShotSample = ResourceHandler::getInstance()->getSample("explo1.wav");
+	mExplosionSample = ResourceHandler::getInstance()->getSample("explo2.wav");
     reset();
 }
 
@@ -284,6 +285,12 @@ void Player::movementLogic(Level* level)
     {
         if (GameState::getInstance()->getMegaBlasts() > 0)
         {
+			play_sample(mExplosionSample, 200, 20, 300, 0);
+			play_sample(mExplosionSample, 200, 235, 301, 0);
+			play_sample(mShotSample, 200, 20, 403, 0);
+			play_sample(mShotSample, 200, 235, 400, 0);
+			play_sample(mShotSample, 255, 128, 200, 0);
+			play_sample(mExplosionSample, 255, 128, 100, 0);
             level->addEntity(new MegaBlast(0, level->getScrollY()));
             GameState::getInstance()->setMegaBlasts(GameState::getInstance()->getMegaBlasts() - 1);
         }
@@ -315,7 +322,7 @@ void Player::movementLogic(Level* level)
 	if (mShotBurstCounter > 0)
 	{
 		float angle = std::atan2((float)(mTargetX - getCenterX()), (float)(mTargetY - getCenterY()) + 0.01f);		
-
+/*
 		if (angle < -1.4) {
 			angle = -1.4;
 		}
@@ -323,7 +330,7 @@ void Player::movementLogic(Level* level)
 		if (angle > 1.4) {
 			angle = 1.4;
 		}
-
+*/
 		if (mShotBurstCounter % SHOT_FRAME_DELAY == 0)
 		{
 			int x = getCenterX();
