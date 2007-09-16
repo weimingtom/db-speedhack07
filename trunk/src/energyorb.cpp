@@ -1,6 +1,7 @@
 #include "energyorb.hpp"
 #include "level.hpp"
 #include "gamestate.hpp"
+#include "resourcehandler.hpp"
 
 EnergyOrb::EnergyOrb(int x, int y)
 : Entity(x, y, Level::BLOCK_SIZE, Level::BLOCK_SIZE, true),
@@ -8,6 +9,7 @@ mFrameCount(0)
 {
 	mKillsPlayer = false;
     mAnimation = new Animation("energyorb.bmp");
+    mSample = ResourceHandler::getInstance()->getSample("shopbuy.wav");
 }
 
 EnergyOrb::~EnergyOrb()
@@ -37,5 +39,6 @@ void EnergyOrb::handleCollision(Entity *other, Level *level)
     {
         GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() + 1);
         mCollidable = false;
+        play_sample(mSample, 128, 128, 1000, 0);
     }
 }

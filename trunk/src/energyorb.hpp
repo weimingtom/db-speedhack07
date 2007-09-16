@@ -18,6 +18,7 @@ public:
 protected:
     Animation* mAnimation;
     int mFrameCount;
+    SAMPLE* mSample;
 };
 
 #endif

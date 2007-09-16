@@ -106,7 +106,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setLives(GameState::getInstance()->getLives() + 1);
         mLivesEquipedLabel->setCaption(toString(GameState::getInstance()->getLives()) + "x~");
         mLivesEquipedLabel->adjustSize();
-        play_sample(mBuySample, 255, 128, 1000, 0);
+        play_sample(mBuySample, 128, 128, 1000, 0);
     }
     else if (actionEvent.getSource() == mBuyPodButton)
     {
@@ -121,7 +121,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setPods(GameState::getInstance()->getPods() + 1);
         mPodsEquipedLabel->setCaption(toString(GameState::getInstance()->getPods()) + "x{");
         mPodsEquipedLabel->adjustSize();
-        play_sample(mBuySample, 255, 128, 1000, 0);
+        play_sample(mBuySample, 128, 128, 1000, 0);
     }
     else if (actionEvent.getSource() == mBuyCannonUpgradeButton)
     {
@@ -136,7 +136,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setCannonLevel(GameState::getInstance()->getCannonLevel() + 1);
         mCannonUpgradeEquipedLabel->setCaption("LEVEL " + toString(GameState::getInstance()->getCannonLevel()));
         mCannonUpgradeEquipedLabel->adjustSize();
-        play_sample(mBuySample, 255, 128, 1000, 0);
+        play_sample(mBuySample, 128, 128, 1000, 0);
     }
     else if (actionEvent.getSource() == mBuyMegaBlastButton)
     {
@@ -151,7 +151,7 @@ void Shop::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->setMegaBlasts(GameState::getInstance()->getMegaBlasts() + 1);
         mMegaBlastsEquippedLabel->setCaption(toString(GameState::getInstance()->getMegaBlasts()) + "x[");
         mMegaBlastsEquippedLabel->adjustSize();
-        play_sample(mBuySample, 255, 128, 1000, 0);
+        play_sample(mBuySample, 128, 128, 1000, 0);
     }
 
     mEnergyOrbsLabel->setCaption("YOU HAVE " + toString(GameState::getInstance()->getEnergyOrbs()) + "x}");
