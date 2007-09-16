@@ -31,6 +31,13 @@ mTotalPointsCounter(0)
 	mEnemyPoints = enemies*20; //todo
 	mOrbPoints = orbs*30; //todo
 	mTimePoints = time/10; //todo
+
+	//test
+	mBlockPoints = 2400;
+	mEnemyPoints = 3220;
+	mOrbPoints = 1000;
+	mTimePoints = 0;
+
 	mTotalPoints = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
 	
 	mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
@@ -119,8 +126,12 @@ void PointSummary::logic()
 			else if (mState == 10)
 			{
 				mTotalPointsLabel->setVisible(true);
-				mCountingPoints=true;
+				mFrameCounter = 60;
 				//play_sample(mBeepSample, 128, 128, 800, 0);
+			}
+			else if(mState == 11)
+			{
+				mCountingPoints=true;
 			}
 		}
 	}
@@ -133,17 +144,17 @@ void PointSummary::logic()
 		if(mState==4) { target = mEnemyPoints; total=mEnemyPointsCounter; }
 		if(mState==6) { target = mOrbPoints; total=mOrbPointsCounter; }
 		if(mState==8) { target = mTimePoints; total=mTimePointsCounter; }
-		if(mState==10) { target = mTotalPoints; total=mTotalPointsCounter; }
+		if(mState==11) { target = mTotalPoints; total=mTotalPointsCounter; }
 
 		int diff = (target-total);
 		
-		int add = diff<100?diff:100;
+		int add = diff<123?diff:123;
 
 		if(mState==2) { mBlockPointsCounter += add; }
 		if(mState==4) { mEnemyPointsCounter += add; }
 		if(mState==6) { mOrbPointsCounter += add; }
 		if(mState==8) { mTimePointsCounter += add; }
-		if(mState==10) { mTotalPointsCounter += add; GameState::getInstance()->addPoints(add); }
+		if(mState==11) { mTotalPointsCounter += add; GameState::getInstance()->addPoints(add); }
 		
 		if(add == 0) { mCountingPoints = false; }
 
@@ -173,9 +184,13 @@ void PointSummary::logic()
 		mTimeBonusLabel->setCaption(": " + toString((int)mTimePointsCounter));
 		mTimeBonusLabel->adjustSize();
 
+		std::string str = toString((int)(mTotalPoints - mTotalPointsCounter));
+		
+		if(str.length() < 5) { std::string str2 = ""; for(int i=0; i < 5-str.length(); i++) {str2 += "0"; }; str = str2+str; }
+		
 		mTotalLabel->setCaption("TOTAL");
 		mTotalLabel->adjustSize();
-		mTotalPointsLabel->setCaption(": " + toString((int)(mTotalPoints - mTotalPointsCounter)));
+		mTotalPointsLabel->setCaption(": " + str);
 		mTotalPointsLabel->adjustSize();
 }
 
