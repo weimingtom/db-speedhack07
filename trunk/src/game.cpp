@@ -357,6 +357,7 @@ void Game::action(const gcn::ActionEvent& actionEvent)
 {
     if (actionEvent.getSource() == mStartButton)
     {
+        GameState::getInstance()->reset();
         prepareNextLevel();
     }
     else if (actionEvent.getSource() == mCreditsButton)
