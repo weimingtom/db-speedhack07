@@ -1,5 +1,6 @@
 #include "resourcehandler.hpp"
 #include "os.hpp"
+#include "exception.hpp"
 
 ResourceHandler* ResourceHandler::mInstance = 0;
 
@@ -43,7 +44,7 @@ BITMAP* ResourceHandler::getBitmap(const std::string& filename)
 	    
         if (bitmap == NULL) 
         {
-            throw "Unable to load: " + getRealFilename(filename);
+			throw DBSH07_EXCEPTION("Unable to load: " + getRealFilename(filename));
 	    }
 
         mBitmaps[filename] = bitmap;
@@ -61,7 +62,7 @@ SAMPLE* ResourceHandler::getSample(const std::string& filename)
 	    
         if (sample == NULL) 
         {
-            throw "Unable to load: " + getRealFilename(filename);
+            throw DBSH07_EXCEPTION("Unable to load: " + getRealFilename(filename));
 	    }
 
         mSamples[filename] = sample;
