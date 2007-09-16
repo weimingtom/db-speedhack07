@@ -309,7 +309,7 @@ void Game::initGui()
 
 	mHighScore = GameState::getInstance()->getHighScore();
 	mHighScore->setPosition(10,154);
-	mHighScore->setVisible(true);
+	mHighScore->setVisible(false);
 	mTop->add(mHighScore);
 
 

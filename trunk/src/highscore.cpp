@@ -62,7 +62,3 @@ HighScore::~HighScore()
 	delete mHighScoreLabel;
 	delete mScoreTable;
 }
-
-void HighScore::setVisible(bool visible)
-{
-}

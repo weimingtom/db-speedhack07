@@ -8,7 +8,6 @@ class HighScore: public gcn::Container
 public:
     HighScore();
     ~HighScore();
-    void setVisible(bool visible);
 	void load(const std::string& filename);
 
 protected:
