@@ -546,7 +546,6 @@ void Level::load(const std::string& filename)
     {
         mMotif = SPACE_MOTIF;
         mBackground = new StarsBackground();
-		mEntities.push_back(new Planet("planet.bmp"));
 		playMusic("greaty.xm", 1.0f);
 		mAirResistance = Player::AIR_RESISTANCE_LOW;
     }
@@ -554,7 +553,6 @@ void Level::load(const std::string& filename)
     {
         mMotif = WATER_MOTIF;
         mBackground = new WaterBackground();
-		mEntities.push_back(new Planet("seabed.bmp"));
 		playMusic("greaty.xm", 1.0f);
 		mAirResistance = Player::AIR_RESISTANCE_HIGH;
     }
@@ -620,6 +618,18 @@ void Level::load(const std::string& filename)
                 case '.':
 					// Ignore
                     break;
+				case 'Z':					
+					switch (mMotif)
+					{
+					case SPACE_MOTIF:
+						mEntities.push_back(new Planet("planet.bmp"));
+						break;
+					case WATER_MOTIF:
+						mEntities.push_back(new Planet("seabed.bmp"));
+						break;
+					default:
+						break;
+					}
                 case '1':
 				case '2':
 				case '3':
