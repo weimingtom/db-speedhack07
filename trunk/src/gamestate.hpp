@@ -4,11 +4,19 @@
 #include <map>
 #include <vector>
 
-#include "highscore.hpp"
-
 class GameState
 {
 public:
+    class HighScorePair
+	{
+    public:
+		//HighScorePair(const std::string& name, int points) : name(name), points(points); }
+		std::string name;
+		unsigned int points;
+		static bool compareScore(const HighScorePair& a, const HighScorePair& b) { return a.points > b.points; };
+		//HighScorePair operator-(const HighScorePair& a) { return HighScorePair(); };
+	};
+
     static GameState* getInstance();
     unsigned int getLives();
     void setLives(unsigned int lives);
@@ -26,17 +34,21 @@ public:
     void setMegaBlasts(unsigned int megaBlasts);
     unsigned int getMegaBlasts();
 
-	HighScore* getHighScore() { return mHighScore; };
-
     const std::string& getLevelFilename(unsigned int level);
     bool isLevelBonusLevel(unsigned int level);
     const std::string& getLevelDesignation(unsigned int level);
     unsigned int getNumberOfLevels();
     void reset();
+	void addHighScore(const std::string& name, int score);
+	unsigned int getMinHighScore();
+	void saveHighScore();
+    std::vector<HighScorePair>& getHighScores();
 
 private:
     GameState();
     void loadLevelsData();
+    void loadHighScore();
+
     static GameState* mInstance;
     unsigned int mLives;
     unsigned int mLevel;
@@ -47,8 +59,6 @@ private:
 	
 	unsigned int mCannonLevel;
     unsigned int mMegaBlasts;
-
-	HighScore* mHighScore;
 
     class LevelData
     {
@@ -65,5 +75,6 @@ private:
         std::string designation;
     };
     std::vector<LevelData> mLevelsData;
+    std::vector<HighScorePair> mHighScore;
 };
 #endif

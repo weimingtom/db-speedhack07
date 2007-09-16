@@ -15,7 +15,7 @@
 #include "gui/shop.hpp"
 #include "gui/optionaldialog.hpp"
 #include "gui/dialog.hpp"
-#include "highscore.hpp"
+#include "gui/highscorecontainer.hpp"
 
 class Game: public gcn::ActionListener, public gcn::KeyListener
 {
@@ -82,7 +82,7 @@ protected:
 	gcn::Icon* mTedIcon;
     gcn::Label* mTedLabel;
 
-	HighScore* mHighScore;
+	HighScoreContainer* mHighScoreContainer;
 
 //    gcn::Container* mLevelsContainer;
 //    LevelSelector* mLevelSelector;

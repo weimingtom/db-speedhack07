@@ -52,6 +52,8 @@ mLevel(NULL)
 
 Game::~Game()
 {
+    GameState::getInstance()->saveHighScore();
+
     ResourceHandler::getInstance()->destroy();
 
     delete mSplashScreen;
@@ -78,6 +80,8 @@ Game::~Game()
     delete mGameInfoIcon;
     delete mLogoImage;
     delete mLogoIcon;
+
+    delete mHighScoreContainer;
 }
 
 void Game::logic()
@@ -317,11 +321,11 @@ void Game::initGui()
 	mCreditsContainer->setVisible(false);
 	mTop->add(mCreditsContainer);
 
-	mHighScore = GameState::getInstance()->getHighScore();
-	mHighScore->setPosition(10,154);
-	mHighScore->setVisible(false);
-	mTop->add(mHighScore);
-
+	mHighScoreContainer = new HighScoreContainer();
+	mHighScoreContainer->setSize(320, 240);
+    mHighScoreContainer->setOpaque(false);
+	mTop->add(mHighScoreContainer);
+    mHighScoreContainer->setVisible(false);
 
 	mOlofImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("olof.bmp"));
 	mOlofIcon = new gcn::Icon(mOlofImage);
@@ -370,6 +374,10 @@ void Game::action(const gcn::ActionEvent& actionEvent)
         GameState::getInstance()->reset();
         prepareNextLevel();
     }
+    else if (actionEvent.getSource() == mHighScoreButton)
+    {
+        setState(HIGH_SCORE);
+    }
     else if (actionEvent.getSource() == mCreditsButton)
     {
         mMainMenuContainer->setVisible(false);
@@ -408,7 +416,7 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             mCreditsContainer->setVisible(false);
             mMainMenuContainer->setVisible(true);
         }
-        else if (mHighScore->isVisible())
+        else if (mHighScoreContainer->isVisible())
         {
             setState(MENU);
         }
@@ -428,7 +436,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
-        mHighScore->setVisible(false);
+        mHighScoreContainer->setVisible(false);
         playMusic("shop.xm", 2.0f);
     }
     else if (state == MENU)
@@ -438,7 +446,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
-        mHighScore->setVisible(false);
+        mHighScoreContainer->setVisible(false);
 		playMusic("hiscore.xm", 1.0f);
     }
     else if (state == BONUS_LEVEL_OR_SHOP)
@@ -460,7 +468,17 @@ void Game::setState(State state)
         mMainMenuContainer->setVisible(false);
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
-        mHighScore->setVisible(true);
+
+        if (GameState::getInstance()->getPoints() > 0)
+        {
+            mHighScoreContainer->setState(HighScoreContainer::ENTER_SCORE);
+        }
+        else
+        {
+            mHighScoreContainer->setState(HighScoreContainer::VIEW);
+        }
+
+        mHighScoreContainer->setVisible(true);
     }
     mState = state; 
 }

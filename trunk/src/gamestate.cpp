@@ -2,6 +2,9 @@
 #include "fileutil.hpp"
 #include "exception.hpp"
 #include "stringutil.hpp"
+#include <fstream>
+#include <algorithm>
+#include "resourcehandler.hpp"
 
 GameState* GameState::mInstance = 0;
 
@@ -11,6 +14,7 @@ GameState* GameState::getInstance()
     {
         mInstance = new GameState();
         mInstance->loadLevelsData();
+        mInstance->loadHighScore();
     }
 
     return mInstance;
@@ -18,7 +22,6 @@ GameState* GameState::getInstance()
 
 GameState::GameState()
 {
-	mHighScore = new HighScore();
     reset();
 }
 
@@ -31,7 +34,6 @@ void GameState::reset()
     mPods = 10;
     mCannonLevel = 10;
     mMegaBlasts = 3;
-	mHighScore->load("highscore.txt");
 }
 
 unsigned int GameState::getLives()
@@ -150,4 +152,62 @@ const std::string& GameState::getLevelDesignation(unsigned int level)
 unsigned int GameState::getNumberOfLevels()
 {
     return mLevelsData.size();
+}
+
+void GameState::loadHighScore()
+{
+    std::vector<std::string> data = tokenize(loadFile("highscore.txt"), "\n");
+	
+	mHighScore.clear();
+	for (unsigned int row = 0; row < data.size(); row++)
+    {
+		std::vector<std::string> stringPair = tokenize(data[row], ",");
+
+        if (stringPair.size() == 2)
+        {
+	        HighScorePair p;
+	        p.name = stringPair[0];
+	        p.points = fromString<int>(stringPair[1]);
+	        mHighScore.push_back(p);
+        }
+	}
+}
+
+void GameState::addHighScore(const std::string& name, int score)
+{
+	HighScorePair p = HighScorePair();
+	p.name = name;
+	p.points = score;
+
+	mHighScore.push_back(p);
+	std::sort(mHighScore.begin(), mHighScore.end(), &HighScorePair::compareScore);
+}
+
+void GameState::saveHighScore()
+{
+	std::string realFilename = ResourceHandler::getInstance()->getRealFilename("highscore.txt");
+	std::ofstream os(realFilename.c_str());
+	if (!os.good())
+	{
+		throw DBSH07_EXCEPTION("Unable to open highscore.txt");
+	}
+
+	for (int row = 0; row < mHighScore.size(); row++)
+    {
+		HighScorePair p = mHighScore[row];
+
+		os << p.name << "," << p.points << std::endl;
+	}
+
+    os.close();
+}
+
+unsigned int GameState::getMinHighScore()
+{
+	return mHighScore.end()->points;
+}
+
+std::vector<GameState::HighScorePair>& GameState::getHighScores()
+{
+    return mHighScore;
 }
