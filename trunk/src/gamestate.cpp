@@ -31,12 +31,12 @@ GameState::GameState()
 
 void GameState::reset()
 {
-    mLives = 0;
+    mLives = 100;
     mLevel = 0;
     mPoints = 0;
     mEnergyOrbs = 1;
-    mPods = 10;
-    mCannonLevel = 10;
+    mPods = 2;
+    mCannonLevel = 2;
     mMegaBlasts = 3;
 }
 

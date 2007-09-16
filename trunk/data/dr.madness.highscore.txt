@@ -1,3 +1,7 @@
-Bajs,5240
+bajs,70942
+YAY!,54043
+ted is best!,16337
+ted!,14980
+ted is best again,12220
 Teddo!!,400
 Olof,290

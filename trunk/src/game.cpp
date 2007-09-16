@@ -20,7 +20,7 @@ mLevel(NULL)
 	
     set_window_title("Darkbits - SpeedHack07");
 
-    int driver = GFX_AUTODETECT_WINDOWED;
+    int driver = GFX_AUTODETECT_FULLSCREEN; //GFX_AUTODETECT_WINDOWED;
     set_color_depth(32);
     if (set_gfx_mode(driver, 640, 480, 0, 0) < 0) {
 	    set_color_depth(24);
