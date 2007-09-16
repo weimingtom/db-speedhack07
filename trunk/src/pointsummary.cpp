@@ -84,6 +84,7 @@ mParTime(partime)
 	mTotalPoints = mBlockPoints + mEnemyPoints + mOrbPoints + mTimePoints;
 	
 	mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
+	mBuySample = ResourceHandler::getInstance()->getSample("shopbuy.wav");
 
 }
 
@@ -199,7 +200,14 @@ void PointSummary::logic()
 		if(mState==8) { mTimePointsCounter += add; }
 		if(mState==11) { mTotalPointsCounter += add; GameState::getInstance()->addPoints(add); }
 		
-		if(add == 0) { mCountingPoints = false; }
+		if(add == 0)
+		{
+			mCountingPoints = false; 
+			if(mState==11)
+			{
+				play_sample(mBuySample, 180, 180, 1500, 0);
+			}
+		}
 
 		//mTotal -= sub;
 //		GameState::getInstance()->addPoints(sub);

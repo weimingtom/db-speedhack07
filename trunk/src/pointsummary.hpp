@@ -63,6 +63,7 @@ protected:
 	gcn::Label* mTotalPointsLabel;
 
 	SAMPLE* mBeepSample;
+	SAMPLE* mBuySample;
 
 };
 
