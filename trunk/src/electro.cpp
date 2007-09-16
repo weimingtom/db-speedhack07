@@ -22,7 +22,7 @@ void Electro::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		bool hflip = ((frame / 6) & 1) != 0;
 		mAnimation.drawFrame(dest, frame, mX, mY - scrolly, hflip, vflip);
 	}
-    else if ((((mFrameCounter + 20)/ 75) & 1) != 0)
+    else if ((mFrameCounter % 150) > 125)
     {
 		int frame = mFrameCounter / 3;
 		bool vflip = ((frame / 3) & 1) != 0;
@@ -37,7 +37,7 @@ bool Electro::killsPlayer()
 
 bool Electro::isOn()
 {
-	return ((mFrameCounter / 75) & 1) != 0;
+	return (mFrameCounter % 150) < 40;
 }
 
 bool Electro::isCollidable()

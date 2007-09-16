@@ -45,7 +45,8 @@ void stopMusic() {
 		al_stop_duh(player);
 		unload_duh(playing);
 	}
-
+	
+	playing = NULL;
 	playingFile = "";
 }
 

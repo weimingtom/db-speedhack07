@@ -102,7 +102,7 @@ unsigned int GameState::getMegaBlasts()
 
 void GameState::loadLevelsData()
 {
-    std::vector<std::string> data = tokenize(loadFile("levels.txt"), "\n");
+    std::vector<std::string> data = tokenize(loadFile("levels.txt"), "\n", true);
 
     if (data.size() == 0)
     {
