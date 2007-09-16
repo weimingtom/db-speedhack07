@@ -1,4 +1,12 @@
+N olof1.txt
+N olof2.txt
+B olofbonus1.txt
+N persbana2.txt
+N tedsbana1.txt
+B persbana4.txt
+
+N olof4.txt
+B olofbonus3.txt
+N persbana3.txt
 N olof3.txt
-N level2.txt
-B level1.txt
-N level2.txt
+B olofbonus2.txt
