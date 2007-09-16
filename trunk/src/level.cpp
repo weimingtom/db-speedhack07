@@ -563,6 +563,15 @@ void Level::load(const std::string& filename)
             break;
         }
 
+        if (data[row].size() < BLOCK_WIDTH)
+        {
+            throw DBSH07_EXCEPTION("Row number " + toString(row) + " is to short in file " + filename + ".");
+        }
+        else if (data[row].size() > BLOCK_WIDTH)
+        {
+            throw DBSH07_EXCEPTION("Row number " + toString(row) + " is to long in file " + filename + ".");
+        }
+
 		mLevelLength = row * BLOCK_SIZE + BLOCK_SIZE;
 
         for (col = 0; col < data[row].size(); col++)
