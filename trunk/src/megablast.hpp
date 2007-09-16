@@ -12,6 +12,7 @@ public:
 	void draw(BITMAP *dest, int scrolly, unsigned int layer);
     bool drawInLayer(unsigned int layer) { return layer == Entity::PLAYER_LAYER; }
 	bool isToBeDeleted();
+	virtual int getDamage() { return 200; };
 private:
     int mFrameCounter;
 };

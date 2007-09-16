@@ -10,7 +10,7 @@
 Floater::Floater(int x, int y, int hitCount)
 : Enemy(x, y, 16, 16, true),
   mToBeDeleted(false),
-  mHitCount(70)
+  mHitCount(150)
 {
 	mAnimation = new Animation("floater.bmp", 4);
 	mRenderAsHit = false;
@@ -76,7 +76,7 @@ void Floater::handleCollision(Entity *other, Level *level)
 	
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
-		mHitCount--;
+		mHitCount -= other->getDamage();
 		mRenderAsHit = true;
 		if(mHitCount <= 0)
 		{

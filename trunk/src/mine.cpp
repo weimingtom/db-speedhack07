@@ -8,7 +8,7 @@
 Mine::Mine(int x, int y, bool isMagnetic)
 : Enemy(x, y, 16, 16, true),
   mToBeDeleted(false),
-  mHitCount(10),
+  mHitCount(30),
   mIsMagnetic(isMagnetic)
 {
 	mAnimation = new Animation(isMagnetic?"magneticmine.bmp":"mine.bmp");
@@ -34,38 +34,59 @@ void Mine::logic(Level* level)
 		int playerDiffX = level->getPlayer()->getCenterX() - getX();
 		int playerDiffY = level->getPlayer()->getCenterY() - getY();
 
-		if (playerDiffX * playerDiffX + playerDiffY * playerDiffY < 100 * 100 
-			&& (mFrameCount % 10) == 0)
+		if (playerDiffX * playerDiffX + playerDiffY * playerDiffY < 150 * 150)			
 		{
-			int pan = (getCenterX() * 256) / 240;
+			if ((mFrameCount % 10) == 0)
+			{
+				int pan = (getCenterX() * 256) / 240;
 
-			if (pan < 0)
-			{
-				pan = 0;
-			} 
-			else if (pan > 255)
-			{
-				pan = 255;
+				if (pan < 0)
+				{
+					pan = 0;
+				} 
+				else if (pan > 255)
+				{
+					pan = 255;
+				}
+
+				play_sample(mBeepSample, 100, pan, 2000, 0);
 			}
 
-			play_sample(mBeepSample, 100, pan, 2000, 0);
+			mDx += playerDiffX / 1000.0f;
+			mDy += playerDiffY / 1000.0f;
 		}
-		
-		mDx += playerDiffX/1000.0f;
-		mDy += playerDiffY/1000.0f;
 	}
 
-	float targetDy = 0.4;
-	float dyDy = targetDy - mDy;
-	float dxDx = -mDx;
+	float targetDy, dyDy, dxDx;
+
+	if (!mIsMagnetic)
+	{
+		targetDy = 0.4;
+		dyDy = targetDy - mDy;
+		dxDx = -mDx;
+	}
+	else
+	{
+		targetDy = 0.0;
+		dyDy = targetDy - mDy;
+		dxDx = -mDx;
+	}
 	
 
 	mY += mDy;
 	mX += mDx;
 	mFrameCount++;
 
-	mDy += dyDy/20.0f;
-	mDx += dxDx/20.0f;
+	if (!mIsMagnetic)
+	{
+		mDy += dyDy/20.0f;
+		mDx += dxDx/20.0f;
+	}
+	else
+	{
+		mDy += dyDy/30.0f;
+		mDx += dxDx/30.0f;
+	}
 
 	setY((int)mY);
 	setX((int)mX);
@@ -83,7 +104,7 @@ void Mine::handleCollision(Entity *other, Level *level)
 		int dx = getCenterX() - other->getCenterX();
 		//int dy = getCenterY() - other->getCenterY();
 
-		mHitCount--;
+		mHitCount -= other->getDamage();
 		mRenderAsHit = true;
 		mDy += 1.0;
 		//std::cout << "dx: " << dx << std::endl;

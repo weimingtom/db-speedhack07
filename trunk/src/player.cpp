@@ -10,7 +10,7 @@
 #include <iostream>
 
 Player::Player() :
-	Entity(115, 20, 10, 20, true),
+	Entity(115, 14, 8, 20, true),
 	mPlayerAni("player.bmp", 1),
 	mPodAni("pod.bmp", 3)
 {
@@ -81,6 +81,14 @@ bool Player::drawInLayer(unsigned int layer)
 
 void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
+	if (mState == DEAD || mState == NEW || mState == IMORTAL)
+    {
+        if (mFrameCounter % 4 < 2)
+        {
+	        return;
+        }
+    }
+
 	for (int i = 0; i < mNumPods; i++)
 	{
 		if (getPodDepth(i) < 0.0f)
@@ -88,20 +96,12 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 			int frame = getPodDepth(i) > -0.2f ? 1 : 2;
 			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);			
 		}
-	}
+	}    
 
-    if (mState == DEAD || mState == NEW || mState == IMORTAL)
-    {
-        if (mFrameCounter % 4 < 2)
-        {
-	        mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
-        }
-    }
-    else
-    {
-        mPlayerAni.drawFrame(dest, 0, getX() - 3, getY() - scrolly - 3);
-    }
-//	rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
+    
+    mPlayerAni.drawFrame(dest, 0, getX() - 4, getY() - scrolly - 4);
+    
+	//rect(dest, getX(), getY() - scrolly, getX() + getWidth() - 1, getY() + getHeight() - 1  - scrolly, makecol(255, 255, 255));
 
 	for (int i = 0; i < mNumPods; i++)
 	{

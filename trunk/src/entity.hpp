@@ -55,6 +55,8 @@ public:
 	virtual bool stopsBullets() { return true; };
 	virtual bool killsPlayer() { return mKillsPlayer; };
 
+	virtual int getDamage() { return 1; };
+
     static const int BACKGROUND_LAYER = 0;
     static const int PLAYER_LAYER = 1;
     static const int ENEMY_LAYER = 2;

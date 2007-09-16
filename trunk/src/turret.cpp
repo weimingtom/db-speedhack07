@@ -13,7 +13,7 @@ Turret::Turret(int x, int y, FireDirection direction, int shots)
   mIsToBeDeleted(false),
   mDirection(direction),
   mFrameCount(0),
-  mHitCount(4),
+  mHitCount(15),
   mShots(shots)
 {
     mAnimation = new Animation("turret.bmp");
@@ -71,7 +71,7 @@ void Turret::handleCollision(Entity *other, Level *level)
 	{
 		int dx = getCenterX() - other->getCenterX();
 
-		mHitCount--;
+		mHitCount -= other->getDamage();
 		mRenderAsHit = true;
 
 		if(mHitCount <= 0)

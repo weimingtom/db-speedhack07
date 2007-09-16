@@ -28,8 +28,8 @@ void GameState::reset()
     mLevel = 0;
     mPoints = 0;
     mEnergyOrbs = 1;
-    mPods = 1;
-    mCannonLevel = 1;
+    mPods = 10;
+    mCannonLevel = 10;
     mMegaBlasts = 3;
 	mHighScore->load("highscore.txt");
 }

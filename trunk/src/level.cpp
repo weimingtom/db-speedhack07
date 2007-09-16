@@ -20,6 +20,7 @@
 #include "bonusbackground.hpp"
 #include "skybackground.hpp"
 #include "cavebackground.hpp"
+#include "vulcano.hpp"
 
 
 
@@ -325,7 +326,7 @@ void Level::logic()
             mLevelNameLabel->setVisible(false);
         }
 
-        if (mLevelLength - 240 < mGameScrollY)
+        if (mLevelLength - 240 <= mGameScrollY)
         {
 			mState = LEVEL_COMPLETE;
             mFrameCounter = 0;
@@ -510,6 +511,11 @@ void Level::updateScrolling()
 	       mGameScrollY = (int)mGameScrollFloat;
         }
     }
+
+	if (mGameScrollY + 240 > mLevelLength)
+	{
+		mGameScrollY = mLevelLength - 240;
+	}
 }
 
 void Level::load(const std::string& filename)
@@ -689,6 +695,10 @@ void Level::load(const std::string& filename)
                     break;
 				case 'f':
                     entity = new Floater(col*BLOCK_SIZE,row*BLOCK_SIZE, 2);
+                    mHibernatingEntities.push_back(entity);
+                    break;
+				case 'V':
+                    entity = new Vulcano(col*BLOCK_SIZE, row*BLOCK_SIZE);
                     mHibernatingEntities.push_back(entity);
                     break;
 				case '~':

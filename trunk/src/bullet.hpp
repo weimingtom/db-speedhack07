@@ -14,6 +14,7 @@ public:
     bool drawInLayer(unsigned int layer) { return layer == Entity::PLAYER_LAYER; }
 	void handleCollision(Entity *other, Level *level);
 	bool isToBeDeleted();
+	virtual int getDamage() { return mDamage; };
 
 protected:
     unsigned int mType;

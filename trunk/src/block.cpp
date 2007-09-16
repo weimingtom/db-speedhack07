@@ -9,7 +9,7 @@
 Block::Block(int x, int y, int width, int height, const std::string& filename, int hitCount, bool withOrb)
 : Entity(x, y, width, height, true),
   mToBeDeleted(false),
-  mHitCount(hitCount),
+  mHitCount(hitCount * 3),
   mFrameCounter(0),
   mWithOrb(withOrb)
 {
@@ -42,7 +42,6 @@ void Block::handleCollision(Entity *other, Level *level)
         // and spawn debri.
         if (mHitCount - 1 >= 0)
         {
-			
             level->spawnDebris(3, mX, mY, mW, mH);
 		    mToBeDeleted = true;
 
@@ -64,7 +63,7 @@ void Block::handleCollision(Entity *other, Level *level)
 
 	if(other->getType() == Entity::PLAYER_BULLET_TYPE)
 	{
-		mHitCount--;
+		mHitCount -= other->getDamage();
 		mIsHit = true;
 		if(mHitCount <= 0)
 		{
@@ -92,13 +91,13 @@ void Block::draw(BITMAP *dest, int scrolly, unsigned int layer)
 	}
 	else
 	{
-		if (mHitCount == -1)
+		if (mHitCount < 0)
 		{
 			mAnimation->drawFrame(dest, mFrameCounter / 5, getX(), getY() - scrolly);
 		}
 		else
 		{
-			int frame = mHitCount - 1;
+			int frame = ((mHitCount + 2) / 3) - 1;
 			if (frame >= mAnimation->getFrameCount())
 			{
 				frame = mAnimation->getFrameCount() - 1;
