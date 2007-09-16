@@ -14,10 +14,10 @@ GameState* GameState::getInstance()
 
 GameState::GameState()
 : mLives(3),
-mLevel(2),
+mLevel(1),
 mEnergyOrbs(100),
 mPods(1),
-mCannonLevel(7),
+mCannonLevel(1)
 mMegaBlasts(3)
 {
 

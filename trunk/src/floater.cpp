@@ -11,7 +11,7 @@ Floater::Floater(int x, int y, int hitCount)
   mToBeDeleted(false),
   mHitCount(70)
 {
-	//mAnimation = new Animation("floater.bmp");
+	mAnimation = new Animation("floater.bmp", 4);
 	mRenderAsHit = false;
 	mY = getY();
 	mX = getX();
@@ -25,7 +25,7 @@ Floater::Floater(int x, int y, int hitCount)
 
 Floater::~Floater()
 {
-    //delete mAnimation;
+    delete mAnimation;
 }
 
 void Floater::logic(Level* level)
@@ -104,8 +104,14 @@ void Floater::handleCollision(Entity *other, Level *level)
 
 void Floater::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-	//mAnimation->drawFrame(dest, mRenderAsHit?2:(mFrameCount%10)<5?0:1, getX(), getY() - scrolly);
-	circlefill(dest, getX(), getY()-scrolly, 8, mRenderAsHit?makecol(255,255,255):makecol(20, 40, 80));
+	int frame = (mFrameCount / 10) % 2;
+	
+	if (mRenderAsHit)
+	{
+		frame += 2;
+	}
+
+	mAnimation->drawFrame(dest, frame, getX() - 2, getY() - scrolly - 2);	
 	mRenderAsHit = false;
 	
 	//circlefill(dest, mTargetX, mTargetY-scrolly, 2, makecol(200, 200, 200));
