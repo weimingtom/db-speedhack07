@@ -44,10 +44,11 @@ mLevel(NULL)
 	mBuffer = create_bitmap(320, 240);
 
     mSplashScreen = new SplashScreen();
+	mEnding = new Ending();
 	initGui();
 	initMusic();
 
-    setState(MENU);
+    setState(END);
 }
 
 Game::~Game()
@@ -57,6 +58,7 @@ Game::~Game()
     ResourceHandler::getInstance()->destroy();
 
     delete mSplashScreen;
+	delete mEnding;
 	destroy_bitmap(mBuffer);
 
     if (mLevel != NULL)
@@ -145,6 +147,13 @@ void Game::logic()
                 prepareNextLevel();
             }
             break;
+		case END:
+			mEnding->logic();
+
+			if (mEnding->isDone())
+			{
+				setState(HIGH_SCORE);
+			}
         case PAUSE:
             break;
         case EXIT:
@@ -179,6 +188,9 @@ void Game::draw()
     case SPLASHSCREEN:
         mSplashScreen->draw(mBuffer);
         break;
+	case END:
+		mEnding->draw(mBuffer);
+		break;
     case BONUS_LEVEL_OR_SHOP:
         clear_to_color(mBuffer, makecol(0, 0, 0));
         mLevel->draw(mBuffer);
@@ -417,11 +429,25 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             setState(EXIT);
         }
     }
+
+	if (keyEvent.getKey().getValue() == gcn::Key::ENTER ||
+		keyEvent.getKey().getValue() == gcn::Key::SPACE)
+	{
+		if (mHighScoreContainer->isVisible())
+        {
+            setState(MENU);
+        }
+	}
 }
 
 void Game::setState(State state)
 {
-    if (state == SHOP)
+	if (state == END)
+	{
+		stopMusic();
+		mEnding->reset();
+	} 
+	else if (state == SHOP)
     {
         mShop->setVisible(true);
         mMainMenuContainer->setVisible(false);
@@ -471,6 +497,7 @@ void Game::setState(State state)
         }
 
         mHighScoreContainer->setVisible(true);
+		playMusic("hiscore.xm", 1.0f);
     }
     mState = state; 
 }
@@ -481,8 +508,7 @@ void Game::prepareNextLevel()
 
     if (GameState::getInstance()->getLevel() > GameState::getInstance()->getNumberOfLevels())
     {
-        //setState(END);
-        setState(HIGH_SCORE);
+        setState(END);        
         GameState::getInstance()->reset();
         return;
     }

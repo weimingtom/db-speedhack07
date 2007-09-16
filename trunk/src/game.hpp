@@ -4,6 +4,7 @@
 #include <allegro.h>
 
 #include "splashscreen.hpp"
+#include "ending.hpp"
 #include "level.hpp"
 
 #include "gui/dbsh07listbox.hpp"
@@ -56,6 +57,7 @@ protected:
     BITMAP* mBuffer;
     BITMAP* mScreenBuffer;
     SplashScreen* mSplashScreen;
+	Ending* mEnding;
     
     Level* mLevel;
 

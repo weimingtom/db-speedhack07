@@ -40,6 +40,15 @@ void playMusic(std::string file, float volume)
 	pollMusic();
 }
 
+void stopMusic() {
+	if (playing != NULL) {
+		al_stop_duh(player);
+		unload_duh(playing);
+	}
+
+	playingFile = "";
+}
+
 void pollMusic() {
 	al_poll_duh(player);
 }

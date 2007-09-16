@@ -36,7 +36,7 @@ void ResourceHandler::destroy()
     }
 }
 
-BITMAP* ResourceHandler::getBitmap(const std::string& filename)
+BITMAP* ResourceHandler::getBitmap(const std::string &filename)
 {
     if (mBitmaps.find(filename) == mBitmaps.end())
     {

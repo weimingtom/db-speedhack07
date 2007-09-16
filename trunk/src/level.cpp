@@ -543,7 +543,7 @@ void Level::load(const std::string& filename)
         mMotif = WATER_MOTIF;
         mBackground = new WaterBackground();
 		mEntities.push_back(new Planet("seabed.bmp"));
-		playMusic("world_on_fire.xm", 1.0f);
+		playMusic("greaty.xm", 1.0f);
 		mAirResistance = Player::AIR_RESISTANCE_HIGH;
     }
     else if (motifName == "SKY")
@@ -557,14 +557,14 @@ void Level::load(const std::string& filename)
     {
         mMotif = CAVE_MOTIF;
         mBackground = new CaveBackground();
-		playMusic("greaty.xm", 1.0f);
+		playMusic("world_on_fire.xm", 1.0f);
         mAirResistance = Player::AIR_RESISTANCE_MEDIUM;
     }
     else if (motifName == "BONUS")
     {
         mMotif = BONUS_MOTIF;
         mBackground = new BonusBackground();
-		playMusic("finalman-quickie.xm", 1.0f);
+		playMusic("finalman-quickie.xm", 1.4f);
         mAirResistance = Player::AIR_RESISTANCE_LOW;
     }
 	else
@@ -615,7 +615,7 @@ void Level::load(const std::string& filename)
 				case '5':
 				case '6':
                     mNumberOfBlocks++;
-                    if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF || mMotif == BONUS_MOTIF)
+                    if (mMotif == SPACE_MOTIF || mMotif == CAVE_MOTIF || mMotif == BONUS_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -623,7 +623,7 @@ void Level::load(const std::string& filename)
                                                  BLOCK_SIZE, 
                                                  "spaceblock.bmp", data[row].at(col) - '0');                        
                     }
-					else if (mMotif == WATER_MOTIF || mMotif == CAVE_MOTIF)
+					else if (mMotif == WATER_MOTIF || mMotif == SKY_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -677,7 +677,7 @@ void Level::load(const std::string& filename)
 				case 'E':
 				case 'e':
                     mNumberOfBlocks++;
-					if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF || mMotif == BONUS_MOTIF)
+					if (mMotif == SPACE_MOTIF || mMotif == CAVE_MOTIF || mMotif == BONUS_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -687,7 +687,7 @@ void Level::load(const std::string& filename)
 												 data[row].at(col) == 'E' ? 6 : 3,
 												 true);                        
                     }
-					else if (mMotif == WATER_MOTIF || mMotif == CAVE_MOTIF)
+					else if (mMotif == WATER_MOTIF || mMotif == SKY_MOTIF)
                     {
                         staticEntity = new Block(col * BLOCK_SIZE,
                                                  row * BLOCK_SIZE, 
@@ -807,12 +807,12 @@ bool Level::isFirePressed()
 
 bool Level::isBrakePressed()
 {
-    return key[KEY_W] != 0;
+    return key[KEY_W] != 0 || key[KEY_UP] != 0;
 }
 
 bool Level::isBurnPressed()
 {
-    return key[KEY_S] != 0;
+    return key[KEY_S] != 0 || key[KEY_DOWN] != 0;
 }
 
 bool Level::isMegaBlastPressed()

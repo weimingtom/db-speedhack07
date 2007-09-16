@@ -10,6 +10,7 @@ public:
     void draw(gcn::Graphics* graphics);
     void drawCaret(gcn::Graphics* graphics, int x);
     void logic();
+	void keyPressed(gcn::KeyEvent &keyEvent);
 protected:
     int mFrameCounter;
 };

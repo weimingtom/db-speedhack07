@@ -26,3 +26,11 @@ void DBSH07TextField::logic()
 {
     mFrameCounter++;
 }
+
+void DBSH07TextField::keyPressed(gcn::KeyEvent &keyEvent)
+{
+	if (keyEvent.getKey().getValue() != ',')
+	{
+		gcn::TextField::keyPressed(keyEvent);
+	}
+}
