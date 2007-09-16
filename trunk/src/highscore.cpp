@@ -1,9 +1,13 @@
+#include <fstream>
+#include <algorithm>
+
 #include "highscore.hpp"
 
 #include "stringutil.hpp"
 #include "gamestate.hpp"
 #include "resourcehandler.hpp"
 #include "fileutil.hpp"
+#include "exception.hpp"
 
 HighScore::HighScore()
 {
@@ -38,6 +42,42 @@ void HighScore::load(const std::string& filename)
 		mHighScore.push_back(p);
 	}
 	updateTextBox();
+}
+
+void HighScore::addScore(const std::string& name, int score)
+{
+	HighScorePair p = HighScorePair();
+	p.name = name;
+	p.points = score;
+
+	mHighScore.push_back(p);
+	std::sort(mHighScore.begin(), mHighScore.end(), &HighScorePair::compareScore);
+	updateTextBox();
+}
+
+unsigned int HighScore::getMinScore()
+{
+	return mHighScore.end()->points;
+}
+
+
+void HighScore::save(const std::string& fileName)
+{
+	std::string realFilename = ResourceHandler::getInstance()->getRealFilename(fileName);
+	std::ofstream os(realFilename.c_str());
+	if (!os.good())
+	{
+		throw DBSH07_EXCEPTION("Unable to open " + fileName);
+	}
+
+	for (int row = 0; row < mHighScore.size(); row++)
+    {
+		
+		HighScorePair p = mHighScore[row];
+
+		os << p.name << "," << p.points << std::endl;
+
+	}
 }
 
 void HighScore::updateTextBox()
