@@ -158,7 +158,7 @@ void Level::initGui()
     mLevelCompleteLabel->setVisible(false);
     mTop->add(mLevelCompleteLabel,
               160 - mLevelCompleteLabel->getWidth() / 2 + 20,
-              120 - mLevelCompleteLabel->getHeight() / 2);
+              50 - mLevelCompleteLabel->getHeight() / 2);
 
     mLevelNameLabel = new gcn::Label();
     mLevelNameLabel->setVisible(false);
@@ -302,21 +302,7 @@ void Level::logic()
         {
 	        (*it)->logic(this);
         }
-		if(mFrameCounter>200) {
-			mLevelCompleteLabel->setVisible(false);
-			mState = POINT_COUNT;
-			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, 15, 30, mKilledEnemies, 10, 20, GameState::getInstance()->getEnergyOrbs(), mTimeCounter, 10000);
-		}
-	}
-	else if (mState == POINT_COUNT)
-	{
-        mBackground->logic(this);
-        std::list<Entity *>::iterator it;
 
-        for (it = mEntities.begin(); it != mEntities.end(); it++)
-        {
-	        (*it)->logic(this);
-        }
 		mPointSummary->logic();
 		if(mPointSummary->isDone()) {
 			delete(mPointSummary);
@@ -348,7 +334,8 @@ void Level::logic()
         {
 			mState = LEVEL_COMPLETE;
             mFrameCounter = 0;
-            mLevelCompleteLabel->setVisible(true);
+            mLevelCompleteLabel->setVisible(true);			
+			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, 15, 30, mKilledEnemies, 10, 20, GameState::getInstance()->getEnergyOrbs(), mTimeCounter, 10000);
             return;
         }
 
@@ -672,7 +659,7 @@ void Level::load(const std::string& filename)
                                                  BLOCK_SIZE,
                                                  BLOCK_SIZE, 
                                                  "spaceblock_e.bmp",
-												 data[row].at(col) == 'E' ? 6 : 3,
+												 6,
 												 true);                        
                     }
 

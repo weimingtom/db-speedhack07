@@ -322,15 +322,15 @@ void Player::movementLogic(Level* level)
 	if (mShotBurstCounter > 0)
 	{
 		float angle = std::atan2((float)(mTargetX - getCenterX()), (float)(mTargetY - getCenterY()) + 0.01f);		
-/*
-		if (angle < -1.4) {
-			angle = -1.4;
+
+		if (angle < -1.8) {
+			angle = -1.8;
 		}
 
-		if (angle > 1.4) {
-			angle = 1.4;
+		if (angle > 1.8) {
+			angle = 1.8;
 		}
-*/
+
 		if (mShotBurstCounter % SHOT_FRAME_DELAY == 0)
 		{
 			int x = getCenterX();

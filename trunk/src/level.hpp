@@ -61,7 +61,6 @@ protected:
         DIALOG,
         GAME,
         GAMEOVER,
-		POINT_COUNT,
         LEVEL_COMPLETE,
 		LEAVE_LEVEL
     };

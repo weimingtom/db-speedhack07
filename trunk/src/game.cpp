@@ -422,6 +422,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
+		playMusic("hiscore.xm", 1.0f);
     }
     else if (state == BONUS_LEVEL_OR_SHOP)
     {
@@ -432,7 +433,7 @@ void Game::setState(State state)
         mOptionalDialog->setVisible(false);
         mOptionalDialog->setState(OptionalDialog::NONE);
         mDialog->setVisible(true);
-        mDialog->setText("F FLUFFY LOVE: You can now choose to either head for a bonus lever or enter" 
+        mDialog->setText("F FLUFFY LOVE: You can now choose to either head for a bonus level or enter" 
                          " a shop where you can buy things from Cuddelz!");
     }
    
