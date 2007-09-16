@@ -5,6 +5,10 @@
 #include <fstream>
 #include <algorithm>
 #include "resourcehandler.hpp"
+#include "os.hpp"
+#ifndef DB_WIN32
+#include <stdlib.h>
+#endif
 
 GameState* GameState::mInstance = 0;
 
@@ -156,7 +160,23 @@ unsigned int GameState::getNumberOfLevels()
 
 void GameState::loadHighScore()
 {
-    std::vector<std::string> data = tokenize(loadFile("highscore.txt"), "\n");
+    std::string saveFilename;
+#if defined (DB_WIN32)
+    saveFilename = "data/dr.madness.highscore.txt";
+#else
+    saveFilename = std::string(getenv("HOME")) + "/.dr.madness.highscore.txt";
+#endif
+
+#if defined (DB_WIN32)    
+    if (!exists(saveFilename.c_str()))
+#else
+    if (!file_exists(saveFilename.c_str(), FA_HIDDEN, NULL))
+#endif
+    {
+        throw DBSH07_EXCEPTION("Unable to open " + saveFilename);
+    }
+
+    std::vector<std::string> data = tokenize(loadFile(saveFilename, true), "\n");
 	
 	mHighScore.clear();
 	for (unsigned int row = 0; row < data.size(); row++)
@@ -185,11 +205,26 @@ void GameState::addHighScore(const std::string& name, int score)
 
 void GameState::saveHighScore()
 {
-	std::string realFilename = ResourceHandler::getInstance()->getRealFilename("highscore.txt");
-	std::ofstream os(realFilename.c_str());
+    std::string saveFilename;
+#if defined (DB_WIN32)
+    saveFilename = ResourceHandler::getInstance()->getRealFilename("dr.madness.highscore.txt");
+#else
+    saveFilename = std::string(getenv("HOME")) + "/.dr.madness.highscore.txt";
+#endif
+
+#if defined (DB_WIN32)    
+    if (!exists(saveFilename.c_str()))
+#else
+    if (!file_exists(saveFilename.c_str(), FA_HIDDEN, NULL))
+#endif
+    {
+        throw DBSH07_EXCEPTION("Unable to open " + saveFilename);
+    }
+
+	std::ofstream os(saveFilename.c_str());
 	if (!os.good())
 	{
-		throw DBSH07_EXCEPTION("Unable to open highscore.txt");
+		throw DBSH07_EXCEPTION("Unable to open " + saveFilename);
 	}
 
 	for (int row = 0; row < mHighScore.size(); row++)
