@@ -90,8 +90,10 @@ protected:
 
     gcn::Image* mTopBackgroundImage;
     gcn::Icon* mTopBackgroundIcon;
-    gcn::Image* mBallzLogoImage;
-    gcn::Icon* mBallzLogoIcon;
+    gcn::Image* mLogoImage;
+    gcn::Icon* mLogoIcon;
+    gcn::Image* mGameInfoImage;
+    gcn::Icon* mGameInfoIcon;
     //gcn::Label* mCollectedStars;
 
     gcn::TextBox* mCreditsText;

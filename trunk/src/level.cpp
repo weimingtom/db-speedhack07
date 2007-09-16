@@ -53,7 +53,6 @@ Level::~Level()
     delete mGraphics;
     delete mInput;
     delete mTop;
-    delete mImageFont;
     delete mDialog;
     delete mLivesLabel;
     delete mEnergyOrbsLabel;
@@ -92,9 +91,6 @@ void Level::initGui()
     gcn::Image::setImageLoader(mImageLoader);
     mGui->setInput(mInput);
     mGui->setGraphics(mGraphics);
-    mImageFont = new gcn::ImageFont(ResourceHandler::getInstance()->getRealFilename("font.bmp"), 32, 131);
-	mImageFont->setGlyphSpacing(-1);
-	gcn::Widget::setGlobalFont(mImageFont);
     mTop = new gcn::Container();
     mTop->setSize(320, 240);
     mTop->setOpaque(false);

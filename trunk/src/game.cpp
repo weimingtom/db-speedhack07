@@ -73,6 +73,11 @@ Game::~Game()
     delete mShop;
     delete mOptionalDialog;
     delete mDialog;
+
+    delete mGameInfoImage;
+    delete mGameInfoIcon;
+    delete mLogoImage;
+    delete mLogoIcon;
 }
 
 void Game::logic()
@@ -277,19 +282,24 @@ void Game::initGui()
 	mMainMenuContainer->setOpaque(false);
 	mTop->add(mMainMenuContainer);
 
-	mBallzLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
-	mBallzLogoIcon = new gcn::Icon(mBallzLogoImage);
-	mMainMenuContainer->add(mBallzLogoIcon, 0, 10);
+	mLogoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("logo.bmp"));
+	mLogoIcon = new gcn::Icon(mLogoImage);
+	mMainMenuContainer->add(mLogoIcon, 0, 60);
 
+    mGameInfoImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("gameinfo.bmp"));
+    mGameInfoIcon = new gcn::Icon(mGameInfoImage);
+    mMainMenuContainer->add(mGameInfoIcon, 
+                            160 - mGameInfoIcon->getWidth() / 2, 
+                            240 - mGameInfoIcon->getHeight() - 2);
     mStartButton = new DBSH07Button("START GAME");
     mStartButton->addActionListener(this);
-    mMainMenuContainer->add(mStartButton, 125, 150);
+    mMainMenuContainer->add(mStartButton, 40, 185);
     mCreditsButton = new DBSH07Button("CREDITS");
     mCreditsButton->addActionListener(this);
-    mMainMenuContainer->add(mCreditsButton, 125, 150 + mStartButton->getHeight());
-    mExitButton = new DBSH07Button("EXIT");
+    mMainMenuContainer->add(mCreditsButton, 130, 185);
+    mExitButton = new DBSH07Button("EXIT GAME");
     mExitButton->addActionListener(this);
-    mMainMenuContainer->add(mExitButton, 125, 150 + mStartButton->getHeight()*2);
+    mMainMenuContainer->add(mExitButton, 200, 185);
 
 	mCreditsContainer = new gcn::Container();
 	mCreditsContainer->setSize(320, 240);
