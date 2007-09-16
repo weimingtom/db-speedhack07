@@ -13,6 +13,9 @@ public:
     unsigned int getEnergyOrbs();
     void setPods(unsigned int pods);
     unsigned int getPods();
+	unsigned int getPoints() {return mPoints; };
+	void setPoints(unsigned int points) {mPoints = points; };
+	void addPoints(unsigned int points) {mPoints += points; };
 	void setCannonLevel(unsigned int cannonLevel);
 	unsigned int getCannonLevel();
     void setMegaBlasts(unsigned int megaBlasts);
@@ -25,6 +28,9 @@ private:
     unsigned int mLevel;
     unsigned int mEnergyOrbs;
     unsigned int mPods;
+
+	unsigned int mPoints;
+	
 	unsigned int mCannonLevel;
     unsigned int mMegaBlasts;
 };

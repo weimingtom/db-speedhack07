@@ -3,6 +3,7 @@
 #include "mine.hpp"
 #include "level.hpp"
 #include "resourcehandler.hpp"
+#include "gamestate.hpp"
 
 Mine::Mine(int x, int y, bool isMagnetic)
 : Enemy(x, y, 16, 16, true),
@@ -93,6 +94,10 @@ void Mine::handleCollision(Entity *other, Level *level)
 		level->spawnDebris(8, mX, mY, mW, mH);
         level->spawnExplosions(10, mX, mY, mW, mH);
 		level->addShakeAmount(100);
+		
+		GameState::getInstance()->addPoints(100);
+		level->addKilledEnemy(1);
+
 		int pan = (getCenterX() * 256) / 240;
 		if (pan < 0)
 		{

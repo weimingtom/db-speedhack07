@@ -5,6 +5,7 @@
 #include "enemybullet.hpp"
 #include "playerbullet.hpp"
 #include "level.hpp"
+#include "gamestate.hpp"
 #include "util.hpp"
 
 Turret::Turret(int x, int y, FireDirection direction, int shots)
@@ -81,6 +82,8 @@ void Turret::handleCollision(Entity *other, Level *level)
 			level->spawnDebris(8, mX, mY, mW, mH);
 		    level->spawnExplosions(10, mX, mY, mW, mH);
 			level->addShakeAmount(100);
+			GameState::getInstance()->addPoints(150);
+			level->addKilledEnemy(1);
 		}
 	}
 

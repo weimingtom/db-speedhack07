@@ -7,6 +7,7 @@
 #include "guichan/allegro.hpp"
 #include "gui/dialog.hpp"
 #include "gui/extendedallegroinput.hpp"
+#include "pointsummary.hpp"
 
 #include <list>
 
@@ -42,6 +43,8 @@ public:
 
 	int getAirResistance() { return mAirResistance; }
 	int setAirResistance(int a) { mAirResistance = a; }
+	void addKilledEnemy(int amount) { mKilledEnemies += amount; }
+	void addDestroyedBlocks(int amount) { mDestroyedBlocks += amount; }
 
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
@@ -58,7 +61,9 @@ protected:
         DIALOG,
         GAME,
         GAMEOVER,
-        LEVEL_COMPLETE
+		POINT_COUNT,
+        LEVEL_COMPLETE,
+		LEAVE_LEVEL
     };
 
 	void updateScrolling();
@@ -77,6 +82,9 @@ protected:
 
     int mGameScrollY;
     int mBackgroundScrollY;
+	unsigned int mKilledEnemies;
+	unsigned int mDestroyedBlocks;
+
     Player* mPlayer;
     Entity* mBackground;
     int mMotif;
@@ -91,7 +99,9 @@ protected:
     gcn::Label* mMegaBlastsLabel;
     gcn::Label* mEnergyOrbsLabel;
     gcn::Label* mTimeLabel;
+	gcn::Label* mPointLabel;
     gcn::Label* mTimeCaptionLabel;
+	gcn::Label* mPointsCaptionLabel;
     gcn::Label* mGameOverLabel;
     gcn::Label* mLevelCompleteLabel;
     gcn::Label* mLevelNumberLabel;
@@ -104,6 +114,8 @@ protected:
 
 	float mScrollSpeed;
 	float mGameScrollFloat;
+
+	PointSummary* mPointSummary;
 
     std::vector<Entity*> mStaticEntities;
 

@@ -21,6 +21,7 @@
 #include "skybackground.hpp"
 
 
+
 #include <iostream>
 
 Level::Level(const std::string& filename)
@@ -33,7 +34,9 @@ Level::Level(const std::string& filename)
   mLevelLength(0),
   mShakeAmount(0),
   mTimeCounter(0),
-  mAirResistance(1)
+  mAirResistance(1),
+  mKilledEnemies(0),
+  mDestroyedBlocks(0)
 {
     load(filename);
 	mPlayer = new Player();
@@ -55,6 +58,7 @@ Level::~Level()
     delete mEnergyOrbsLabel;
     delete mGameOverLabel;
     delete mTimeLabel;
+	delete mPointLabel;
     delete mLevelCompleteLabel;
     delete mLevelNameLabel;
     delete mLevelNumberLabel;
@@ -75,7 +79,7 @@ bool Level::isGameOver()
 
 bool Level::isLevelComplete()
 {
-    return mState == LEVEL_COMPLETE && mFrameCounter > 200;
+    return mState == LEAVE_LEVEL;
 }
 
 void Level::initGui()
@@ -137,9 +141,15 @@ void Level::initGui()
 
     mTimeLabel = new gcn::Label("000.00");
     mTop->add(mTimeLabel, 5, mLivesLabel->getHeight()*5 + 3);
+	
+	mPointLabel = new gcn::Label("0");
+	mTop->add(mPointLabel, 5, mLivesLabel->getHeight()*10);
 
     mTimeCaptionLabel = new gcn::Label("TIME");
     mTop->add(mTimeCaptionLabel, 5, mLivesLabel->getHeight() * 6 + 3);
+
+	mPointsCaptionLabel = new gcn::Label("POINTS");
+    mTop->add(mPointsCaptionLabel, 5, mLivesLabel->getHeight() * 9);
 
     mGameOverLabel = new gcn::Label("GAME OVER");
     mGameOverLabel->setVisible(false);
@@ -288,8 +298,8 @@ void Level::logic()
 	        (*it)->logic(this);
         }
     }
-    else if (mState == LEVEL_COMPLETE)
-    {
+	else if (mState == LEVEL_COMPLETE)
+	{
         mBackground->logic(this);
         std::list<Entity *>::iterator it;
 
@@ -297,7 +307,27 @@ void Level::logic()
         {
 	        (*it)->logic(this);
         }
-    }
+		if(mFrameCounter>200) {
+			mLevelCompleteLabel->setVisible(false);
+			mState = POINT_COUNT;
+			mPointSummary = new PointSummary(mTop, mDestroyedBlocks, mKilledEnemies, GameState::getInstance()->getEnergyOrbs(), mTimeCounter);
+		}
+	}
+	else if (mState == POINT_COUNT)
+	{
+        mBackground->logic(this);
+        std::list<Entity *>::iterator it;
+
+        for (it = mEntities.begin(); it != mEntities.end(); it++)
+        {
+	        (*it)->logic(this);
+        }
+		mPointSummary->logic();
+		if(mPointSummary->isDone()) {
+			delete(mPointSummary);
+			mState = LEAVE_LEVEL;
+		}
+	}
     else if (mState == GAME)
     {
         if (mFrameCounter < 200)
@@ -321,7 +351,7 @@ void Level::logic()
 
         if (mLevelLength - 240 < mGameScrollY)
         {
-            mState = LEVEL_COMPLETE;
+			mState = LEVEL_COMPLETE;
             mFrameCounter = 0;
             mLevelCompleteLabel->setVisible(true);
             return;
@@ -434,6 +464,9 @@ void Level::logic()
 
         mTimeLabel->setCaption(time);
         mTimeLabel->adjustSize();
+
+		mPointLabel->setCaption(toString(GameState::getInstance()->getPoints()));
+        mPointLabel->adjustSize();
 
         mGui->logic();
 

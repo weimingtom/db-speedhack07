@@ -5,6 +5,7 @@
 #include "level.hpp"
 #include "resourcehandler.hpp"
 #include "util.hpp"
+#include "gamestate.hpp"
 
 Floater::Floater(int x, int y, int hitCount)
 : Enemy(x, y, 16, 16, true),
@@ -88,6 +89,9 @@ void Floater::handleCollision(Entity *other, Level *level)
 		level->spawnDebris(8, mX, mY, mW, mH);
         level->spawnExplosions(10, mX, mY, mW, mH);
 		level->addShakeAmount(100);
+		GameState::getInstance()->addPoints(120);
+		level->addKilledEnemy(1);
+
 		int pan = (getCenterX() * 256) / 240;
 		if (pan < 0)
 		{
