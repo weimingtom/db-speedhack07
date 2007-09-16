@@ -115,6 +115,9 @@ void Game::logic()
 
             mGui->logic();
             break;
+        case HIGH_SCORE:
+            mGui->logic();
+            break;
         case SHOP:
         case MENU:
             mGui->logic();
@@ -123,7 +126,7 @@ void Game::logic()
             mLevel->logic();
             if (mLevel->isGameOver())
             {
-                setState(MENU);
+                setState(HIGH_SCORE);
             }
             else if (mLevel->isLevelComplete())
             {
@@ -172,6 +175,7 @@ void Game::draw()
         mGui->draw();
         draw_sprite(mBuffer, mouse_sprite, mouse_x / 2, mouse_y / 2);
         break;
+    case HIGH_SCORE:
     case SHOP:
 	case MENU:
         mAllegroGraphics->setTarget(mBuffer);
@@ -398,6 +402,10 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             mCreditsContainer->setVisible(false);
             mMainMenuContainer->setVisible(true);
         }
+        else if (mHighScore->isVisible())
+        {
+            setState(MENU);
+        }
         else if (mState != BONUS_LEVEL_OR_SHOP)
         {
             setState(EXIT);
@@ -414,6 +422,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
+        mHighScore->setVisible(false);
         playMusic("shop.xm", 2.0f);
     }
     else if (state == MENU)
@@ -423,6 +432,7 @@ void Game::setState(State state)
         mCreditsContainer->setVisible(false);
         mOptionalDialog->setVisible(false);
         mTopBackgroundIcon->setVisible(true);
+        mHighScore->setVisible(false);
 		playMusic("hiscore.xm", 1.0f);
     }
     else if (state == BONUS_LEVEL_OR_SHOP)
@@ -437,7 +447,15 @@ void Game::setState(State state)
         mDialog->setText("F FLUFFY LOVE: You can now choose to either head for a bonus level or enter" 
                          " a shop where you can buy things from Cuddelz!");
     }
-   
+    else if (state == HIGH_SCORE)
+    {
+        mTopBackgroundIcon->setVisible(true);
+        mShop->setVisible(false);
+        mMainMenuContainer->setVisible(false);
+        mCreditsContainer->setVisible(false);
+        mOptionalDialog->setVisible(false);
+        mHighScore->setVisible(true);
+    }
     mState = state; 
 }
 
@@ -448,7 +466,7 @@ void Game::prepareNextLevel()
     if (GameState::getInstance()->getLevel() > GameState::getInstance()->getNumberOfLevels())
     {
         //setState(END);
-        setState(MENU);
+        setState(HIGH_SCORE);
         GameState::getInstance()->reset();
         return;
     }

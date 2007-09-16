@@ -24,7 +24,7 @@ GameState::GameState()
 
 void GameState::reset()
 {
-    mLives = 3;
+    mLives = 0;
     mLevel = 0;
     mPoints = 0;
     mEnergyOrbs = 1;

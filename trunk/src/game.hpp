@@ -44,7 +44,8 @@ protected:
         PAUSE,
         SHOP,
         BONUS_LEVEL_OR_SHOP,
-        END
+        END,
+        HIGH_SCORE
     };
 
     void setState(State state);

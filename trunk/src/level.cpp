@@ -248,13 +248,6 @@ void Level::logic()
 	mLogicDoneOnce = true;
 	if(mShakeAmount > 0) mShakeAmount /= 1.045;
 
-    /*
-	std::cout << mPlayerEntities.size() << " " 
-		<< mPlayerBulletEntities.size() << " "
-		<< mEnemyEntities.size() << " "
-		<< mEnemyBulletEntities.size() << std::endl;
-
-        */
 
     if (mState == DIALOG)
     {
