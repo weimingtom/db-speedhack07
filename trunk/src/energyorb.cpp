@@ -37,8 +37,11 @@ void EnergyOrb::handleCollision(Entity *other, Level *level)
 {
     if (other->getType() == Entity::PLAYER_TYPE)
     {
-        GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() + 1);
-        mCollidable = false;
+		if (level->getPlayer()->getState() != Player::KILLED)
+		{
+			GameState::getInstance()->setEnergyOrbs(GameState::getInstance()->getEnergyOrbs() + 1);
+			mCollidable = false;
+		}
         play_sample(mSample, 128, 128, 1000, 0);
     }
 }

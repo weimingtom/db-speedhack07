@@ -29,7 +29,7 @@ bool Electro::killsPlayer()
 
 bool Electro::isOn()
 {
-	return (mFrameCounter & 32) != 0;
+	return ((mFrameCounter / 75) & 1) != 0;
 }
 
 bool Electro::isCollidable()

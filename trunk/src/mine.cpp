@@ -20,6 +20,7 @@ Mine::Mine(int x, int y, bool isMagnetic)
 	mFrameCount = 0;
 
 	mExplosionSample = ResourceHandler::getInstance()->getSample("explo2.wav");
+	mBeepSample = ResourceHandler::getInstance()->getSample("beep.wav");
 }
 
 Mine::~Mine()
@@ -32,6 +33,23 @@ void Mine::logic(Level* level)
 	if(mIsMagnetic) {
 		int playerDiffX = level->getPlayer()->getCenterX() - getX();
 		int playerDiffY = level->getPlayer()->getCenterY() - getY();
+
+		if (playerDiffX * playerDiffX + playerDiffY * playerDiffY < 100 * 100 
+			&& (mFrameCount % 10) == 0)
+		{
+			int pan = (getCenterX() * 256) / 240;
+
+			if (pan < 0)
+			{
+				pan = 0;
+			} 
+			else if (pan > 255)
+			{
+				pan = 255;
+			}
+
+			play_sample(mBeepSample, 100, pan, 2000, 0);
+		}
 		
 		mDx += playerDiffX/1000.0f;
 		mDy += playerDiffY/1000.0f;

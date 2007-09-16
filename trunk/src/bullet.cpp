@@ -39,8 +39,7 @@ void Bullet::logic(Level* level)
 }
 void Bullet::handleCollision(Entity *other, Level *level)
 {
-	if ( other->getType() != Entity::PLAYER_BULLET_TYPE &&
-		 other->stopsBullets() )
+	if ( other->stopsBullets() )
 	{
 		mIsToBeDeleted = true;
 	}

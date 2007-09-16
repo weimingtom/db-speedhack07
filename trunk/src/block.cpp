@@ -45,6 +45,11 @@ void Block::handleCollision(Entity *other, Level *level)
 			
             level->spawnDebris(3, mX, mY, mW, mH);
 		    mToBeDeleted = true;
+
+			if (mWithOrb)
+			{
+				level->addEntity(new EnergyOrb(mX, mY));
+			}
         }
 
         return;

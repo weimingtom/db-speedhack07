@@ -27,6 +27,7 @@ protected:
 	int mFrameCount;
 	
 	SAMPLE *mExplosionSample;
+	SAMPLE *mBeepSample;
 };
 
 #endif

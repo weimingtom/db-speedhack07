@@ -346,6 +346,7 @@ void Level::logic()
         checkCollision(mEnemyEntities, mEnemyEntities);
         checkStaticCollision(mPlayerEntities);
         checkStaticCollision(mPlayerBulletEntities);
+		checkStaticCollision(mEnemyBulletEntities);
      
 		mBackground->logic(this);
         std::list<Entity *>::iterator it;
@@ -474,11 +475,14 @@ void Level::spawnNewPlayer()
 
 void Level::updateScrolling()
 {
-    if (mPlayer->getState() == Player::KILLED || mState == LEVEL_COMPLETE)
+    if (mPlayer->getState() == Player::KILLED ||
+		mState == LEVEL_COMPLETE ||
+		mState == GAMEOVER )
     {
-        // Do nothing, that is freeze the camera.
+		return;
     }
-    else if (isBurnPressed())
+    
+	if (isBurnPressed())
     {
 	    float wantedScroll = mPlayer->getY() - 40.0f + mPlayer->getSpeed();
 	    float scrollAmount = wantedScroll - mGameScrollFloat;
@@ -679,8 +683,8 @@ void Level::load(const std::string& filename)
                     mHibernatingEntities.push_back(entity);
                     break;
 				case '~':
-                    entity = new Electro(col*BLOCK_SIZE, row*BLOCK_SIZE);
-                    mHibernatingEntities.push_back(entity);
+                    staticEntity = new Electro(col*BLOCK_SIZE, row*BLOCK_SIZE);
+                    mHibernatingEntities.push_back(staticEntity);
                     break;
 				case '0':
                     if (mMotif == SPACE_MOTIF || mMotif == SKY_MOTIF)
