@@ -4,6 +4,8 @@
 #include <map>
 #include <vector>
 
+#include "highscore.hpp"
+
 class GameState
 {
 public:
@@ -24,6 +26,8 @@ public:
     void setMegaBlasts(unsigned int megaBlasts);
     unsigned int getMegaBlasts();
 
+	HighScore* getHighScore() { return mHighScore; };
+
     const std::string& getLevelFilename(unsigned int level);
     bool isLevelBonusLevel(unsigned int level);
     const std::string& getLevelDesignation(unsigned int level);
@@ -43,6 +47,8 @@ private:
 	
 	unsigned int mCannonLevel;
     unsigned int mMegaBlasts;
+
+	HighScore* mHighScore;
 
     class LevelData
     {

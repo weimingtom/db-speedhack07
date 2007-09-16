@@ -18,6 +18,7 @@ GameState* GameState::getInstance()
 
 GameState::GameState()
 {
+	mHighScore = new HighScore();
     reset();
 }
 
@@ -30,6 +31,7 @@ void GameState::reset()
     mPods = 1;
     mCannonLevel = 1;
     mMegaBlasts = 3;
+	mHighScore->load("highscore.txt");
 }
 
 unsigned int GameState::getLives()

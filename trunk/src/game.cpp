@@ -297,6 +297,12 @@ void Game::initGui()
 	mCreditsContainer->setVisible(false);
 	mTop->add(mCreditsContainer);
 
+	mHighScore = GameState::getInstance()->getHighScore();
+	mHighScore->setPosition(10,154);
+	mHighScore->setVisible(true);
+	mTop->add(mHighScore);
+
+
 	mOlofImage = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("olof.bmp"));
 	mOlofIcon = new gcn::Icon(mOlofImage);
 	mCreditsContainer->add(mOlofIcon, 50, 95);
@@ -323,6 +329,7 @@ void Game::initGui()
 	mCreditsText->setOpaque(false);
 	mCreditsText->setBorderSize(0);
 	mCreditsContainer->add(mCreditsText, 40, 180);
+
 
 /*
 	mInfoText = new gcn::TextBox("Team Darkbits Tins 07\n"
