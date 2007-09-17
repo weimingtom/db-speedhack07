@@ -149,6 +149,10 @@ void Game::logic()
                 std::cout << "LEVEL COMPLETE" << std::endl;
                 prepareNextLevel();
             }
+            else if (mLevel->isQuit())
+            {
+                setState(MENU);
+            }
             break;
 		case END:
 			mEnding->logic();

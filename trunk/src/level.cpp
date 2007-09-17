@@ -40,7 +40,9 @@ Level::Level(const std::string& filename)
   mKilledEnemies(0),
   mDestroyedBlocks(0),
   mNumberOfEnemies(0),
-  mNumberOfBlocks(0)
+  mNumberOfBlocks(0),
+  mEscapePressed(false),
+  mQuit(false)
 {
     load(filename);
 	mPlayer = new Player();
@@ -83,6 +85,11 @@ bool Level::isGameOver()
 bool Level::isLevelComplete()
 {
     return mState == LEAVE_LEVEL;
+}
+
+bool Level::isQuit()
+{
+    return mQuit;
 }
 
 void Level::initGui()
@@ -269,7 +276,7 @@ void Level::logic()
         mPlayer->logic(this);
         mGui->logic();
 
-        if (key[KEY_ESC])
+        if ((key[KEY_ESC] != 0) && !mEscapePressed)
         {
             mDialog->setVisible(false);
             mState = GAME;
@@ -319,6 +326,11 @@ void Level::logic()
 	}
     else if (mState == GAME)
     {
+        if ((key[KEY_ESC] != 0) && !mEscapePressed)
+        {
+            mQuit = true;
+        }
+
         if (mFrameCounter < 200)
         {
             mLevelNumberLabel->setCaption(GameState::getInstance()->getLevelDesignation(GameState::getInstance()->getLevel()) + ":");
@@ -469,6 +481,8 @@ void Level::logic()
 	mPointLabel->setCaption(toString(GameState::getInstance()->getPoints()));
     mPointLabel->adjustSize();
     mFrameCounter++;
+
+    mEscapePressed = key[KEY_ESC] != 0;
 }
 
 void Level::spawnNewPlayer()

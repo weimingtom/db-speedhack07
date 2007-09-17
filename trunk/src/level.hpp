@@ -25,6 +25,7 @@ public:
 
     bool isGameOver();
     bool isLevelComplete();
+    bool isQuit();
 
 	int getMouseX();
 	int getMouseY();
@@ -131,6 +132,9 @@ protected:
     unsigned int mNumberOfEnemies;
     unsigned int mNumberOfBlocks;
     unsigned int mLevelParTime;
+
+    bool mEscapePressed;
+    bool mQuit;
 };
 
 #endif
