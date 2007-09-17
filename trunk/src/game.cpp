@@ -128,15 +128,10 @@ void Game::logic()
             {
                 startNextLevel();
             }
-
-            mGui->logic();
             break;
         case HIGH_SCORE:
-            mGui->logic();
-            break;
         case SHOP:
         case MENU:
-            mGui->logic();
 			break;
         case LEVEL:
             mLevel->logic();
@@ -161,6 +156,7 @@ void Game::logic()
 			{
 				setState(HIGH_SCORE);
 			}
+            break;
         case PAUSE:
             break;
         case EXIT:
@@ -169,6 +165,8 @@ void Game::logic()
 			throw DBSH07_EXCEPTION("Unknown game state.");
    }
    
+      mGui->logic();
+
     if (key[KEY_F10]) 
     {
         setState(EXIT);
@@ -498,6 +496,15 @@ void Game::setState(State state)
 
         mHighScoreContainer->setVisible(true);
 		playMusic("hiscore.xm", 1.0f);
+    }
+    else
+    {
+        mTopBackgroundIcon->setVisible(false);
+        mShop->setVisible(false);
+        mMainMenuContainer->setVisible(false);
+        mCreditsContainer->setVisible(false);
+        mOptionalDialog->setVisible(false);
+        mHighScoreContainer->setVisible(false);
     }
     mState = state; 
 }
