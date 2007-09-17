@@ -68,7 +68,7 @@ void HighScoreContainer::setVisible(bool visible)
                 && highScores[row].name == mHash
                 && highScores[row].points == GameState::getInstance()->getPoints())
             {
-               highScores[row].name = "BAJs!";
+               highScores[row].name = "";
             }
         }
 
