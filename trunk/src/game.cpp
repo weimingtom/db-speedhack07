@@ -18,9 +18,10 @@ mLevel(NULL)
     install_keyboard();
     install_mouse();
 	
-    set_window_title("Darkbits - SpeedHack07");
+    set_window_title("D.r Madness Or: How Fluffy Loved Learned to Stop "
+                      "Worrying and Love The Bomb");
 
-    int driver = GFX_AUTODETECT_WINDOWED;
+    int driver = GFX_AUTODETECT_FULLSCREEN;
 
     set_color_depth(32);
     if (set_gfx_mode(driver, 640, 480, 0, 0) < 0) {
@@ -49,7 +50,7 @@ mLevel(NULL)
 	initGui();
 	initMusic();
 
-    setState(MENU);
+    setState(SPLASHSCREEN);
 }
 
 Game::~Game()

@@ -54,5 +54,5 @@ void SplashScreen::draw(BITMAP* dest)
 
 bool SplashScreen::isDrawingDone()
 {
-    return mFrameCounter > 200;
+    return mFrameCounter > 300;
 }
