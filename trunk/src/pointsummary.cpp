@@ -68,7 +68,7 @@ mParTime(partime)
         }
     }
 
-    mOrbPoints = orbs * 250;
+    mOrbPoints = orbs * 200;
 
     int t = mParTime - time;
 
