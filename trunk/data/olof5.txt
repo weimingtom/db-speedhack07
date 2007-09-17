@@ -592,3 +592,26 @@ E..1.....1.....
 ...............
 ...............
 ...............
+DIALOG
+F FLUFFY LOVE: Hello? Hello?
+F FLUFFY LOVE: Bam Bam?... Can you read me?...
+B BAM BAM: I read you Fluffy!
+F FLUFFY LOVE: Yippie, that's great!
+F FLUFFY LOVE: Are you in orbit around the planet yet?
+B BAM BAM: Yes I am Fluffy!
+F FLUFFY LOVE: Well that's just super. Before you head down to the surface you better talk with Cuddelz.
+F FLUFFY LOVE: I bet she has some tips your you.
+C CUDDELZ: Indeed I have! Hello Bam Bam, I'm so happy you have reached the planet.
+B BAM BAM: Me too Cuddelz!
+C CUDDELZ: Before you head down there are a couple of things you need to know.
+C CUDDELZ: Space is full of debris, shoot your way through by pressing the LEFT MOUSE BUTTON so you don't get hurt.
+C CUDDELZ: To fire a Mega Blast more power full than your normal cannon press the RIGHT MOUSE BUTTON. 
+C CUDDELZ: To accelerate press the S BUTTON.
+C CUDDELZ: If you think it goes to fast you can always use the breaks to slow down by pressing the W BUTTON.
+C CUDDELZ: ... Oh, and if you happen to see any energy orbs be sure to pick them up as they can be used to transfer upgrades to you!
+B BAM BAM: Thanks for the tips Cuddelz!
+C CUDDELZ: You're welcome Bam Bam!
+F FLUFFY LOVE: And Bam Bam, be sure to not get spotted by any mines as they will alert the alarm system.
+B BAM BAM: I'll try Fluffy!
+F FLUFFY LOVE: Good luck Bam Bam!
+F FLUFFY LOVE: And remember, I love you!
