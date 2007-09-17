@@ -1,4 +1,4 @@
-FIRST IN SPACE
+The alarm system is alerted!
 SPACE
 3600
 ...............
