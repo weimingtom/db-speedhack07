@@ -1,4 +1,4 @@
-The defense system has been alerted!
+Space, the last frontier
 SPACE
 3300
 ...............
@@ -818,10 +818,3 @@ SPACE
 ...............
 ...............
 ...............
-DIALOG
-F FLUFFY LOVE: Oh no Bam Bam, a couple of mines have spotted you. The defense system has been alerted.
-C CUDDELZ: I'm scared...
-B BAM BAM: Don't be Cuddelz, I think I can handle it!
-C CUDDELZ: Hurrah! I'm happy again!
-F FLUFFY LOVE: Hurry down to the planet before Dr. Madness finds out about your location!
-B BAM BAM: Okay Fluffy!

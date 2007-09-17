@@ -1,4 +1,4 @@
-Closing in on Dr. Madness!
+The defense system has been alerted!
 SPACE
 3000
 Z..............
@@ -341,11 +341,9 @@ Z..............
 ...............
 ...............
 DIALOG
-F FLUFFY LOVE: Hurrah! You've made it so far!
-F FLUFFY LOVE: Now it won't be long before you'll be able to head into the atmosphere.
-B BAM BAM: So Fluffy, what's down there?
-F FLUFFY LOVE: It's the lair of Dr. Madness of course, don't you remember?
-B BAM BAM: Ah yes, right, all those explosions made me a bit dizzy for a while.
-C CUDDELZ: ...
-B BAM BAM: But you don't need to worry Cuddelz, I'm fine!
-C CUDDELZ: Hurrah!
+F FLUFFY LOVE: Oh no Bam Bam, a couple of mines have spotted you. The defense system has been alerted.
+C CUDDELZ: I'm scared...
+B BAM BAM: Don't be Cuddelz, I think I can handle it!
+C CUDDELZ: Hurrah! I'm happy again!
+F FLUFFY LOVE: Hurry down to the planet before Dr. Madness finds out about your location!
+B BAM BAM: Okay Fluffy!

@@ -1,8 +1,8 @@
 N olof5.txt
-N olof2.txt
-N olof1.txt
-B olofbonus1.txt
 N persbana2.txt
+N olof2.txt
+B olofbonus1.txt
+N olof1.txt
 N tedsbana1.txt
 B persbana4.txt
 N tedsbana2.txt
