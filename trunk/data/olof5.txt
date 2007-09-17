@@ -470,7 +470,7 @@ C CUDDELZ: If you think it goes to fast you can always use the breaks to slow do
 C CUDDELZ: ... Oh, and if you happen to see any energy orbs be sure to pick them up as they can be used to transfer upgrades to you!
 B BAM BAM: Thanks for the tips Cuddelz!
 C CUDDELZ: You're welcome Bam Bam!
-F FLUFFY LOVE: And Bam Bam, be sure to not get spotted by any mines as they will alert the alarm system.
+F FLUFFY LOVE: And Bam Bam, be sure to not get spotted by any mines as they will alert the defense system.
 B BAM BAM: I'll try Fluffy!
 F FLUFFY LOVE: Good luck Bam Bam!
 F FLUFFY LOVE: And remember, I love you!
