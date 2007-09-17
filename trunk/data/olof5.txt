@@ -459,7 +459,7 @@ F FLUFFY LOVE: Yippie, that's great!
 F FLUFFY LOVE: Are you in orbit around the planet yet?
 B BAM BAM: Yes I am Fluffy!
 F FLUFFY LOVE: Well that's just super. Before you head down to the surface you better talk with Cuddelz.
-F FLUFFY LOVE: I bet she has some tips your you.
+F FLUFFY LOVE: I bet she has some tips for you.
 C CUDDELZ: Indeed I have! Hello Bam Bam, I'm so happy you have reached the planet.
 B BAM BAM: Me too Cuddelz!
 C CUDDELZ: Before you head down there are a couple of things you need to know.
