@@ -31,9 +31,20 @@ void SplashScreen::draw(BITMAP* dest)
 		//if(mFrameCounter > 100) l = 0;
 		//if(mFrameCounter > 160) l2 = 0;
 		//std::cout << l << std::endl;
-		float stretch = std::cos(mFrameCounter*0.6f)/ (mFrameCounter*mFrameCounter*0.01f);
+		float stretch = std::cos(mFrameCounter*0.4f) / (mFrameCounter * 0.2f);
+
+		if (mFrameCounter > 150)
+		{
+			stretch = 0;
+		}
+
 		int w = mDarkbitsLogoBitmap->w * std::pow(2.0f, stretch);//(1 + 20 * l);
 		//w = mDarkbitsLogoBitmap->w * std::sin(mFrameCounter/1.2)*(40.0*(l2));
+
+		if (w <= 0)
+		{
+			w = 1;
+		}
 
 		int h = (mDarkbitsLogoBitmap->h * mDarkbitsLogoBitmap->w) / w;
 		
