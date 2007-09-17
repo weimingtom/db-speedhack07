@@ -21,7 +21,7 @@ mLevel(NULL)
     set_window_title("Dr. Madness Or: How Fluffy Loved Learned to Stop "
                       "Worrying and Love The Bomb");
 
-    int driver = GFX_AUTODETECT_FULLSCREEN;
+    int driver = GFX_AUTODETECT_WINDOWED;
 
     set_color_depth(32);
     if (set_gfx_mode(driver, 640, 480, 0, 0) < 0) {

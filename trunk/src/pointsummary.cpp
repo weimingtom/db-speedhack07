@@ -258,10 +258,6 @@ void PointSummary::logic()
 	mTotalPointsLabel->setCaption(": " + str);
 	mTotalPointsLabel->adjustSize();
 }
-std::string fixString(const std::string& str)
-{
-
-}
 
 void PointSummary::initGui(gcn::Container* mTop)
 {
