@@ -590,6 +590,8 @@ void Level::load(const std::string& filename)
     // Load entities
     for (row = 0; row < data.size(); row++)
     {
+		pollMusic();
+
         if (data[row] == "DIALOG")
         {
             break;

@@ -46,6 +46,8 @@ public:
 	void addKilledEnemy(int amount) { mKilledEnemies += amount; }
 	void addDestroyedBlocks(int amount) { mDestroyedBlocks += amount; }
 
+	int getBackgroundScroll() { return mBackgroundScrollY; }
+
     static const int SPACE_MOTIF = 0;
     static const int SKY_MOTIF = 1;
     static const int WATER_MOTIF = 2;

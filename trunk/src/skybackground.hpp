@@ -20,6 +20,7 @@ protected:
     BITMAP *mBackgroundColors;
 	int mLevelLength;
 	int mFrameCounter;
+	int mBgScroll;
 
     Animation* mCloud1;
     Animation* mCloud2;

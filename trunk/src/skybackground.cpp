@@ -7,7 +7,8 @@
 SkyBackground::SkyBackground() :
 	Entity(false),
 	mLevelLength(0),
-	mFrameCounter(0)
+	mFrameCounter(0),
+	mBgScroll(0)
 {
 	mBackgroundColors = ResourceHandler::getInstance()->getBitmap("skybackground.bmp");
 
@@ -24,13 +25,13 @@ SkyBackground::~SkyBackground()
 void SkyBackground::logic(Level* level)
 {
 	mLevelLength = level->getLevelLength();
-
+	mBgScroll = level->getBackgroundScroll();
 	mFrameCounter++;
 }
 
 void SkyBackground::draw(BITMAP *dest, int scrolly, unsigned int layer)
 {
-	float depth = scrolly / (mLevelLength - 240.0f);
+	float depth = (scrolly - mBgScroll) / (mLevelLength - 240.0f);
 
 	int c = (int)(depth * 16.0f);
 	float t = depth * 16.0f - c;

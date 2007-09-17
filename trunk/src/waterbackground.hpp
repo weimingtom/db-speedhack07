@@ -19,6 +19,7 @@ protected:
     BITMAP *mBackgroundColors;
 	int mLevelLength;
 	int mFrameCounter;
+	int mBgScroll;
 
 	class Particle {
 	public:
