@@ -369,7 +369,7 @@ void Game::initGui()
 	mTedLabel = new gcn::Label("TED STEEN");
 	mCreditsContainer->add(mTedLabel, 215, 165);
 
-	mCreditsText = new gcn::TextBox("We would like to thanks Berith Tivell\n"
+	mCreditsText = new gcn::TextBox("We would like to thank Berith Tivell\n"
                                     "and Staffan Beijer for supplying us\n"
                                     "with food during the competition.");
 	mCreditsText->setOpaque(false);
