@@ -48,7 +48,7 @@ mLevel(NULL)
 	initGui();
 	initMusic();
 
-    setState(END);
+    setState(MENU);
 }
 
 Game::~Game()
