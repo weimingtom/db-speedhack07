@@ -5,7 +5,7 @@
                                   
                                        ~     
                                        
-        Or: How Fluffy Love learned to stop worrying and love the bomb
+        Or: How Fluffy Love Learned to Stop Worrying and Love the Bomb
 
                                                              BY: Team Darkbits
 ===============================================================================
@@ -74,7 +74,8 @@
         parts of dialog.cpp,
         decoratedcontainer.cpp,
         stringutil.hpp,
-        parts of optiondialog.cpp
+        parts of optiondialog.cpp,
+        entity.cpp
 	    from Nodajo's Mechanical Castle, http://code.google.com/p/db-nmc/
 
 

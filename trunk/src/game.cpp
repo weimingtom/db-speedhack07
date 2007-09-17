@@ -169,7 +169,7 @@ void Game::logic()
 			throw DBSH07_EXCEPTION("Unknown game state.");
    }
    
-    if (key[KEY_Q]) 
+    if (key[KEY_F10]) 
     {
         setState(EXIT);
     }
