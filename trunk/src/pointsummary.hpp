@@ -21,6 +21,7 @@ public:
 
 protected:
 	void initGui(gcn::Container* mTop);
+	std::string fixString(const std::string& str, int lenght);
 
 	unsigned int mOrbs;
 	unsigned int mEnemies;

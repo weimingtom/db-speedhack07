@@ -38,11 +38,11 @@ mParTime(partime)
     else
     {
 	    initGui(mTop);
-        int b = blocks - mMaxBlocks / 2;
-        int mb = mMaxBlocks / 2;
+        int b = blocks - (mMaxBlocks / 4);
+        int mb = mMaxBlocks / 4;
         if (b > 0)
         {
-	        mBlockPoints = b / (float)mb * 7000;
+	        mBlockPoints = b / (float)mb * 5000;
         }
         else
         {
@@ -68,13 +68,13 @@ mParTime(partime)
         }
     }
 
-    mOrbPoints = orbs * 500;
+    mOrbPoints = orbs * 600;
 
     int t = mParTime - time;
 
     if (t > 0)
     {
-        mTimePoints = t * 10;
+        mTimePoints = t * 25;
     }
     else
     {
@@ -215,34 +215,52 @@ void PointSummary::logic()
 
 		//if (mTotal <= 0) { mState = 12; mFrameCounter = 0; }
 	}
-		mBlocksDestroyedLabel->setCaption("^x" + toString(mBlocks));
-		mBlocksDestroyedLabel->adjustSize();
-		mBlockPointsLabel->setCaption(": " + toString((int)mBlockPointsCounter));
-		mBlockPointsLabel->adjustSize();
+	std::string str;
+	str = toString((int)mBlockPointsCounter);
+	if(str.length() < 6) { std::string str2 = ""; for(int i=0; i < 6-str.length(); i++) {str2 += "0"; }; str = str2+str; }
 
-		mEnemiesKilledLabel->setCaption("_x" + toString(mEnemies));
-		mEnemiesKilledLabel->adjustSize();
-		mEnemyKillPointsLabel->setCaption(": " + toString((int)mEnemyPointsCounter));
-		mEnemyKillPointsLabel->adjustSize();
 
-		mOrbsTakenLabel->setCaption("}x" + toString(mOrbs));
-		mOrbsTakenLabel->adjustSize();
-		mOrbsTakenPointsLabel->setCaption(": " + toString((int)mOrbPointsCounter));
-		mOrbsTakenPointsLabel->adjustSize();
+	mBlocksDestroyedLabel->setCaption("^x" + toString(mBlocks));
+	mBlocksDestroyedLabel->adjustSize();
+	mBlockPointsLabel->setCaption(": " + str);
+	mBlockPointsLabel->adjustSize();
 
-		mTimePassedLabel->setCaption("Time bonus");
-		mTimePassedLabel->adjustSize();
-		mTimeBonusLabel->setCaption(": " + toString((int)mTimePointsCounter));
-		mTimeBonusLabel->adjustSize();
+	str = toString((int)mEnemyPointsCounter);
+	if(str.length() < 6) { std::string str2 = ""; for(int i=0; i < 6-str.length(); i++) {str2 += "0"; }; str = str2+str; }
 
-		std::string str = toString((int)(mTotalPoints - mTotalPointsCounter));
-		
-		if(str.length() < 5) { std::string str2 = ""; for(int i=0; i < 5-str.length(); i++) {str2 += "0"; }; str = str2+str; }
-		
-		mTotalLabel->setCaption("TOTAL");
-		mTotalLabel->adjustSize();
-		mTotalPointsLabel->setCaption(": " + str);
-		mTotalPointsLabel->adjustSize();
+	mEnemiesKilledLabel->setCaption("_x" + toString(mEnemies));
+	mEnemiesKilledLabel->adjustSize();
+	mEnemyKillPointsLabel->setCaption(": " + str);
+	mEnemyKillPointsLabel->adjustSize();
+
+	str = toString((int)mOrbPointsCounter);
+	if(str.length() < 6) { std::string str2 = ""; for(int i=0; i < 6-str.length(); i++) {str2 += "0"; }; str = str2+str; }
+
+	mOrbsTakenLabel->setCaption("}x" + toString(mOrbs));
+	mOrbsTakenLabel->adjustSize();
+	mOrbsTakenPointsLabel->setCaption(": " + str);
+	mOrbsTakenPointsLabel->adjustSize();
+
+	str = toString((int)mTimePointsCounter);
+	if(str.length() < 6) { std::string str2 = ""; for(int i=0; i < 6-str.length(); i++) {str2 += "0"; }; str = str2+str; }
+
+	mTimePassedLabel->setCaption("Time bonus");
+	mTimePassedLabel->adjustSize();
+	mTimeBonusLabel->setCaption(": " + str);
+	mTimeBonusLabel->adjustSize();
+
+	str = toString((int)(mTotalPoints - mTotalPointsCounter));
+	
+	if(str.length() < 6) { std::string str2 = ""; for(int i=0; i < 6-str.length(); i++) {str2 += "0"; }; str = str2+str; }
+	
+	mTotalLabel->setCaption("TOTAL");
+	mTotalLabel->adjustSize();
+	mTotalPointsLabel->setCaption(": " + str);
+	mTotalPointsLabel->adjustSize();
+}
+std::string fixString(const std::string& str)
+{
+
 }
 
 void PointSummary::initGui(gcn::Container* mTop)
