@@ -43,12 +43,13 @@ void Block::handleCollision(Entity *other, Level *level)
         if (mHitCount - 1 >= 0)
         {
             level->spawnDebris(3, mX, mY, mW, mH);
-		    mToBeDeleted = true;
 
-			if (mWithOrb)
+			if (mWithOrb && !mToBeDeleted)
 			{
 				level->addEntity(new EnergyOrb(mX, mY));
 			}
+
+			mToBeDeleted = true;
         }
 
         return;
@@ -70,12 +71,13 @@ void Block::handleCollision(Entity *other, Level *level)
 			GameState::getInstance()->addPoints(20);
 			level->addDestroyedBlocks(1);
 			level->spawnDebris(3, mX, mY, mW, mH);
-			mToBeDeleted = true;
 
-			if (mWithOrb)
+			if (mWithOrb && !mToBeDeleted)
 			{
 				level->addEntity(new EnergyOrb(mX, mY));
 			}
+
+			mToBeDeleted = true;
 		}
 	}
 }
