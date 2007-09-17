@@ -1,4 +1,4 @@
-DBSH07
+Dr. Madness!
 SKY
 750
 ............000
@@ -269,3 +269,16 @@ SKY
 0.............0
 0.............0
 0.............0
+DIALOG
+D DR. MADNESS: Hey what's going on here?
+C CUDDELZ: It's Dr. Madness, he has intercepted our radio communication!
+F FLUFFY LOVE: Your time is up Dr. Madness!
+D DR. MADNESS: What do you mean? Who are you?
+F FLUFFY LOVE: Hihi, it's such a pleasent surprise.
+C CUDDELZ: Hihi, yes, I can't wait!
+D DR. MADNESS: Don't come any closer or the defense system will kill you!
+F FLUFFY LOVE: Don't listen to him Bam Bam!
+C CUDDELZ: Yeah, don't listen to him, he's scary!!
+B BAM BAM: I won't Fluffy, and I know what I have to do!
+F FLUFFY LOVE: Hihi, you are so wonderful Bam Bam!
+D DR. MADNESS: I said, DON'T COME ANY CLOSER! YOU WILL GET HURT!
