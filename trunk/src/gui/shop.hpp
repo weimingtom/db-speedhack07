@@ -16,7 +16,7 @@ public:
 protected:
     static const int CANNON_UPGRADE_COST = 15;
     static const int POD_COST = 10;
-    static const int LIFE_COST = 5;
+    static const int LIFE_COST = 3;
     static const int MEGA_BLAST_COST = 4;
 
     gcn::Label* mItemLabel;

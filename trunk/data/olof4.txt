@@ -525,7 +525,7 @@ DIALOG
 F FLUFFY LOVE: Yippie! You have reached the ocean of the planet!
 C CUDDELZ: Now be careful as you won't be able to move as swift as before in the water.
 B BAM BAM: That's good to know Cuddelz.
-D DR. MADNESS: I told you to not come any closer, it's dangerous here, the ocean is full old defense systems.
+D DR. MADNESS: I told you to not come any closer, it's dangerous here, the ocean is full of old defense systems.
 F FLUFFY LOVE: Hihi, we know Dr. Madness, but you won't be able to stop us.
 D DR. MADNESS: But it's DANGEROUS!
 F FLUFFY LOVE: But our Bam Bam loves dangers, don't you Bam Bam?
