@@ -585,8 +585,6 @@ void Level::load(const std::string& filename)
     data.erase(data.begin());
 
     mLevelParTime = fromString<int>(data[0]);
-
-    std::cout << "PARTIME = " << mLevelParTime << std::endl;
     data.erase(data.begin());
 
     // Load entities

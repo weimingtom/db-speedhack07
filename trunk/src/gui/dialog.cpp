@@ -20,6 +20,7 @@ Dialog::Dialog()
 	mVertical = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("dialog-vertical.bmp"));
     mBomb = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("bomb.bmp"));
     mFluffyLove = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("fluffylove.bmp"));
+    mFluffyLoveAngry = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("fluffylove2.bmp"));
     mCuddelz= gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("cuddelz.bmp"));
     mDoctorMad = gcn::Image::load(ResourceHandler::getInstance()->getRealFilename("doctormad.bmp"));
 
@@ -33,6 +34,7 @@ Dialog::Dialog()
 
 Dialog::~Dialog()
 {
+    delete mFluffyLoveAngry;
     delete mDoctorMad;
     delete mCuddelz;
     delete mFluffyLove;
@@ -150,6 +152,10 @@ void Dialog::draw(gcn::Graphics *graphics)
     {
         graphics->drawImage(mFluffyLove, 5, 8);
     }
+    else if (mCharacter == FLUFFY_LOVE_ANGRY)
+    {
+        graphics->drawImage(mFluffyLoveAngry, 5, 8);
+    }
     else if (mCharacter == CUDDELZ)
     {
         graphics->drawImage(mCuddelz, 5, 8);
@@ -172,6 +178,11 @@ void Dialog::setText(const std::string &text)
     else if (text.size() > 2 && text.at(0) == 'F')
     {
         mCharacter = FLUFFY_LOVE;
+        mText = text.substr(2, text.size() - 2);
+    }
+    else if (text.size() > 2 && text.at(0) == 'A')
+    {
+        mCharacter = FLUFFY_LOVE_ANGRY;
         mText = text.substr(2, text.size() - 2);
     }
     else if (text.size() > 2 && text.at(0) == 'C')

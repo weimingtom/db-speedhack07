@@ -1,4 +1,4 @@
-DER ZORN GOTTES!
+Der Zorn Gottes!
 CAVE
 6700
 ...............
@@ -1024,3 +1024,23 @@ m.............m
 ...............
 ...............
 ...............
+DIALOG
+D DR. MADNESS: I must warn you, I've just discovered that there is a bomb headed for the planet core.
+D DR. MADNESS: You have to get out of here as quickly as possible!
+C CUDDELZ: Hihi.
+F FLUFFY LOVE: That's right Dr. Madness. Soon there won't be any planet left.
+F FLUFFY LOVE: Our Bam Bam will make sure of that!
+B BAM BAM: I sure will!
+D DR. MADNESS: What?! Is the bomb yours!!
+C CUDDELZ: He is so cute when he is confused.
+F FLUFFY LOVE: Yes, no wonder they call him Dr. Madness, he doesn't seem to be very bright.
+D DR. MADNESS: This is terrible, all my research on curing deseases will be lost!
+C CUDDELZ: Hihi!
+D DR. MADNESS: Oh my god, I have to call my eight children to tell them what will happen with me.
+F FLUFFY LOVE: This is so funny!
+C CUDDELZ: Hihi! It sure is!
+D DR. MADNESS: Thank god they all left the planet a few days ago.
+A FLUFFY LOVE: Damnit!
+C CUDDELZ: Don't be angry Fluffy, at least we will kill Dr. Madness.
+F FLUFFY LOVE: That's right! Oh I can't wait, hurry up Bam bam!
+B BAM BAM: I'm going as fast as I can!

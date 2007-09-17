@@ -48,6 +48,7 @@ private:
 
     gcn::Image* mBomb;
     gcn::Image* mFluffyLove;
+    gcn::Image* mFluffyLoveAngry;
     gcn::Image* mCuddelz;
     gcn::Image* mDoctorMad;
 
@@ -57,7 +58,8 @@ private:
         BOMB,
         FLUFFY_LOVE,
         CUDDELZ,
-        DOCTOR_MAD
+        DOCTOR_MAD,
+        FLUFFY_LOVE_ANGRY
     };
 
     unsigned int mCharacter;
