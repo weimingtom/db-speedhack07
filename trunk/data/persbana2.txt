@@ -340,6 +340,11 @@ Z..............
 ...............
 ...............
 DIALOG
-F Do you see that planet down there? That is where you are heading!
-B Cool. What's down there?
-F It's the lair of Dr. Madness.
+F FLUFFY LOVE: Hurrah! You've made it so far!
+F FLUFFY LOVE: Now it won't be long before you'll be able to head into the atmosphere.
+B BAM BAM: So Fluffy, what's down there?
+F FLUFFY LOVE: It's the lair of Dr. Madness of course, don't you remember?
+B BAM BAM: Ah yes, right, all those explosions made me a bit dizzy for a while.
+C CUDDELZ: ...
+B BAM BAM: But you don't need to worry Cuddelz, I'm fine!
+C CUDDELZ: Hurrah!
