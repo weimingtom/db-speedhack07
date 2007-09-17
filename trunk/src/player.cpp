@@ -109,17 +109,7 @@ void Player::draw(BITMAP *dest, int scrolly, unsigned int layer)
 		{
 			int frame = getPodDepth(i) < 0.4f ? 1 : 0;
             
-            if (mState == DEAD || mState == NEW || mState == IMORTAL)
-            {
-                if (mFrameCounter % 4 < 2)
-                {
-			        mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
-		        }
-            }
-            else
-            {
-                mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
-            }
+			mPodAni.drawFrame(dest, frame, getCenterX() + getPodOffset(i) - 2, getY() - scrolly + 4);
         }
 	}	
 }

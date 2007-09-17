@@ -190,8 +190,8 @@ void Level::draw(BITMAP* dest)
 
 	if(mShakeAmount > 100)
 	{
-		int shakeAmount = ((mShakeAmount - 100)/10.0f);
-		if(shakeAmount > 60) shakeAmount = 40;
+		int shakeAmount = ((mShakeAmount - 100)/25.0f);
+		if(shakeAmount > 60) shakeAmount = 60;
 
 		xOffs = shakeAmount*(frand()-0.5f);
 		yOffs = shakeAmount*(frand()-0.5f);
