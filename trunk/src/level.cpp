@@ -630,6 +630,7 @@ void Level::load(const std::string& filename)
 					default:
 						break;
 					}
+					break;
                 case '1':
 				case '2':
 				case '3':
