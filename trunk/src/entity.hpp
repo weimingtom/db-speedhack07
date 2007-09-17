@@ -58,8 +58,8 @@ public:
 	virtual int getDamage() { return 1; };
 
     static const int BACKGROUND_LAYER = 0;
-    static const int PLAYER_LAYER = 1;
-    static const int ENEMY_LAYER = 2;
+    static const int PLAYER_LAYER = 2;
+    static const int ENEMY_LAYER = 1;
     static const int EXPLOSION_LAYER = 3;
     static const int FOREGROUND_LAYER = 4;
 	static const int NUM_LAYERS = 5;

@@ -14,10 +14,10 @@ public:
     void setVisible(bool visible);
 
 protected:
-    static const int CANNON_UPGRADE_COST = 30;
-    static const int POD_COST = 20;
-    static const int LIFE_COST = 10;
-    static const int MEGA_BLAST_COST = 25;
+    static const int CANNON_UPGRADE_COST = 4;
+    static const int POD_COST = 3;
+    static const int LIFE_COST = 4;
+    static const int MEGA_BLAST_COST = 3;
 
     gcn::Label* mItemLabel;
     gcn::Label* mCostLabel;

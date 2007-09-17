@@ -18,10 +18,10 @@ mLevel(NULL)
     install_keyboard();
     install_mouse();
 	
-    set_window_title("D.r Madness Or: How Fluffy Loved Learned to Stop "
+    set_window_title("Dr. Madness Or: How Fluffy Loved Learned to Stop "
                       "Worrying and Love The Bomb");
 
-    int driver = GFX_AUTODETECT_WINDOWED;
+    int driver = GFX_AUTODETECT_FULLSCREEN;
 
     set_color_depth(32);
     if (set_gfx_mode(driver, 640, 480, 0, 0) < 0) {
@@ -403,13 +403,13 @@ void Game::action(const gcn::ActionEvent& actionEvent)
         if (mOptionalDialog->getState() == OptionalDialog::BONUS_LEVEL)
         {
             mOptionalDialog->setVisible(false);
-            mDialog->setText("B I think I'll try my luck in a bonus level!");
+			mDialog->setText("B BAM BAM: I think I'll try my luck in a bonus level!");
             mDialog->setVisible(true);
         }
         else if (mOptionalDialog->getState() == OptionalDialog::SHOP)
         {
             mOptionalDialog->setVisible(false);
-            mDialog->setText("B I think I'll head for the shop!");
+			mDialog->setText("B BAM BAM: I think I'll head for the shop!");
             mDialog->setVisible(true);
         }
     }

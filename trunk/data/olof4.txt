@@ -530,5 +530,5 @@ F FLUFFY LOVE: Hihi, we know Dr. Madness, but you won't be able to stop us.
 D DR. MADNESS: But it's DANGEROUS!
 F FLUFFY LOVE: But our Bam Bam loves dangers, don't you Bam Bam?
 B BAM BAM: I sure do!
-C CUDDELZ: Yeah! So be quite now Dr. Madness.
+C CUDDELZ: Yeah! So be quiet now Dr. Madness.
 D DR. MADNESS: I'm not sure I will be able to warn you again!

@@ -31,6 +31,9 @@ void DBSH07TextField::keyPressed(gcn::KeyEvent &keyEvent)
 {
 	if (keyEvent.getKey().getValue() != ',')
 	{
-		gcn::TextField::keyPressed(keyEvent);
+		if (getText().size() < 10 || keyEvent.getKey().getValue() == gcn::Key::BACKSPACE || keyEvent.getKey().getValue() == gcn::Key::ENTER)
+		{
+			gcn::TextField::keyPressed(keyEvent);
+		}
 	}
 }
