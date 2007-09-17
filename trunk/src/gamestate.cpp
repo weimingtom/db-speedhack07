@@ -31,10 +31,10 @@ GameState::GameState()
 
 void GameState::reset()
 {
-    mLives = 100;
+    mLives = 3;
     mLevel = 0;
-    mPoints = 0;
-    mEnergyOrbs = 1;
+    mPoints = 1;
+    mEnergyOrbs = 10;
     mPods = 5;
     mCannonLevel = 5;
     mMegaBlasts = 3;
@@ -191,6 +191,11 @@ void GameState::loadHighScore()
 	        mHighScore.push_back(p);
         }
 	}
+
+    while (mHighScore.size() > 10)
+    {
+        mHighScore.pop_back();
+    }
 }
 
 void GameState::addHighScore(const std::string& name, int score)
@@ -201,6 +206,11 @@ void GameState::addHighScore(const std::string& name, int score)
 
 	mHighScore.push_back(p);
 	std::sort(mHighScore.begin(), mHighScore.end(), &HighScorePair::compareScore);
+    
+    while (mHighScore.size() > 10)
+    {
+        mHighScore.pop_back();
+    }
 }
 
 void GameState::saveHighScore()
@@ -227,7 +237,7 @@ void GameState::saveHighScore()
 		throw DBSH07_EXCEPTION("Unable to open " + saveFilename);
 	}
 
-	for (int row = 0; row < mHighScore.size(); row++)
+	for (int row = 0; row < mHighScore.size() && row < 10; row++)
     {
 		HighScorePair p = mHighScore[row];
 

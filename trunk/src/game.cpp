@@ -50,7 +50,7 @@ mLevel(NULL)
 	initGui();
 	initMusic();
 
-    setState(SPLASHSCREEN);
+    setState(MENU);
 }
 
 Game::~Game()
@@ -432,19 +432,12 @@ void Game::keyPressed(gcn::KeyEvent &keyEvent)
             setState(EXIT);
         }
     }
-
-	if (keyEvent.getKey().getValue() == gcn::Key::ENTER ||
-		keyEvent.getKey().getValue() == gcn::Key::SPACE)
-	{
-		if (mHighScoreContainer->isVisible())
-        {
-            setState(MENU);
-        }
-	}
 }
 
 void Game::setState(State state)
 {
+    clear_keybuf();
+
 	if (state == END)
 	{
 		stopMusic();
@@ -511,8 +504,7 @@ void Game::prepareNextLevel()
 
     if (GameState::getInstance()->getLevel() > GameState::getInstance()->getNumberOfLevels())
     {
-        setState(END);        
-        GameState::getInstance()->reset();
+        setState(END);
         return;
     }
 

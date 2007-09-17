@@ -58,11 +58,7 @@ void HighScoreContainer::setVisible(bool visible)
 {
     Container::setVisible(visible);
 
-    if (mState == ENTER_SCORE && visible)
-    {
-        GameState::getInstance()->addHighScore(mHash, GameState::getInstance()->getPoints());
-    }
-    else if (mState == ENTER_SCORE && !visible)
+    if (mState == ENTER_SCORE && !visible)
     {
         std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
 
@@ -72,7 +68,7 @@ void HighScoreContainer::setVisible(bool visible)
                 && highScores[row].name == mHash
                 && highScores[row].points == GameState::getInstance()->getPoints())
             {
-               highScores[row].name = "ANONYMOUS!";
+               highScores[row].name = "BAJs!";
             }
         }
 
@@ -86,34 +82,45 @@ void HighScoreContainer::setVisible(bool visible)
         mState = VIEW;
        
         mTextField->setVisible(false);
+        return;
     }
-
-    std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
-
-	for (int row = 0; row < highScores.size() && row < 10; row++)
-	{
-        mLabels[row]->setCaption(highScores[row].name);
-        mLabels[row]->adjustSize();
-        mLabels[row+10]->setCaption(toString(highScores[row].points));
-        mLabels[row+10]->adjustSize();
-
-        if (mState == ENTER_SCORE 
-            && visible
-            && highScores[row].name == mHash
-            && highScores[row].points == GameState::getInstance()->getPoints())
-        {
-            mTextFieldEnterRow = row;
-        }
-    }
-
-    if (mState == ENTER_SCORE && visible)
+    else if (mState == ENTER_SCORE && visible)
     {
+        GameState::getInstance()->addHighScore(mHash, GameState::getInstance()->getPoints());
+        std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
+
+	    for (int row = 0; row < highScores.size() && row < 10; row++)
+	    {
+            mLabels[row]->setCaption(highScores[row].name);
+            mLabels[row]->adjustSize();
+            mLabels[row+10]->setCaption(toString(highScores[row].points));
+            mLabels[row+10]->adjustSize();
+
+            if (highScores[row].name == mHash
+                && highScores[row].points == GameState::getInstance()->getPoints())
+            {
+                mTextFieldEnterRow = row;
+            }
+        }
+
         mLabels[mTextFieldEnterRow]->setVisible(false);
         mTextField->setText("");
         mTextField->setVisible(true);
         mTextField->setPosition(mLabels[mTextFieldEnterRow]->getX() - 1,
                                 mLabels[mTextFieldEnterRow]->getY() - 1);
         mTextField->requestFocus();
+    }
+    else if (mState == VIEW && visible)
+    {
+        std::vector<GameState::HighScorePair> &highScores = GameState::getInstance()->getHighScores();
+
+	    for (int row = 0; row < highScores.size() && row < 10; row++)
+	    {
+            mLabels[row]->setCaption(highScores[row].name);
+            mLabels[row]->adjustSize();
+            mLabels[row+10]->setCaption(toString(highScores[row].points));
+            mLabels[row+10]->adjustSize();
+        }
     }
 }
 

@@ -43,6 +43,7 @@ int main(int argc, char **argv)
         allegro_message(os.str().c_str());
         return 1;
     }
+    /*
 	catch (std::exception e)
 	{
         std::string str;
@@ -55,6 +56,7 @@ int main(int argc, char **argv)
         allegro_message(os.str().c_str());
         return 1;
 	}
+    */
 	/*
     catch (...)
 	{
