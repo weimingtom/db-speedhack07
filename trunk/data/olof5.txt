@@ -605,7 +605,7 @@ C CUDDELZ: Indeed I have! Hello Bam Bam, I'm so happy you have reached the plane
 B BAM BAM: Me too Cuddelz!
 C CUDDELZ: Before you head down there are a couple of things you need to know.
 C CUDDELZ: Space is full of debris, shoot your way through by pressing the LEFT MOUSE BUTTON so you don't get hurt.
-C CUDDELZ: To fire a Mega Blast more power full than your normal cannon press the RIGHT MOUSE BUTTON. 
+C CUDDELZ: To fire a Mega Blast more powerful than your normal cannon press the RIGHT MOUSE BUTTON. 
 C CUDDELZ: To accelerate press the S BUTTON.
 C CUDDELZ: If you think it goes to fast you can always use the breaks to slow down by pressing the W BUTTON.
 C CUDDELZ: ... Oh, and if you happen to see any energy orbs be sure to pick them up as they can be used to transfer upgrades to you!
