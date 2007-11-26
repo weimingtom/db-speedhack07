@@ -260,22 +260,6 @@ namespace gcn
         virtual void handleMouseReleased(const MouseInput& mouseInput);
 
         /**
-         * Handles modal mouse input focus releases. When a release occurs appropriate
-         * mouse events should be distributed (such as mouse entered and mouse exited).
-         *
-         * @since 0.6.0
-         */
-        virtual void handleModalMouseInputFocusRelease();
-
-        /**
-         * Handles modal focus releases. When a release occurs appropriate mouse events
-         * should be distributed (such as mouse entered and mouse exited).
-         *
-         * @since 0.6.0
-         */
-        virtual void handleModalFocusRelease();
-
-        /**
          * Distributes a mouse event.
          *
          * @param type The type of the event to distribute,
@@ -369,6 +353,11 @@ namespace gcn
 
         // Widget with mouse stack
         std::deque<Widget*> mWidgetWithMouseQueue;
+
+        virtual void handleModalFocus();
+        virtual void handleModalMouseInputFocus();
+        virtual void handleModalFocusGained();
+        virtual void handleModalFocusReleased();
     };
 }
 
