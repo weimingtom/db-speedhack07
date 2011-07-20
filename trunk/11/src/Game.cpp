@@ -1,4 +1,3 @@
-#include "Precompiled.hpp"
 #include "Game.hpp"
 
 #include "Input.hpp"
@@ -41,6 +40,7 @@ void Game::initGraphics(bool windowed)
 	privChangeResolution(windowed);
 
 	myScreenBuffer = create_bitmap(320, 240);
+	rectfill(myScreenBuffer, 0, 0, 320, 240, 0);
 	setTitle(myTitle.c_str());
 }
 
