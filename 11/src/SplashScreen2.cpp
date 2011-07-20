@@ -10,7 +10,7 @@ SplashScreen2::SplashScreen2()
     myDarkbitsLogo = Resource::getBitmap("data/images/darkbitslogo.bmp");
 	myDarkbitsLogoBlackAndWhite = Resource::getBitmap("data/images/darkbitslogo_black_and_white.bmp");
 	myDarkbitsLogoGlow = Resource::getBitmap("data/images/darkbitslogo_glow.bmp");
-	mySoftware2010 = Resource::getBitmap("data/images/software_2010.bmp");
+	mySoftware = Resource::getBitmap("data/images/software.bmp");
 	myDarkbitsLogoBlink = Resource::getBitmap("data/images/darkbitslogo_blink.bmp");
 }
 
@@ -96,14 +96,14 @@ void SplashScreen2::onDraw(BITMAP* aBuffer)
 
 	if ((myFrameCounter > 348 && myFrameCounter < 396 && rand() % 3 == 0)
 			|| myFrameCounter >= 396)
-		masked_blit(mySoftware2010,
+		masked_blit(mySoftware,
 					aBuffer, 
 					0, 
 					0, 
-					320 / 2 - mySoftware2010->w / 2, 
+					320 / 2 - mySoftware->w / 2, 
 					180, 
-					mySoftware2010->w, 
-					mySoftware2010->h);
+					mySoftware->w, 
+					mySoftware->h);
 
 	if (myFrameCounter > 228 && myFrameCounter < 240)
 		masked_blit(myDarkbitsLogoBlink, aBuffer, 0, 0, 70, 67, myDarkbitsLogoBlink->w, myDarkbitsLogoBlink->h);

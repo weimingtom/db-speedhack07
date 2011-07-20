@@ -14,6 +14,6 @@ protected:
     BITMAP* myDarkbitsLogo;
 	BITMAP* myDarkbitsLogoBlackAndWhite;
 	BITMAP* myDarkbitsLogoGlow;
-	BITMAP* mySoftware2010;
+	BITMAP* mySoftware;
 	BITMAP* myDarkbitsLogoBlink;
 };
