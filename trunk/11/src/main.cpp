@@ -1,4 +1,3 @@
-#include "Precompiled.hpp"
 #include "Speedhack11Game.hpp"
 
 int main(int argc, char **argv)
