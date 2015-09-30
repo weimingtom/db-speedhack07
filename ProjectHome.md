@@ -1,0 +1,1 @@
+Darkbits entries for the Speedhack competitions. Speedhack's homepage can be found at: http://www.speedhack.allegro.cc/.
